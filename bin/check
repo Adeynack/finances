@@ -1,0 +1,45 @@
+#!/bin/bash
+#
+# To run in parallel:
+# (echo yarn run lint-api & echo rubocop -a & echo rspec) | parallel --halt now,fail=1 --tag
+#
+echo "" && \
+
+echo "---------------------------------------------------------" && \
+echo "Ruby Dependencies" && \
+bundle install && \
+echo "" && \
+
+echo "---------------------------------------------------------" && \
+echo "Yarn Dependencies" && \
+yarn install && \
+echo "" && \
+
+echo "---------------------------------------------------------" && \
+echo "Full Reset of the Database" && \
+bin/rails db:full_reset && \
+
+# echo "---------------------------------------------------------" && \
+# echo "Annotating Rails Routes" && \
+# bundle exec annotate --routes --force && \
+# bundle exec rubocop -A config/routes.rb && \
+# echo "" && \
+
+echo "---------------------------------------------------------" && \
+echo "Annotating Rails Controllers" && \
+bundle exec chusaku && \
+echo "" && \
+
+echo "---------------------------------------------------------" && \
+echo "Linting & Repairing Ruby Code" && \
+bundle exec rubocop -A && \
+echo "" && \
+
+echo "---------------------------------------------------------" && \
+echo "Running RSpec Tests" && \
+bin/rails test &&
+echo "" && \
+
+echo "---------------------------------------------------------" && \
+echo "Done" && \
+echo ""
