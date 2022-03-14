@@ -41,6 +41,14 @@ gem "autoprefixer-rails"
 gem "turbo-rails"
 gem "serviceworker-rails"
 
+# Specific to the project (not from the template)
+gem "closure_tree"
+gem "devise"
+gem "awesome_print"
+gem "table_print"
+gem "money-rails", "~> 1.13.3"
+gem "iban-tools"
+gem "montrose"
 
 group :development, :test do
   gem "rspec-rails"
@@ -49,12 +57,13 @@ group :development, :test do
   gem "cuprite"
   gem "i18n-tasks", "0.9.35"
   gem "rack_session_access"
+  gem "annotate"
+  gem "chusaku", require: false
 end
 
 group :development do
   gem "listen"
   gem "web-console"
-  gem "annotate"
   gem "rb-fsevent"
   gem "letter_opener"
   gem "debug"
