@@ -32,3 +32,8 @@
 !.keep
 app/assets/builds
 node_modules
+
+# Misc
+/out
+/.env.local
+overmind.sock

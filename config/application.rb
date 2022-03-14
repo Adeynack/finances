@@ -24,6 +24,12 @@ module TestApp
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
+
+    config.autoload_paths += Dir["#{root}/app/models/accounts/**/"]
+    config.autoload_paths += Dir["#{root}/app/models/categories/**/"]
+    config.autoload_paths += Dir["#{root}/app/models/refinements/**/"]
+    config.autoload_paths += Dir["#{root}/app/validators/**/"]
+
     config.time_zone = "Berlin"
 
     config.middleware.use Shimmer::CloudflareProxy

@@ -1,0 +1,187 @@
+@startuml Model
+
+hide empty methods
+hide circle
+
+package Organisation {
+  class User {
+    * email
+    * display_name
+    * password_digest
+  }
+
+  class Book {
+    * name
+    * default_currency_iso_code: string{3}
+  }
+  Book "* owner" --* User
+
+  enum BookRoleType < PG Enum > {
+    admin
+    writer
+    reader
+  }
+
+  class BookRole {
+  }
+  BookRole --* User
+  BookRole --* Book
+  BookRole "role" --* BookRoleType
+}
+
+package "Register" {
+  enum RegisterType < PG Enum > {
+    ' Accounts
+    Bank
+    Card
+    Investment
+    Asset
+    Liability
+    Loan
+    Institution
+    ' Categories
+    Expense
+    Income
+  }
+
+  class Register {
+    * name
+    * starts_at
+    * currency_iso_code: string{3}
+    * initial_balance: integer = 0
+    * active: boolean = true
+    info: JSON
+    notes: text
+  }
+  Register --* Book
+  Register "parent" --o Register
+  Register "default category" --o Register
+  Register "* type" --* RegisterType
+
+  package Categories {
+    class Expense < STI > {}
+    Expense --|> Register
+
+    class Income < STI > {}
+    Income --|> Register
+  }
+
+  package Accounts {
+    class Asset < STI > {}
+    Asset --|> Register
+
+    class Bank < STI > {}
+    Bank --|> Register
+
+    class BankInfo < Store > {
+      account_number: String
+      iban: String
+    }
+    BankInfo o-- Bank
+
+    class Card < STI > {}
+    Card --|> Register
+
+    class CardInfo < Store > {
+      account_number: String
+      iban: String
+      interest_rate: Float
+      credit_limit: Integer
+      card_number: String
+      expires_at: Date
+    }
+    CardInfo o-- Card
+
+    class Investment < STI > {}
+    Investment --|> Register
+
+    class InvestmentInfo < Store > {
+      account_number: String
+    }
+    InvestmentInfo o-- Investment
+
+    class Liability < STI > {}
+    Liability --|> Register
+
+    class Loan < STI > {}
+    Loan --|> Register
+  }
+}
+
+package Exchange {
+  enum ExchangeStatus < PG Enum > {
+    Uncleared
+    Reconciling
+    Cleared
+  }
+
+  class Exchange {
+    * date: Date
+    cheque: String
+    * description: String
+    memo: Text
+  }
+  Exchange "* (origin)" --|> Register
+  Exchange "* status" --* ExchangeStatus
+
+  class Split {
+    * amount: Integer
+    * counterpart_amount: Integer
+    memo
+  }
+  Exchange "1..n" --* Split
+  Split "* destination" --* Register
+  Split "* status" --* ExchangeStatus
+}
+
+package Reminders {
+  enum ReminderMode < PG Enum > {
+    manual
+    auto_commit
+    auto_cancel
+  }
+
+  class Reminder {
+    * title
+    title
+    * first_date: Date
+    last_date: Date
+    * recurrence: String < Montrose >
+    last_applied_at: DateTime
+    * exchange_description: String
+    exchange_memo: Text
+  }
+  Reminder "* mode" --* ReminderMode
+  Reminder "* exchange_register" --|> Register
+  Reminder "* exchange_status" --* ExchangeStatus
+
+  class ReminderSplit {
+    * amount: Integer
+    * counterpart_amount: Integer
+    memo
+  }
+  Reminder "1..n" --* ReminderSplit
+  ReminderSplit "* destination" --* Register
+  ReminderSplit "* status" --* ExchangeStatus
+}
+
+package "Applicable to all elements" {
+  class Tag {
+    * name
+  }
+
+  class Tagging {
+    * subject_type
+    * subject_id
+  }
+  Tagging --* Tag
+
+  class ImportOrigin {
+    * subject_id
+    * subject_type
+    * external_system
+    * external_id
+  }
+}
+
+@enduml

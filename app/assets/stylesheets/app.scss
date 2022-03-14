@@ -1,0 +1,42 @@
+// TODO: REBIRTH: Make sure this is included.
+
+body {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+a {
+  color: rgb(0, 0, 129);
+  text-decoration: none;
+  color: black;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+nav {
+  background-color: #cde3ff;
+  padding: 1em;
+  margin: -1em;
+}
+
+.navbar-title {
+  float: left;
+  font-weight: bolder;
+}
+
+.navbar-main-content {
+  margin-left: 1em;
+}
+
+.navbar-main-content > .nav-item {
+  margin-left: 0.75em;
+}
+
+.nav-link {
+  text-decoration: none;
+}
+
+.nav-text.active {
+  border-bottom: 0.2em solid;
+}
