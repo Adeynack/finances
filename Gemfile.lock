@@ -171,7 +171,7 @@ GEM
     highline (2.0.3)
     i18n (1.10.0)
       concurrent-ruby (~> 1.0)
-    i18n-tasks (0.9.35)
+    i18n-tasks (0.9.37)
       activesupport (>= 4.0.2)
       ast (>= 2.1.0)
       erubi
@@ -509,7 +509,7 @@ DEPENDENCIES
   groupdate
   guard
   guard-rspec
-  i18n-tasks (= 0.9.35)
+  i18n-tasks
   iban-tools
   image_processing
   jsbundling-rails

@@ -60,7 +60,7 @@ group :development, :test do
   gem "rubocop-rspec"
   gem "capybara"
   gem "cuprite"
-  gem "i18n-tasks", "0.9.35"
+  gem "i18n-tasks"
   gem "rack_session_access"
   gem "annotate"
   gem "chusaku", require: false
