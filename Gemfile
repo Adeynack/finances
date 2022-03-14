@@ -2,7 +2,7 @@ source "https://rubygems.org"
 ruby File.read(".ruby-version").strip
 
 # Core
-gem "rails", "7.0.0"
+gem "rails", "~> 7.0.2"
 gem "puma"
 
 # Database

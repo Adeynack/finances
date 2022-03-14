@@ -10,11 +10,11 @@ default: &default
 
 development:
   <<: *default
-  database: finances_development
+  database: finances_rebirth_development
 
 test:
   <<: *default
-  database: finances_test
+  database: finances_rebirth_test
 
 production:
   <<: *default
