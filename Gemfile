@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source "https://rubygems.org"
 ruby File.read(".ruby-version").strip
 
@@ -53,6 +55,9 @@ gem "montrose"
 group :development, :test do
   gem "rspec-rails"
   gem "standard"
+  gem "rubocop-rails"
+  gem "rubocop-performance"
+  gem "rubocop-rspec"
   gem "capybara"
   gem "cuprite"
   gem "i18n-tasks", "0.9.35"
