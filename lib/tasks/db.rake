@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# TODO: SHIMMER
 namespace :db do
   namespace :reset do
     desc "Perform a full reset of the database, loads seeds & fixtures, and re-annotate the models"

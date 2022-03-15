@@ -47,10 +47,20 @@ jobs:
         env:
           DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/app
           RAILS_ENV: test
+      - name: Model and Routes Annotation
+        # To fix: bin/rake annotate_models
+        env:
+          DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/finances
+          ANNOTATE_FROZEN: true
+        run: bundle exec annotate
+      - name: Controllers Annotation
+        # To fix: bin/chusaku
+        run: bundle exec chusaku --dry-run --exit-with-error-on-annotation
+      - name: Lint
+        run: bundle exec rubocop -c .rubocop.yml
       - name: Build and test with Rake
         run: bundle exec rspec --format documentation
         env:
           DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/app
           REDIS_URL: redis://127.0.0.1:6379
           RAILS_ENV: test
-# TODO: REBIRTH: Import additional linting tasks from `finances`.
