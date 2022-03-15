@@ -58,8 +58,8 @@ jobs:
         run: bundle exec chusaku --dry-run --exit-with-error-on-annotation
       - name: Lint with Rubocop
         run: bundle exec rubocop -c .rubocop.yml
-      - name: Lint with Standard # Ensuring the Rubocop configuration is compatible with Standard
-        run: bundle exec rubocop -c .rubocop.yml
+      # - name: Lint with Standard # Ensuring the Rubocop configuration is compatible with Standard
+      #   run: bundle exec rubocop -c .rubocop.yml
       - name: Build and test with Rake
         run: bundle exec rspec --format documentation
         env:
