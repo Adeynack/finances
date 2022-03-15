@@ -1,0 +1,4 @@
+en:
+  errors:
+    messages:
+      invalid_currency_code: "%{value} is not a known currency ISO code"

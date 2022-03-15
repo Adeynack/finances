@@ -11,7 +11,7 @@ namespace :db do
         ["Delete schema cache (schema.rb & structure.sql", :sh, "rm -v -f db/schema.rb db/structure.sql"],
         ["Create Database", :rake, "db:create"],
         ["Migrate Database", :rake, "db:migrate"],
-        ["Annotate Models", :rake, "annotate_models"],
+        ["Annotate Models", :rake, "annotate_models"]
       ]
       steps << ["Seed Database", :rake, "db:seed"] if Rails.env.development?
       steps << ["Load Fixtures into Database", :rake, "db:fixtures:load"] if Rails.env.development?

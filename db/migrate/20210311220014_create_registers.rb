@@ -11,7 +11,7 @@ class CreateRegisters < ActiveRecord::Migration[6.1]
       "Loan",
       "Institution",
       "Expense",
-      "Income",
+      "Income"
     ]
     create_table :registers do |t|
       t.timestamps

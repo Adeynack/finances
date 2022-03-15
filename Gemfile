@@ -46,24 +46,31 @@ gem "serviceworker-rails"
 # Specific to the project (not from the template)
 gem "closure_tree"
 gem "devise"
-gem "awesome_print"
+gem "amazing_print" # awesome_print has bugs with some Rails classes
 gem "table_print"
 gem "money-rails", "~> 1.13.3"
 gem "iban-tools"
 gem "montrose"
 
 group :development, :test do
+  gem "debug"
   gem "rspec-rails"
+  gem "pry-rails"
+  gem "pry-doc"
+  gem "pry-byebug"
   gem "standard"
   gem "rubocop-rails"
   gem "rubocop-performance"
   gem "rubocop-rspec"
-  gem "capybara"
-  gem "cuprite"
   gem "i18n-tasks"
-  gem "rack_session_access"
   gem "annotate"
   gem "chusaku", require: false
+end
+
+group :test do
+  gem "capybara"
+  gem "cuprite"
+  gem "rack_session_access"
 end
 
 group :development do
@@ -71,8 +78,6 @@ group :development do
   gem "web-console"
   gem "rb-fsevent"
   gem "letter_opener"
-  gem "debug"
-  gem "pry-rails"
   gem "guard"
   gem "guard-rspec"
   gem "solargraph-standardrb"

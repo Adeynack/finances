@@ -55,7 +55,7 @@ module Import::Moneydance::ReminderImport
       extract_reminder_recurence_daily(md_reminder),
       extract_reminder_recurence_weekly(md_reminder),
       extract_reminder_recurence_monthly(md_reminder),
-      extract_reminder_recurence_yearly(md_reminder),
+      extract_reminder_recurence_yearly(md_reminder)
     ]
     schedules.compact!
     raise StandardError, "multiple schedules are not supported by this import" if schedules.length > 1

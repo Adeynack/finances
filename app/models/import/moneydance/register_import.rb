@@ -15,7 +15,7 @@ module Import::Moneydance::RegisterImport
     batches = [
       first_level_accounts_per_type.delete("i"),
       first_level_accounts_per_type.delete("e"),
-      first_level_accounts_per_type.values.flatten,
+      first_level_accounts_per_type.values.flatten
     ]
     batches.each { |accounts_to_import| import_account_batch(accounts_to_import, md_accounts_by_parent_id) }
   end

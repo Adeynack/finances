@@ -66,19 +66,21 @@ class Reminder < ApplicationRecord
         [
           "    - register: #{split.register.ancestry_path.join(" / ")}",
           "      amount:   #{split.amount}",
-          "      memo:     #{split.memo}",
+          "      memo:     #{split.memo}"
         ]
       end,
-      "",
+      ""
     ].flatten
   end
 
   private
 
+  # TODO: Create date validator? Put in Shimmer?
   def validate_last_date_after_first_date
     errors.add :last_date, "must be after first date" if last_date.present? && first_date >= last_date
   end
 
+  # TODO: Use `inclusivity` validator instead.
   def validate_exchange_register_on_same_book_as_reminder
     return if exchange_register_id.blank?
 
