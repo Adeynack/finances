@@ -57,8 +57,8 @@ class Register < ApplicationRecord
   validates :interest_rate, numericality: {allow_nil: true}
   validates :credit_limit, numericality: {allow_nil: true, only_integer: true}
 
-  scope :accounts, -> { where(type: Register.account_type_names) }
-  scope :categories, -> { where(type: Register.category_type_names) }
+  scope :accounts, -> { where(type: Account.known_names) }
+  scope :categories, -> { where(type: Category.known_names) }
 
   before_create do
     self.starts_at ||= Time.zone.today

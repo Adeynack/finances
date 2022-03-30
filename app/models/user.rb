@@ -9,6 +9,7 @@
 #  updated_at             :datetime         not null
 #  email                  :string           not null, indexed
 #  encrypted_password     :string           not null
+#  admin                  :boolean          default(FALSE), not null
 #  display_name           :string           not null
 #  reset_password_token   :string           indexed
 #  reset_password_sent_at :datetime

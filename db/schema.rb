@@ -157,6 +157,7 @@ ActiveRecord::Schema[7.0].define(version: 2021_10_31_080038) do
     t.datetime "updated_at", null: false
     t.string "email", null: false
     t.string "encrypted_password", null: false
+    t.boolean "admin", default: false, null: false
     t.string "display_name", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at", precision: nil

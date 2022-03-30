@@ -18,12 +18,14 @@ class Book < ApplicationRecord
   belongs_to :owner, class_name: "User"
 
   has_many :registers, dependent: :destroy
+  has_many :accounts, -> { accounts }, class_name: "Register", dependent: false, inverse_of: :book
+  has_many :categories, -> { categories }, class_name: "Register", dependent: false, inverse_of: :book
   has_many :exchanges, through: :registers
   has_many :reminders, dependent: :destroy
 
   has_currency :default_currency
 
-  delegate :categories, :accounts, to: :registers
+  validates :name, presence: true
 
   def debug_registers_tree
     exchange_count_per_register_id = Exchange.group(:register_id).count

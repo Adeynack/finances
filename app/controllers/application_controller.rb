@@ -5,4 +5,5 @@ class ApplicationController < ActionController::Base
   include Shimmer::RemoteNavigation
 
   before_action :check_locale
+  before_action :authenticate_user!
 end

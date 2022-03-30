@@ -48,7 +48,7 @@ jobs:
           DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/app
           RAILS_ENV: test
       - name: Model and Routes Annotation
-        # To fix: bin/rake annotate_models
+        # To fix: bundle exec annotate
         env:
           DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/finances
           ANNOTATE_FROZEN: true

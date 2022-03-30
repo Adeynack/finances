@@ -37,7 +37,7 @@ RSpec.describe Card do
   end
 
   it "can create a card when IBAN is valid" do
-    card = Card.new name: "Visa", book: books(:joe), iban: "SE35 5000 0000 0549 1000 0003"
+    card = Card.new name: "Visa", book: books(:joe), iban: "SE35 5000 0000 0549 1000 0003", currency_iso_code: "EUR"
     expect(card.valid?).to be_truthy
   end
 

@@ -6,12 +6,12 @@ module Currencyable
   KNOWN_CURRENCY_ISO_CODES = Money::Currency.all.map(&:iso_code).freeze
 
   class_methods do
-    def ensure_the_currency_is_known(model_attribute)
+    def ensure_the_currency_is_known(model_attribute, optional)
       validates model_attribute,
         inclusion: {
           in: KNOWN_CURRENCY_ISO_CODES,
-          allow_nil: true,
-          message: :invalid_currency_code
+          allow_nil: optional,
+          message: :invalid_currency_code # TODO: Why is that not working in AVO?
         }
     end
 
@@ -43,13 +43,13 @@ module Currencyable
       end
     end
 
-    def has_currency(attribute_name, optional: true)
+    def has_currency(attribute_name, optional: false)
       raise ArgumentError, "has_currency needs the symbol of the attribute representing the ISO code of a currency" unless attribute_name.is_a?(Symbol)
 
       model_attribute = :"#{attribute_name}_iso_code"
       money_instance_variable = :"@#{attribute_name}"
 
-      ensure_the_currency_is_known(model_attribute)
+      ensure_the_currency_is_known(model_attribute, optional)
       define_iso_code_setter(model_attribute)
       define_money_object_getter(attribute_name, model_attribute, money_instance_variable)
       define_money_object_setter(attribute_name, optional, model_attribute, money_instance_variable)

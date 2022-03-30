@@ -7,6 +7,7 @@
 #  updated_at             :datetime         not null
 #  email                  :string           not null, indexed
 #  encrypted_password     :string           not null
+#  admin                  :boolean          default(FALSE), not null
 #  display_name           :string           not null
 #  reset_password_token   :string           indexed
 #  reset_password_sent_at :datetime
@@ -16,15 +17,13 @@
 joe:
   email: joe@example.com
   display_name: Joe
-  # password: joe
-  encrypted_password: "$2a$12$EerDaJxakTE3nf7aEmyNc.CWWQo2b0Kp2gbo94gcIaIM1J5mxLv66"
+  encrypted_password: <%= User.new.send(:password_digest, "joe") %>
+  last_book: joe
 mary:
   email: mary@example.com
   display_name: Proud Mary
-  # password: mary
-  encrypted_password: "$2a$12$2etKk5yA1XMa6SadHlEth.Ue6JjcrGPHgz86T.83CEVrwM.e59UyO"
+  encrypted_password: <%= User.new.send(:password_digest, "mary") %>
 vlad:
   email: vlad@example.com
   display_name: Vlad the Impaler
-  # password: vlad
-  encrypted_password: "$2a$12$GubbEH6TWGkFaSKjf0E58ez5gd7wQfmFJ6JTXHpaQsCY8ck.d9.ea"
+  encrypted_password: <%= User.new.send(:password_digest, "vlad") %>

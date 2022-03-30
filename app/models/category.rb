@@ -28,11 +28,15 @@
 class Category < Register
   # self.abstract_class = true
 
-  def known_types
-    @category_types ||= find_child_from_files(namespace: nil).freeze
-  end
+  class << self
+    using ClassRefinements
 
-  def known_names
-    @known_names ||= known_types.map(&:sti_name).freeze
+    def known_types
+      @category_types ||= find_child_from_files(namespace: nil).freeze
+    end
+
+    def known_names
+      @known_names ||= known_types.map(&:sti_name).freeze
+    end
   end
 end

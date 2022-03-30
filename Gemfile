@@ -51,6 +51,8 @@ gem "table_print"
 gem "money-rails", "~> 1.13.3"
 gem "iban-tools"
 gem "montrose"
+gem "avo"
+gem "ransack"
 
 group :development, :test do
   gem "debug"
