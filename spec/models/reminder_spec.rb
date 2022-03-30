@@ -75,7 +75,18 @@ RSpec.describe Reminder do
       exchange_register: other_register
     )
     expect(reminder.validate).to be_falsy
-    # TODO: Expect the error to be a symbol (or use the inclusivity validator).
-    expect(reminder.errors.details[:exchange_register]).to eq [{error: "must belong to the same book as the reminder"}]
+    expect(reminder.errors.details[:exchange_register].pluck(:error)).to include :inclusion
+  end
+
+  it "fails if the last date is before first date" do
+    reminder = books(:joe).reminders.build(
+      exchange_register_id: registers(:first_bank).id,
+      title: "Bleh",
+      exchange_description: "Foo",
+      first_date: 2.days.from_now,
+      last_date: 1.day.from_now
+    )
+    expect(reminder.validate).to be_falsy
+    expect(reminder.errors.details[:last_date].pluck(:error)).to include :date_not_after
   end
 end

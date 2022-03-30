@@ -1,10 +1,14 @@
 {
-  "editor.formatOnSave": true,
   "typescript.tsdk": "node_modules/typescript/lib",
   "rubyTestExplorer.rspecCommand": "bin/rspec",
   "rubyTestExplorer.testFramework": "rspec",
   "ruby.lint": {
     "rubocop": true
+  },
+  "editor.formatOnSave": true,
+  "[ruby]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "castwide.solargraph"
   },
   "solargraph.formatting": true
 }

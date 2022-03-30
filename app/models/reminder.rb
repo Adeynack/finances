@@ -35,8 +35,8 @@ class Reminder < ApplicationRecord
 
   validates :title, presence: true
   validates :first_date, presence: true
-  validate :validate_last_date_after_first_date
-  validate :validate_exchange_register_on_same_book_as_reminder
+  validates :last_date, date: {after: :first_date}
+  validates :exchange_register, inclusion: {in: ->(r) { r.book.registers }, message: :must_belong_to_reminder_book}
   validates :exchange_description, presence: true
 
   before_validation do
@@ -71,20 +71,5 @@ class Reminder < ApplicationRecord
       end,
       ""
     ].flatten
-  end
-
-  private
-
-  # TODO: Create date validator? Put in Shimmer?
-  def validate_last_date_after_first_date
-    errors.add :last_date, "must be after first date" if last_date.present? && first_date >= last_date
-  end
-
-  # TODO: Use `inclusivity` validator instead.
-  def validate_exchange_register_on_same_book_as_reminder
-    return if exchange_register_id.blank?
-
-    register = exchange_register || Register.find(exchange_register_id)
-    errors.add :exchange_register, "must belong to the same book as the reminder" if register.present? && register.book_id != book_id
   end
 end

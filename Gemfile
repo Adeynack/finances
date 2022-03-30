@@ -80,5 +80,5 @@ group :development do
   gem "letter_opener"
   gem "guard"
   gem "guard-rspec"
-  gem "solargraph-standardrb"
+  gem "solargraph"
 end
