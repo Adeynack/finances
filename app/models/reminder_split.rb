@@ -4,11 +4,11 @@
 #
 # Table name: reminder_splits
 #
-#  id                 :bigint           not null, primary key
+#  id                 :uuid             not null, primary key
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
-#  reminder_id        :bigint           not null, indexed
-#  register_id        :bigint           not null, indexed
+#  reminder_id        :uuid             not null, indexed
+#  register_id        :uuid             not null, indexed
 #  amount             :integer          not null
 #  counterpart_amount :integer
 #  memo               :text

@@ -6,6 +6,7 @@
     "rubocop": true
   },
   "editor.formatOnSave": true,
+  "ruby.format": "rubocop",
   "[ruby]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "castwide.solargraph"

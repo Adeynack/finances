@@ -1,22 +1,5 @@
 AllCops:
   TargetRubyVersion: 3.1
-  NewCops: enable
-  Exclude:
-    - vendor/bundle/**/*
-    - 'bin/**/*'
-    - 'db/schema.rb'
-    - 'node_modules/**/*'
-
-require:
-  - standard
-  - rubocop-rails
 
 inherit_gem:
-  standard: config/base.yml
-
-Style/FrozenStringLiteralComment:
-  Enabled: true
-
-Style/MutableConstant:
-  Enabled: true
-  EnforcedStyle: strict
+  shimmer: config/rubocop_base.yml

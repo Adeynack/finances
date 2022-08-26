@@ -4,10 +4,10 @@
 #
 # Table name: reminders
 #
-#  id                   :bigint           not null, primary key
+#  id                   :uuid             not null, primary key
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
-#  book_id              :bigint           not null, indexed
+#  book_id              :uuid             not null, indexed
 #  title                :string           not null
 #  description          :text
 #  mode                 :enum             default("manual"), not null
@@ -16,7 +16,7 @@
 #  recurrence           :jsonb
 #  last_commit_at       :date
 #  next_occurence_at    :date
-#  exchange_register_id :bigint           not null, indexed
+#  exchange_register_id :uuid             not null, indexed
 #  exchange_description :string           not null
 #  exchange_memo        :text
 #  exchange_status      :enum             default("uncleared"), not null

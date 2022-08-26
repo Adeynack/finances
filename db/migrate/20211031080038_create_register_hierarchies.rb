@@ -3,8 +3,8 @@
 class CreateRegisterHierarchies < ActiveRecord::Migration[6.1]
   def change
     create_table :register_hierarchies, id: false do |t| # rubocop:disable Rails/CreateTableWithTimestamps
-      t.integer :ancestor_id, null: false
-      t.integer :descendant_id, null: false
+      t.uuid :ancestor_id, null: false
+      t.uuid :descendant_id, null: false
       t.integer :generations, null: false
     end
 

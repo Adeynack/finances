@@ -60,13 +60,6 @@ group :development, :test do
   gem "pry-rails"
   gem "pry-doc"
   gem "pry-byebug"
-  gem "standard"
-  gem "rubocop-rails"
-  gem "rubocop-performance"
-  gem "rubocop-rspec"
-  gem "i18n-tasks"
-  gem "annotate"
-  gem "chusaku", require: false
 end
 
 group :test do
@@ -82,5 +75,14 @@ group :development do
   gem "letter_opener"
   gem "guard"
   gem "guard-rspec"
+  gem "standard"
   gem "solargraph"
+  gem "solargraph-standardrb"
+  gem "rubocop-rails"
+  gem "rubocop-performance"
+  gem "rubocop-rspec"
+  gem "rubocop-rake"
+  gem "i18n-tasks"
+  gem "annotate"
+  gem "chusaku", require: false
 end

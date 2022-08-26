@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 class DeviseCreateUsers < ActiveRecord::Migration[6.1]
+  enable_extension "pgcrypto"
+
   def change
-    create_table :users do |t|
+    create_table :users, id: :uuid do |t|
       t.timestamps null: false
 
       ## Database authenticatable

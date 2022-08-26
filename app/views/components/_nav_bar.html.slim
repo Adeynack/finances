@@ -1,0 +1,11 @@
+nav
+  span.navbar-title Finances
+  span.navbar-main-content
+    - if @book
+      = nav_item_link_to @book.name, @book
+      = nav_item_link_to "Accounts", book_accounts_path(@book)
+      = nav_item_link_to "Categories", book_categories_path(@book)
+    - else
+      = nav_item_link_to "Books", books_path
+    - if current_user
+      = nav_item_link_to "User", current_user, title: "#{current_user.display_name} (#{current_user.email})"

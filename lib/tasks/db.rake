@@ -1,28 +1,31 @@
 # frozen_string_literal: true
 
-# TODO: SHIMMER
 namespace :db do
   namespace :reset do
     desc "Perform a full reset of the database, loads seeds & fixtures, and re-annotate the models"
     task full: [:environment] do
-      steps = [
-        ["Set Rails Environment to DEV", :sh, "rails db:environment:set RAILS_ENV=#{Rails.env}"],
+      success = true
+      [
         ["Drop Database", :rake, "db:drop"],
-        ["Delete schema cache (schema.rb & structure.sql", :sh, "rm -v -f db/schema.rb db/structure.sql"],
+        ["Delete schema cache (schema.rb & structure.sql)", :sh, "rm -v -f db/schema.rb db/structure.sql"],
         ["Create Database", :rake, "db:create"],
         ["Migrate Database", :rake, "db:migrate"],
-        ["Annotate Models", :rake, "annotate_models"]
-      ]
-      steps << ["Seed Database", :rake, "db:seed"] if Rails.env.development?
-      steps << ["Load Fixtures into Database", :rake, "db:fixtures:load"] if Rails.env.development?
-      steps.each do |title, type, command|
-        puts title.blue
+        ["Annotate Models", :sh, "annotate --models"],
+        ["Seed Database", :rake, "db:seed"],
+        ["Load Fixtures into Database", :rake, "db:fixtures:load"]
+      ].each do |title, type, command|
+        puts title.blue + (success ? "" : " => Skipped because of previous error".yellow)
         case type
         when :rake
-          Rake::Task[command].invoke
+          puts "bin/rake #{command}"
+          Rake::Task[command].invoke if success
         when :sh
-          sh command
+          # `sh` outputs the command already
+          sh command if success
         end
+      rescue => e
+        puts e.message.red
+        success = false
       end
     end
   end
