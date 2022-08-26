@@ -8,6 +8,10 @@ class ApplicationPolicy
     @record = record
   end
 
+  def admin?
+    user&.admin?
+  end
+
   def index?
     false
   end
@@ -34,6 +38,23 @@ class ApplicationPolicy
 
   def destroy?
     false
+  end
+
+  ASSOCIATION_ACTIONS = [:view, :edit, :attach, :detach, :create, :edit, :destroy].freeze
+
+  class << self
+    # TODO: Move to Shimmer (?)
+    def allow_association_actions(association_names, *allowed_actions, **options)
+      options.reverse_merge! except: [], if: nil
+      allowed_actions = (allowed_actions.presence || ASSOCIATION_ACTIONS) - options[:except]
+      ASSOCIATION_ACTIONS.each do |action|
+        Array.wrap(association_names).each do |association_name|
+          define_method "#{action}_#{association_name}?" do
+            allowed_actions.include?(action) && (!options[:if] || send(options[:if]))
+          end
+        end
+      end
+    end
   end
 
   class Scope

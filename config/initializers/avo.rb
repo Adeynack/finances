@@ -6,8 +6,8 @@ Avo.configure do |config|
   config.root_path = "/avo"
 
   ## == Licensing ==
-  config.license = "community" # change this to 'pro' when you add the license key
-  # config.license_key = ENV['AVO_LICENSE_KEY']
+  config.license = "pro" # change this to 'pro' when you add the license key
+  config.license_key = ENV["AVO_LICENSE_KEY"]
 
   ## == Set the context ==
   config.set_context do
@@ -56,4 +56,22 @@ Avo.configure do |config|
   # config.set_initial_breadcrumbs do
   #   add_breadcrumb "Home", '/avo'
   # end
+
+  ## == Menus ==
+  # config.main_menu = -> {
+  #   section "Dashboards", icon: "dashboards" do
+  #     all_dashboards
+  #   end
+
+  #   section "Resources", icon: "resources" do
+  #     all_resources
+  #   end
+
+  #   section "Tools", icon: "tools" do
+  #     all_tools
+  #   end
+  # }
+  # config.profile_menu = -> {
+  #   link "Profile", path: "/avo/profile", icon: "user-circle"
+  # }
 end
