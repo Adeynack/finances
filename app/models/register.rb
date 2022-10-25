@@ -64,4 +64,8 @@ class Register < ApplicationRecord
     self.starts_at ||= Time.zone.today
     self.currency_iso_code ||= book.default_currency_iso_code
   end
+
+  def hierarchical_name
+    self_and_ancestors.pluck(:name).reverse.join(" > ")
+  end
 end
