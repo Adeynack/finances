@@ -4,8 +4,8 @@ source "https://rubygems.org"
 ruby File.read(".ruby-version").strip
 
 # Core
-gem "rails", "~> 7.0.2"
-gem "puma"
+gem "rails", "< 7.1"
+gem "puma", "~> 6.0"
 
 # Database
 gem "pg"

@@ -13,7 +13,7 @@ class UserResource < Avo::BaseResource
   field :password, as: :password, required: true
   field :display_name, as: :text, required: true, sortable: true
   field :admin, as: :boolean
-  field :last_book, as: :belongs_to, hide_on: :index
+  field :default_book, as: :belongs_to, hide_on: :index
 
   field :books, as: :has_many
 

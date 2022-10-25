@@ -13,9 +13,9 @@ a {
 }
 
 nav {
-  background-color: #cde3ff;
-  padding: 1em;
-  margin: -1em;
+  background-color: #5ea4ff;
+  padding: 1em 1em 0.5em 1em;
+  margin: -1em -1em 0.5em -1em;
 }
 
 .navbar-title {
@@ -35,6 +35,31 @@ nav {
   text-decoration: none;
 }
 
-.nav-text.active {
+.nav-active {
   border-bottom: 0.2em solid;
+}
+
+.toolbar {
+  background-color: #b6d4fc;
+  padding: 0.5em 1em;
+  margin: -.5em -1em 0.5em -1em;
+}
+
+.toolbar:empty {
+  display: none;
+}
+
+.button, .toolbar > a {
+  border: .08em #90bffd solid;
+  border-radius: .3em;
+  padding: .1em .3em;
+
+  &:hover {
+    text-decoration: none;
+    background-color: #a7ccfc;
+  }
+}
+
+.toolbar > * + * {
+  margin-left: .5em;
 }

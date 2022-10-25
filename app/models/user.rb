@@ -14,14 +14,14 @@
 #  reset_password_token   :string           indexed
 #  reset_password_sent_at :datetime
 #  remember_created_at    :datetime
-#  last_book_id           :uuid             indexed
+#  default_book_id        :uuid             indexed
 #
 class User < ApplicationRecord
   devise :database_authenticatable, :recoverable, :rememberable, :registerable, :validatable # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
 
   has_many :books, dependent: :destroy, foreign_key: "owner_id", inverse_of: :owner
 
-  belongs_to :last_book, class_name: "Book", dependent: false, inverse_of: false, optional: true
+  belongs_to :default_book, class_name: "Book", dependent: false, inverse_of: false, optional: true
 
   validates :email, presence: true
   validates :display_name, presence: true

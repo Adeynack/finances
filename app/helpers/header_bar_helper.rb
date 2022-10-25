@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 module HeaderBarHelper
-  def nav_item_link_to(text, path, title: nil)
+  def nav_item_link_to(text, path, title: nil, strict: false)
     content_tag "span", class: "nav-item" do
-      link_to_unless_current text, path, class: "nav-link", title: do
-        content_tag "span", text, class: "nav-text active", title:
-      end
+      url = url_for(path)
+      url_path = URI.parse(url).path
+      super_path_of_request = strict ? (url_path == request.path) : /^#{url_path}($|\/).*/i.match?(request.path)
+      link_to text, url, {class: class_names("nav-link", "nav-active": super_path_of_request), title:}
     end
   end
 end

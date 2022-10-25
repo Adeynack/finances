@@ -163,9 +163,9 @@ ActiveRecord::Schema[7.0].define(version: 2021_10_31_080038) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at", precision: nil
     t.datetime "remember_created_at", precision: nil
-    t.uuid "last_book_id", comment: "Last opened book."
+    t.uuid "default_book_id", comment: "Last opened book."
+    t.index ["default_book_id"], name: "index_users_on_default_book_id"
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["last_book_id"], name: "index_users_on_last_book_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
@@ -181,5 +181,5 @@ ActiveRecord::Schema[7.0].define(version: 2021_10_31_080038) do
   add_foreign_key "splits", "exchanges"
   add_foreign_key "splits", "registers"
   add_foreign_key "taggings", "tags"
-  add_foreign_key "users", "books", column: "last_book_id"
+  add_foreign_key "users", "books", column: "default_book_id"
 end

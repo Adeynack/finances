@@ -10,9 +10,9 @@ namespace :db do
         ["Delete schema cache (schema.rb & structure.sql)", :sh, "rm -v -f db/schema.rb db/structure.sql"],
         ["Create Database", :rake, "db:create"],
         ["Migrate Database", :rake, "db:migrate"],
-        ["Annotate Models", :sh, "annotate --models"],
-        ["Seed Database", :rake, "db:seed"],
-        ["Load Fixtures into Database", :rake, "db:fixtures:load"]
+        ["Annotate Models", :sh, "bin/annotate --models"],
+        ["Load Fixtures into Database", :rake, "db:fixtures:load"],
+        ["Seed Database", :rake, "db:seed"]
       ].each do |title, type, command|
         puts title.blue + (success ? "" : " => Skipped because of previous error".yellow)
         case type

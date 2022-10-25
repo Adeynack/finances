@@ -1,8 +1,9 @@
-- if current_user.admin?
-  - if params[:all] == "1"
-    = link_to "Show only current user's books", books_path
-  - else
-    = link_to "Show all books", books_path(all: "1")
+p.toolbar
+  - if current_user.admin?
+    - if params[:all] == "1"
+      = link_to "Show only current user's books", books_path
+    - else
+      = link_to "Show all books", books_path(all: "1")
 p
   table
     thead
