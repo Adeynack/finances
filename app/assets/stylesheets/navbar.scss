@@ -11,10 +11,9 @@
 
 .navbar__items {
   margin-left: 16px;
-}
-
-.navbar__items > .navbar__item {
-  margin-left: 12px;
+  display: flex;
+  gap: 12px;
+  padding-left: 12px;
 }
 
 .navbar__link {
