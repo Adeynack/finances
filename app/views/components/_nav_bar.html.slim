@@ -2,7 +2,7 @@ nav.navbar
   span.navbar__title Finances
   span.navbar__items
     - if @book
-      = nav_item_link_to @book.name, @book, title: "Book '#{@book.name}'"
+      = nav_item_link_to @book.name, @book, title: "Book '#{@book.name}'", strict: true
       = nav_item_link_to "Accounts", book_accounts_path(@book), title: "Accounts of book '#{@book.name}'"
       = nav_item_link_to "Categories", book_categories_path(@book), title: "Categories of book '#{@book.name}'"
     = nav_item_link_to "Books", books_path(book_id: @book&.id), strict: true, title: "List of all accessible books"
