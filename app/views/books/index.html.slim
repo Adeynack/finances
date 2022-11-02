@@ -1,10 +1,10 @@
-p.toolbar
+section.toolbar
   - if current_user.admin?
     - if params[:all] == "1"
-      = link_to "Show only current user's books", books_path
+      = link_to "Show only current user's books", books_path, class: "toolbar__button"
     - else
-      = link_to "Show all books", books_path(all: "1")
-p
+      = link_to "Show all books", books_path(all: "1"), class: "toolbar__button"
+section
   table
     thead
       tr

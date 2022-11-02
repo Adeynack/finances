@@ -4,55 +4,65 @@ body {
 
 a {
   color: rgb(0, 0, 129);
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-color: #c1d0ff;
   color: black;
 
   &:hover {
     text-decoration: underline;
+    text-decoration-color: rgb(103, 141, 255);
   }
 }
 
-nav {
+.navbar {
   background-color: #5ea4ff;
   padding: 1em 1em 0.5em 1em;
   margin: -1em -1em 0.5em -1em;
 }
 
-.navbar-title {
+.navbar__title {
   float: left;
   font-weight: bolder;
 }
 
-.navbar-main-content {
+.navbar__items {
   margin-left: 1em;
 }
 
-.navbar-main-content > .nav-item {
+.navbar__items > .navbar__item {
   margin-left: 0.75em;
 }
 
-.nav-link {
+.navbar__link {
   text-decoration: none;
 }
 
-.nav-active {
+.navbar__link--active {
   border-bottom: 0.2em solid;
 }
 
+.navbar + .toolbar {
+  margin-top: -.5em;
+}
+
+// TODO: Switch back to `px` vs `em`
 .toolbar {
   background-color: #b6d4fc;
-  padding: 0.5em 1em;
-  margin: -.5em -1em 0.5em -1em;
+  padding: .5em 1em;
+  margin: .5em -1em .5em -1em;
+  display: flex;
+  gap: .5em;
 }
 
 .toolbar:empty {
   display: none;
 }
 
-.button, .toolbar > a {
+.toolbar__button {
   border: .08em #90bffd solid;
   border-radius: .3em;
   padding: .1em .3em;
+  text-decoration: none;
 
   &:hover {
     text-decoration: none;
@@ -60,6 +70,7 @@ nav {
   }
 }
 
-.toolbar > * + * {
-  margin-left: .5em;
-}
+// TODO: Use `flex` on `.toolbar` instead of this.
+// .toolbar > * + * {
+//   margin-left: .5em;
+// }

@@ -1,6 +1,6 @@
-nav
-  span.navbar-title Finances
-  span.navbar-main-content
+nav.navbar
+  span.navbar__title Finances
+  span.navbar__items
     - if @book
       = nav_item_link_to @book.name, @book, title: "Book '#{@book.name}'"
       = nav_item_link_to "Accounts", book_accounts_path(@book), title: "Accounts of book '#{@book.name}'"
