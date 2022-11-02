@@ -5,6 +5,6 @@ nav.navbar
       = nav_item_link_to @book.name, @book, title: "Book '#{@book.name}'"
       = nav_item_link_to "Accounts", book_accounts_path(@book), title: "Accounts of book '#{@book.name}'"
       = nav_item_link_to "Categories", book_categories_path(@book), title: "Categories of book '#{@book.name}'"
-    = nav_item_link_to "Books", books_path, strict: true, title: "List of all accessible books"
+    = nav_item_link_to "Books", books_path(book_id: @book&.id), strict: true, title: "List of all accessible books"
     - if current_user
-      = nav_item_link_to "User", current_user, title: "#{current_user.display_name} (#{current_user.email})"
+      = nav_item_link_to "User", user_path(current_user, book_id: @book&.id), title: "#{current_user.display_name} (#{current_user.email})"
