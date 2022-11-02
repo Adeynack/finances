@@ -1,0 +1,30 @@
+.navbar {
+  background-color: #5ea4ff;
+  padding: 1em 1em 0.5em 1em;
+  margin: -1em -1em 0.5em -1em;
+}
+
+.navbar__title {
+  float: left;
+  font-weight: bolder;
+}
+
+.navbar__items {
+  margin-left: 1em;
+}
+
+.navbar__items > .navbar__item {
+  margin-left: 0.75em;
+}
+
+.navbar__link {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration-color: black;
+  }
+
+  &--active {
+    border-bottom: 0.2em solid;
+  }
+}

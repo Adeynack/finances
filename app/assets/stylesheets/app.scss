@@ -1,5 +1,5 @@
 body {
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
 }
 
 a {
@@ -13,64 +13,3 @@ a {
     text-decoration-color: rgb(103, 141, 255);
   }
 }
-
-.navbar {
-  background-color: #5ea4ff;
-  padding: 1em 1em 0.5em 1em;
-  margin: -1em -1em 0.5em -1em;
-}
-
-.navbar__title {
-  float: left;
-  font-weight: bolder;
-}
-
-.navbar__items {
-  margin-left: 1em;
-}
-
-.navbar__items > .navbar__item {
-  margin-left: 0.75em;
-}
-
-.navbar__link {
-  text-decoration: none;
-}
-
-.navbar__link--active {
-  border-bottom: 0.2em solid;
-}
-
-.navbar + .toolbar {
-  margin-top: -.5em;
-}
-
-// TODO: Switch back to `px` vs `em`
-.toolbar {
-  background-color: #b6d4fc;
-  padding: .5em 1em;
-  margin: .5em -1em .5em -1em;
-  display: flex;
-  gap: .5em;
-}
-
-.toolbar:empty {
-  display: none;
-}
-
-.toolbar__button {
-  border: .08em #90bffd solid;
-  border-radius: .3em;
-  padding: .1em .3em;
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: none;
-    background-color: #a7ccfc;
-  }
-}
-
-// TODO: Use `flex` on `.toolbar` instead of this.
-// .toolbar > * + * {
-//   margin-left: .5em;
-// }

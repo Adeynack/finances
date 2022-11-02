@@ -1,0 +1,33 @@
+// TODO: Switch back to `px` vs `em`
+.toolbar {
+  background-color: #b6d4fc;
+  padding: .5em 1em;
+  margin: .5em -1em .5em -1em;
+  display: flex;
+  gap: .5em;
+
+  &:empty {
+    display: none;
+  }
+}
+
+.toolbar__button {
+  border: .08em #90bffd solid;
+  border-radius: .3em;
+  padding: .1em .3em;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+    background-color: #a7ccfc;
+  }
+}
+
+.navbar + .toolbar {
+  margin-top: -.5em;
+}
+
+// TODO: Use `flex` on `.toolbar` instead of this.
+// .toolbar > * + * {
+//   margin-left: .5em;
+// }
