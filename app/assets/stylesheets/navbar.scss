@@ -1,7 +1,7 @@
 .navbar {
   background-color: #5ea4ff;
-  padding: 1em 1em 0.5em 1em;
-  margin: -1em -1em 0.5em -1em;
+  padding: 16px 16px 8px 16px;
+  margin: -16px -16px 8px -16px
 }
 
 .navbar__title {
@@ -10,11 +10,11 @@
 }
 
 .navbar__items {
-  margin-left: 1em;
+  margin-left: 16px;
 }
 
 .navbar__items > .navbar__item {
-  margin-left: 0.75em;
+  margin-left: 12px;
 }
 
 .navbar__link {
@@ -25,6 +25,6 @@
   }
 
   &--active {
-    border-bottom: 0.2em solid;
+    border-bottom: 3px solid;
   }
 }
