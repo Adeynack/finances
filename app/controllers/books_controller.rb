@@ -2,8 +2,9 @@
 
 class BooksController < ApplicationController
   def index
+    @show_all = params.key?(:all)
     @books = policy_scope(Book)
-    @books = @books.where(owner: current_user) unless params.key?(:all)
+    @books = @books.where(owner: current_user) unless @show_all
   end
 
   def show

@@ -1,4 +1,12 @@
+section.toolbar
+  - if @show_inactive
+    = link_to "Hide inactives", book_accounts_path(@book), class: "toolbar__button"
+  - else
+    = link_to "Show inactives", book_accounts_path(@book, show_inactive: 1), class: "toolbar__button"
 section
   ul
     - @accounts.each do |account|
-      li = account.hierarchical_name
+      li
+        span = account.hierarchical_name
+        - unless account.active?
+          span< 🛑

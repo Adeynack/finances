@@ -2,6 +2,7 @@
 
 class AccountsController < ApplicationController
   def index
-    @accounts = @book.accounts
+    @show_inactive = params[:show_inactive] == "1"
+    @accounts = @book.accounts.scope_unless(@show_inactive, :active)
   end
 end

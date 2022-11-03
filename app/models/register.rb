@@ -59,6 +59,7 @@ class Register < ApplicationRecord
 
   scope :accounts, -> { where(type: Account.known_names) }
   scope :categories, -> { where(type: Category.known_names) }
+  scope :active, -> { where(active: true) }
 
   before_create do
     self.starts_at ||= Time.zone.today
