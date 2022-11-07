@@ -1,4 +1,2 @@
 section
-  ul
-    - @categories.each do |category|
-      li = category.hierarchical_name
+  = render "register_tree_level", register_tree: @category_tree, collapsed: true

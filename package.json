@@ -11,7 +11,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@hotwired/stimulus": "^3.0.1",
+    "@hotwired/stimulus": "^3.1.1",
     "@hotwired/turbo-rails": "^7.1.1",
     "@nerdgeschoss/shimmer": "^0.0.10",
     "esbuild": "^0.14.27",

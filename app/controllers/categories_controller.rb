@@ -2,6 +2,6 @@
 
 class CategoriesController < ApplicationController
   def index
-    @categories = @book.categories
+    @category_tree = @book.categories.hash_tree
   end
 end

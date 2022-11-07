@@ -1,0 +1,30 @@
+.register-tree {
+  padding-left: 16px;
+
+  &__children {
+    &--collapsed {
+      display: none;
+    }
+  }
+
+  &__expand-button {
+    font-family: monospace;
+    font-weight: bold;
+
+    &__label {
+      &--collapsed::after {
+        content: '+';
+      }
+
+      &--expanded::after {
+        content: '-';
+      }
+    }
+
+    visibility: visible;
+
+    &--disabled {
+      visibility: hidden;
+    }
+  }
+}
