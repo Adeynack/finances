@@ -17,5 +17,4 @@ test:
   database: finances_rebirth_test
 
 production:
-  <<: *default
   url: <%= ENV['DATABASE_URL'] %>
