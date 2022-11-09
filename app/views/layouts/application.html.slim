@@ -3,6 +3,4 @@ html lang=I18n.locale
   = render "components/head"
   body class=Rails.env
     = render "components/nav_bar"
-    - if params[:show_status]
-      = render "components/status"
     = yield
