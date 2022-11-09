@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
+set -v
+
 # exit on error
 set -o errexit
 
 bundle install
-yarn build
+
 bundle exec rake assets:precompile
+
 bundle exec rake assets:clean
+
 bundle exec rake db:migrate
 
 if [ "$RAILS_PERFORM_SEED" == "1" ]; then bundle exec rake db:seed; fi

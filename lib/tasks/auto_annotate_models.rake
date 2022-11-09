@@ -42,7 +42,7 @@ if Rails.env.development? || Rails.env.test?
       # "ignore_unknown_models" => "false",
       # "hide_limit_column_types" => "integer,bigint,boolean",
       # "hide_default_column_types" => "json,jsonb,hstore",
-      # "skip_on_db_migrate" => "false",
+      "skip_on_db_migrate" => Rails.env.production? ? "true" : "false",
       # "format_bare" => "true",
       # "format_rdoc" => "true",
       # "format_yard" => "false",
