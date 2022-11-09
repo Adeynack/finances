@@ -5,6 +5,7 @@ set -o errexit
 bundle install
 bundle exec rake assets:precompile
 bundle exec rake assets:clean
+yarn build
 bundle exec rake db:migrate
 
 if [ "$RAILS_PERFORM_SEED" == "1" ]; then bundle exec rake db:seed; fi
