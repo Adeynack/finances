@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-puts "<><><><><><> RAILS_ENV: #{ENV["RAILS_ENV"]}"
-puts "<><><><><><> DATABASE_URL: #{ENV["DATABASE_URL"]}"
-
 # The `threads` method setting takes two numbers: a minimum and maximum.
 # Any libraries that use thread pools should be configured to match
 # the maximum value specified for Puma. Default is set to 5 threads for minimum
