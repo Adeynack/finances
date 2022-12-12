@@ -14,6 +14,6 @@ class ApplicationController < ActionController::Base
   def set_book
     b = params[:book_id]&.then { Book.find(_1) }
     b ||= current_user&.default_book
-    @book = authorize(b) if b
+    @book = authorize(b, :show?) if b
   end
 end

@@ -27,7 +27,7 @@ class BookPolicy < ApplicationPolicy
     def resolve
       if user&.admin?
         scope.all
-      elsif current_user
+      elsif user
         user.books
       else
         scope.none
