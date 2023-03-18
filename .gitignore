@@ -31,9 +31,14 @@
 /config/master.key
 !.keep
 app/assets/builds
-node_modules
 
 # Misc
 /out
 /.env.local
 overmind.sock
+
+# Vite Ruby & Assets
+/public/vite*
+node_modules
+
+###

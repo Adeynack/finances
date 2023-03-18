@@ -67,7 +67,7 @@ module Import::Moneydance::ReminderImport
     daily_interval = md_reminder["daily"]&.to_i
     return nil unless daily_interval&.positive?
 
-    Montrose.every(daily_interval == 1 ? :day : daily_interval.days)
+    Montrose.every((daily_interval == 1) ? :day : daily_interval.days)
   end
 
   WEEKDAY_MAPPING = [nil, :sunday, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday].freeze
@@ -80,7 +80,7 @@ module Import::Moneydance::ReminderImport
 
     week_step = md_reminder.fetch("weeklymod", 0).to_i + 1
 
-    Montrose.every(week_step == 1 ? :week : week_step.weeks, on: weekly_days)
+    Montrose.every((week_step == 1) ? :week : week_step.weeks, on: weekly_days)
   end
 
   def extract_reminder_recurence_monthly(md_reminder)
@@ -97,14 +97,14 @@ module Import::Moneydance::ReminderImport
 
     month_step = md_reminder.fetch("monthlymod", 0).to_i + 1
 
-    Montrose.every(month_step == 1 ? :month : month_step.months, mday: monthly_days)
+    Montrose.every((month_step == 1) ? :month : month_step.months, mday: monthly_days)
   end
 
   def extract_reminder_recurence_yearly(md_reminder)
     yearly_interval = md_reminder["yearly"]&.to_i
     return nil unless yearly_interval&.positive?
 
-    Montrose.every(yearly_interval == 1 ? :year : yearly_interval.years)
+    Montrose.every((yearly_interval == 1) ? :year : yearly_interval.years)
   end
 
   def import_reminder_splits(md_splits, reminder)

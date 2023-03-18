@@ -4,8 +4,8 @@ source "https://rubygems.org"
 ruby File.read(".ruby-version").strip
 
 # Core
-gem "rails", "< 7.1"
-gem "puma", "~> 6.0"
+gem "rails"
+gem "puma"
 
 # Database
 gem "pg"
@@ -36,19 +36,28 @@ gem "yael"
 gem "translate_client"
 
 # Assets
+gem "vite_rails"
+
+# Scenario 1: Propshaft
+# gem "propshaft"
+# TODO: Understand why with `propshaft`, rending is abnormally slow.
+
+# Scenario 2: What it was before attempting Propshaft
 gem "jsbundling-rails"
-gem "stimulus-rails"
 gem "sassc-rails"
 gem "autoprefixer-rails"
+
+gem "stimulus-rails"
 gem "turbo-rails"
 gem "serviceworker-rails"
+
 
 # Specific to the project (not from the template)
 gem "closure_tree"
 gem "devise"
 gem "amazing_print" # awesome_print has bugs with some Rails classes
 gem "table_print"
-gem "money-rails", "~> 1.13.3"
+gem "money-rails"
 gem "iban-tools"
 gem "montrose"
 gem "avo"
@@ -78,6 +87,7 @@ group :development do
   gem "standard"
   gem "solargraph"
   gem "solargraph-standardrb"
+  gem "rubocop"
   gem "rubocop-rails"
   gem "rubocop-performance"
   gem "rubocop-rspec"

@@ -11,6 +11,10 @@
     font-family: monospace;
     font-weight: bold;
 
+    a {
+      text-decoration: none;
+    }
+
     &__label {
       &--collapsed::after {
         content: '+';
