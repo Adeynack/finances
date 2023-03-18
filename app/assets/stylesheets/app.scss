@@ -1,12 +1,14 @@
 body {
-  font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+  font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS',
+    sans-serif;
+  background-color: #1c182e;
+  color: #baaeee;
 }
 
 a {
   color: rgb(0, 0, 129);
   text-decoration: underline;
   text-decoration-color: #c1d0ff;
-  color: black;
 
   &:hover {
     text-decoration: underline;
