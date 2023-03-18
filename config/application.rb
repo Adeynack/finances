@@ -40,3 +40,6 @@ module Finances
     config.assets.paths << Rails.root.join("node_modules")
   end
 end
+
+require "view_component"
+require "primer/view_components/engine"

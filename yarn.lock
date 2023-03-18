@@ -263,6 +263,11 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@oddbird/popover-polyfill@^0.0.10":
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/@oddbird/popover-polyfill/-/popover-polyfill-0.0.10.tgz#1e6d928390205319fe7aa11f66e70214ee72dd53"
+  integrity sha512-jkfX/35EsxDe9ruTx3He59FyE+y5WDF5S4YJ7TABj0c8egHV2FLeADavknvr12CnSu0QTybv9ufKfPJDsYZYNw==
+
 "@popperjs/core@^2.11.0":
   version "2.11.6"
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.6.tgz#cee20bd55e68a1720bdab363ecf0c821ded4cd45"
@@ -300,6 +305,23 @@
     "@github/mini-throttle" "^2.1.0"
     "@github/relative-time-element" "^4.0.0"
     "@github/tab-container-element" "^3.1.2"
+    "@primer/behaviors" "^1.2.0"
+
+"@primer/view-components@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@primer/view-components/-/view-components-0.1.2.tgz#1ecfb30135dc066df6e5a5cc9657ea99b7c05e69"
+  integrity sha512-gGFbOwjnC7nOMmzc53+Ou8uh8pL3bvcYu2qjwKNPDz/G2ID6f7UJr/lTVE4+O4pE9Pyac8lx9CqsFQrua4GGEQ==
+  dependencies:
+    "@github/auto-check-element" "^5.2.0"
+    "@github/auto-complete-element" "^3.3.4"
+    "@github/catalyst" "^1.6.0"
+    "@github/clipboard-copy-element" "^1.1.2"
+    "@github/details-menu-element" "^1.0.12"
+    "@github/image-crop-element" "^5.0.0"
+    "@github/mini-throttle" "^2.1.0"
+    "@github/relative-time-element" "^4.0.0"
+    "@github/tab-container-element" "^3.1.2"
+    "@oddbird/popover-polyfill" "^0.0.10"
     "@primer/behaviors" "^1.2.0"
 
 "@rails/actioncable@^7.0":

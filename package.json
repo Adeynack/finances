@@ -15,6 +15,7 @@
     "@hotwired/turbo-rails": "^7.1.1",
     "@nerdgeschoss/shimmer": "^0.0.10",
     "@primer/css": "^20.8.3",
+    "@primer/view-components": "^0.1.2",
     "autoprefixer": "^10.4.14",
     "esbuild": "^0.14.27",
     "path": "^0.12.7",

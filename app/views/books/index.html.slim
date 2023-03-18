@@ -15,3 +15,39 @@ section
         tr
           td = link_to book.name, book
           td = link_to "#{book.owner.display_name}", book.owner, title: book.owner.email
+
+= render(Primer::Beta::BorderBox.new) do |component|
+  - component.with_header { "Testing \"Primer\" ViewComponents" }
+  - component.with_body do
+    = render(Primer::Beta::Counter.new(count: 25))
+    = render(Primer::Beta::Button.new(scheme: :danger)) { "Danger" }
+    = render(Primer::Beta::Button.new(scheme: :primary)) { "Primary" }
+    = render(Primer::Beta::Button.new(id: "star-button")) do |component|
+      - component.with_leading_visual_icon(icon: :star)
+      - component.with_tooltip(text: "Tooltip text")
+      span Button
+    = render(Primer::Beta::Button.new(scheme: :danger)) { "Danger" }
+    = render(Primer::Beta::IconButton.new(icon: :search, "aria-label": "Search"))
+    = render(Primer::Beta::Octicon.new(:check))
+    = render(Primer::Beta::Octicon.new(icon: :check))
+    = render(Primer::Beta::CloseButton.new)
+    = render(Primer::Alpha::Dropdown.new) do |component|
+      - component.with_button { "Dropdown" }
+      - component.with_menu(header: "Options") do |menu|
+        - menu.with_item { "Item 1" }
+        - menu.with_item { "Item 2" }
+        - menu.with_item { "Item 3" }
+    br
+    = render(Primer::Beta::Label.new) { "Default" }
+    = render(Primer::Beta::Label.new(scheme: :primary)) { "Primary" }
+    = render(Primer::Beta::Label.new(scheme: :secondary)) { "Secondary" }
+    = render(Primer::Beta::Label.new(scheme: :accent)) { "Accent" }
+    = render(Primer::Beta::Label.new(scheme: :success)) { "Success" }
+    = render(Primer::Beta::Label.new(scheme: :attention)) { "Attention" }
+    = render(Primer::Beta::Label.new(scheme: :danger)) { "Danger" }
+    = render(Primer::Beta::Label.new(scheme: :severe)) { "Severe" }
+    = render(Primer::Beta::Label.new(scheme: :done)) { "Done" }
+    = render(Primer::Beta::Label.new(scheme: :sponsors)) { "Sponsors" }
+
+    = render(Primer::Alpha::ToggleSwitch.new(size: :small))
+    = render(Primer::Alpha::TextField.new(name: :first_name, label: "First name", show_clear_button: true))

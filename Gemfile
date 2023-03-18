@@ -51,6 +51,8 @@ gem "stimulus-rails"
 gem "turbo-rails"
 gem "serviceworker-rails"
 
+gem "view_component"
+gem "primer_view_components"
 
 # Specific to the project (not from the template)
 gem "closure_tree"

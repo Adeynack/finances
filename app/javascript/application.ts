@@ -2,6 +2,7 @@ import '@hotwired/turbo-rails';
 import { start } from '@nerdgeschoss/shimmer';
 import { application } from './controllers/application_controller';
 import { registerControllers } from 'stimulus-vite-helpers';
+import '@primer/view-components';
 
 // Controller files must be named *_controller.ts/js.
 const controllers = import.meta.glob('../**/*_controller.{ts,js}', {
