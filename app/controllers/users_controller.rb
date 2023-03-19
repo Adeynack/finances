@@ -3,6 +3,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show]
 
+  # @route GET /users/:id (user)
   def show
   end
 
