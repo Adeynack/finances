@@ -36,11 +36,9 @@ app/assets/builds
 /out
 /.env.local
 overmind.sock
+.overmind.sock
 
 # JS
 node_modules
-
-# Overmind
-.overmind.sock
 
 ###
