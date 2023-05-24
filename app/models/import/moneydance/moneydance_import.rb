@@ -19,7 +19,7 @@ class Import::Moneydance::MoneydanceImport
     @register_id_by_md_acctid = {}
     @md_json = JSON.parse(json_content)
 
-    set_book book_owner_email: book_owner_email, default_currency: default_currency, auto_delete_book: auto_delete_book
+    set_book(book_owner_email:, default_currency:, auto_delete_book:)
     import_accounts
     import_reminders
     import_exchanges

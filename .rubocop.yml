@@ -1,14 +1,17 @@
 AllCops:
   TargetRubyVersion: 3.1
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+  NewCops: disable
+  Exclude:
+    - 'vendor/bundle/**/*'
+    - 'bin/**/*'
+    - 'db/schema.rb'
+    - 'node_modules/**/*'
 
 inherit_gem:
   shimmer: config/rubocop_base.yml
 
-# TODO: Sync with Shimmer
-Style/TernaryParentheses:
-  Enabled: false
-
-# TODO: Sync with Shimmer
 Metrics/AbcSize:
   Enabled: false
   Max: 9999 # for some reason, `Enabled: false` does not disable it 🤷🏼‍♂️
