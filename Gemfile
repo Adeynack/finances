@@ -55,6 +55,8 @@ group :development, :test do
   gem "rspec-rails"
   gem "rspec-retry"
   gem "rack_session_access"
+  gem "capybara"
+  gem "cuprite"
 end
 
 group :development do
