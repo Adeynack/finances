@@ -37,8 +37,7 @@ app/assets/builds
 /.env.local
 overmind.sock
 
-# Vite Ruby & Assets
-/public/vite*
+# JS
 node_modules
 
 ###

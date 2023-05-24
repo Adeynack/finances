@@ -5,7 +5,7 @@
   "ruby.lint": {
     "rubocop": true
   },
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
   "ruby.format": "rubocop",
   "[ruby]": {
     "editor.formatOnSave": true,

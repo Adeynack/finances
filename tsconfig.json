@@ -5,7 +5,7 @@
     "experimentalDecorators": true,
     "lib": ["ES2019", "dom"],
     "module": "ESnext",
-    "types": ["vite/client"],
+    "types": [],
     "moduleResolution": "node",
     "baseUrl": ".",
     "paths": {

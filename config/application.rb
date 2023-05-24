@@ -36,10 +36,5 @@ module Finances
 
     config.action_mailer.default_url_options = {host: ENV["HOST"]} if ENV["HOST"].present?
     config.active_job.queue_adapter = :sidekiq
-
-    config.assets.paths << Rails.root.join("node_modules")
   end
 end
-
-require "view_component"
-require "primer/view_components/engine"
