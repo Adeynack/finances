@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "vite client --port 8080 --config vite.config.ts",
+    "start": "vite client --port 8080 --config vite.config.ts --clearScreen false",
     "format": "prettier --write \"client/src/**/*.{js,jsx,tsx,ts,scss,json}\"",
     "lint": "yarn lint:types && yarn lint:style && yarn lint:format",
     "lint:types": "tsc",
