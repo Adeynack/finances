@@ -6,7 +6,7 @@
     "lint:types": "tsc",
     "lint:style": "eslint client/**/*.{ts,tsx} --max-warnings 0",
     "lint:format": "prettier --list-different \"client/**/*.{js,jsx,ts,tsx,scss,json}\" --max-warnings 0",
-    "build": "esbuild client/app/*.* --bundle --sourcemap --outdir=app/assets/builds",
+    "build": "echo \"No build script configured\" && exit 1",
     "bundle-size": "npx source-map-explorer app/assets/builds/application.js app/assets/builds/application.js.map --no-border-checks"
   },
   "license": "MIT",

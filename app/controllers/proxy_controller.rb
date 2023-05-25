@@ -3,10 +3,13 @@
 class ProxyController < ApplicationController
   FILE_ROOT = Rails.root.join("public").freeze
 
+  # @route GET /ping (ping)
   def ping
     render html: "<html><body><h1>pong</h1></body></html>".html_safe, layout: false
   end
 
+  # @route GET /*path
+  # @route GET / (root)
   def proxy
     extension = File.extname(request.path)
     file_name = (params[:path].to_s + extension).presence || "index.html"

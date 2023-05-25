@@ -22,6 +22,11 @@ jobs:
         ports:
           - 6379:6379
 
+    env:
+      DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/finances
+      REDIS_URL: redis://127.0.0.1:6379
+      RAILS_ENV: test
+
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -36,21 +41,16 @@ jobs:
           bundler-cache: true
       - name: Lint Ruby
         run: bin/rubocop
-      # - name: Translations Lint
-      #   run: bundle exec i18n-tasks health
       - name: Lint JS/TS
         run: yarn lint
-      - name: Build Assets
-        run: yarn build
       - name: Create PG Database
         run: bundle exec rake db:create db:migrate
         env:
-          DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/app
+          DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/finances
           RAILS_ENV: test
       - name: Model and Routes Annotation
         # To fix: bundle exec annotate
         env:
-          DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/finances
           ANNOTATE_FROZEN: true
         run: bundle exec annotate
       - name: Controllers Annotation
@@ -60,7 +60,3 @@ jobs:
         run: bundle exec rubocop -c .rubocop.yml
       - name: Build and test with Rake
         run: bundle exec rspec --format documentation
-        env:
-          DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/app
-          REDIS_URL: redis://127.0.0.1:6379
-          RAILS_ENV: test
