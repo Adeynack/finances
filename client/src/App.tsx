@@ -5,11 +5,12 @@ import {
   OptionsContext,
   OptionsSetterContext,
   defaultOptions,
-} from './Options';
+} from './core/options';
 import { useMemo, useState } from 'react';
-import { DemoCard } from './DemoCard';
 import { ConfigProvider, type ThemeConfig, theme, App as AntApp } from 'antd';
-import { BodyStyler } from './BodyStyler';
+import { BodyStyler } from './core/BodyStyler';
+import { RouterProvider } from 'react-router-dom';
+import { router } from './core/router';
 
 export function App(): JSX.Element {
   const [options, setOptions] = useState(defaultOptions);
@@ -30,7 +31,7 @@ export function App(): JSX.Element {
             }}
           >
             <div className="App">
-              <DemoCard />
+              <RouterProvider router={router} />
             </div>
           </OptionsSetterContext.Provider>
         </OptionsContext.Provider>

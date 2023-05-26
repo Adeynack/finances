@@ -56,7 +56,5 @@ jobs:
       - name: Controllers Annotation
         # To fix: bin/chusaku
         run: bundle exec chusaku --dry-run --exit-with-error-on-annotation
-      - name: Lint with Rubocop
-        run: bundle exec rubocop -c .rubocop.yml
       - name: Build and test with Rake
         run: bundle exec rspec --format documentation

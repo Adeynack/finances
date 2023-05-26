@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { OptionsContext, OptionsSetterContext } from './Options';
+import { OptionsContext, OptionsSetterContext } from '../core/options';
 import { Select } from 'antd';
 
 export function ThemeSwitcher(): JSX.Element {
