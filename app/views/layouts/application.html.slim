@@ -1,6 +1,6 @@
 doctype html
 html lang=I18n.locale data-color-mode="dark" data-dark-theme="dark"
-  = c.head
+  = render "components/head"
   body class=Rails.env class="modern-font-stack--geometric-humanist"
-    = c.nav_bar
+    = render "components/nav_bar"
     = yield

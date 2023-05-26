@@ -17,11 +17,11 @@
 
     &__label {
       &--collapsed::after {
-        content: '+';
+        content: '➕';
       }
 
       &--expanded::after {
-        content: '-';
+        content: '➖';
       }
     }
 
