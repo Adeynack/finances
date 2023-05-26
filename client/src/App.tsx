@@ -1,13 +1,13 @@
 import './App.scss';
 import 'antd/dist/reset.css';
 import {
-  type Options,
   OptionsContext,
   OptionsSetterContext,
   defaultOptions,
+  themeFromOptions
 } from './core/options';
 import { useMemo, useState } from 'react';
-import { ConfigProvider, type ThemeConfig, theme, App as AntApp } from 'antd';
+import { ConfigProvider, App as AntApp } from 'antd';
 import { BodyStyler } from './core/BodyStyler';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './core/router';
@@ -27,7 +27,6 @@ export function App(): JSX.Element {
           <OptionsSetterContext.Provider
             value={{
               changeOptions: (o) => setOptions({ ...options, ...o }),
-              setOptions,
             }}
           >
             <div className="App">
@@ -38,11 +37,4 @@ export function App(): JSX.Element {
       </AntApp>
     </ConfigProvider>
   );
-}
-
-function themeFromOptions(optionTheme: Options['theme']): ThemeConfig {
-  return {
-    algorithm:
-      optionTheme === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm,
-  };
 }

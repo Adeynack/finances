@@ -1,3 +1,4 @@
+import { type ThemeConfig, theme } from 'antd';
 import { createContext } from 'react';
 
 export interface Options {
@@ -16,5 +17,11 @@ export const OptionsContext = createContext(defaultOptions);
 
 export const OptionsSetterContext = createContext({
   changeOptions: (options: Partial<Options>) => {},
-  setOptions: (options: Options) => {},
 });
+
+export function themeFromOptions(optionTheme: Options['theme']): ThemeConfig {
+  return {
+    algorithm:
+      optionTheme === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm,
+  };
+}
