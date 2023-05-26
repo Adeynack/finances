@@ -1,4 +1,13 @@
-@import '@primer/css/index.scss';
-@import '@primer/view-components/app/assets/styles/primer_view_components.css';
 @import './modern-font-stack.scss';
 @import 'application/components/*';
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: black;
+    color: white;
+  }
+
+  a {
+    color: white;
+  }
+}

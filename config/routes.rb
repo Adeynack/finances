@@ -6,7 +6,6 @@ require "sidekiq-scheduler/web"
 Rails.application.routes.draw do
   devise_for :users, path: "auth"
   authenticate :user, ->(user) { user.admin? } do
-    mount Avo::Engine, at: Avo.configuration.root_path
     mount Sidekiq::Web => "/sidekiq"
   end
   mount ActionCable.server => "/cable"
@@ -39,9 +38,8 @@ end
 #                                          PUT    /auth(.:format)                                                                                   devise/registrations#update
 #                                          DELETE /auth(.:format)                                                                                   devise/registrations#destroy
 #                                          POST   /auth(.:format)                                                                                   devise/registrations#create
-#                                      avo        /avo                                                                                              Avo::Engine
 #                              sidekiq_web        /sidekiq                                                                                          Sidekiq::Web
-#                                                 /cable                                                                                            #<ActionCable::Server::Base:0x0000000112a9ffc0 @config=#<ActionCable::Server::Configuration:0x0000000112a1da98 @log_tags=[], @connection_class=#<Proc:0x0000000112a0fce0 /Users/adeynack/.rbenv/versions/3.1.2/lib/ruby/gems/3.1.0/gems/actioncable-7.0.4/lib/action_cable/engine.rb:46 (lambda)>, @worker_pool_size=4, @disable_request_forgery_protection=false, @allow_same_origin_as_host=true, @logger=#<ActiveSupport::Logger:0x0000000111b56578 @level=0, @progname=nil, @default_formatter=#<Logger::Formatter:0x0000000111b57dd8 @datetime_format=nil>, @formatter=#<ActiveSupport::Logger::SimpleFormatter:0x0000000111b56118 @datetime_format=nil>, @logdev=#<Logger::LogDevice:0x0000000111b56eb0 @shift_period_suffix="%Y%m%d", @shift_size=1048576, @shift_age=0, @filename="/Users/adeynack/src/github.com/Adeynack/finances_rebirth/log/development.log", @dev=#<File:/Users/adeynack/src/github.com/Adeynack/finances_rebirth/log/development.log>, @binmode=false, @mon_data=#<Monitor:0x0000000111b56a78>, @mon_data_owner_object_id=57420>>, @cable={"adapter"=>"async"}, @mount_path="/cable", @precompile_assets=true, @allowed_request_origins=/https?:\/\/localhost:\d+/>, @mutex=#<Monitor:0x0000000112a9fef8>, @pubsub=nil, @worker_pool=nil, @event_loop=nil, @remote_connections=nil>
+#                                                 /cable                                                                                            #<ActionCable::Server::Base:0x0000000116565c90 @config=#<ActionCable::Server::Configuration:0x00000001164acdd0 @log_tags=[], @connection_class=#<Proc:0x0000000116537250 /Users/adeynack/.rbenv/versions/3.1.2/lib/ruby/gems/3.1.0/gems/actioncable-7.0.4.3/lib/action_cable/engine.rb:46 (lambda)>, @worker_pool_size=4, @disable_request_forgery_protection=false, @allow_same_origin_as_host=true, @logger=#<ActiveSupport::Logger:0x00000001153e6d48 @level=0, @progname=nil, @default_formatter=#<Logger::Formatter:0x00000001153e7310 @datetime_format=nil>, @formatter=#<ActiveSupport::Logger::SimpleFormatter:0x00000001153e6c58 @datetime_format=nil>, @logdev=#<Logger::LogDevice:0x00000001153e7158 @shift_period_suffix="%Y%m%d", @shift_size=1048576, @shift_age=0, @filename="/Users/adeynack/src/github.com/Adeynack/finances/log/development.log", @dev=#<File:/Users/adeynack/src/github.com/Adeynack/finances/log/development.log>, @binmode=false, @mon_data=#<Monitor:0x00000001153e7090>, @mon_data_owner_object_id=9540>>, @cable={"adapter"=>"async"}, @mount_path="/cable", @precompile_assets=true, @allowed_request_origins=/https?:\/\/localhost:\d+/>, @mutex=#<Monitor:0x0000000116565bf0>, @pubsub=nil, @worker_pool=nil, @event_loop=nil, @remote_connections=nil>
 #                                          GET    /sitemaps/*path(.:format)                                                                         shimmer/sitemaps#show
 #                                     file GET    /files/:id(.:format)                                                                              shimmer/files#show
 #                                     root GET    /                                                                                                 books#index
@@ -107,66 +105,3 @@ end
 #                       rails_disk_service GET    /rails/active_storage/disk/:encoded_key/*filename(.:format)                                       active_storage/disk#show
 #                update_rails_disk_service PUT    /rails/active_storage/disk/:encoded_token(.:format)                                               active_storage/disk#update
 #                     rails_direct_uploads POST   /rails/active_storage/direct_uploads(.:format)                                                    active_storage/direct_uploads#create
-#
-# Routes for Avo::Engine:
-#                                root GET    /                                                                                                  avo/home#index
-#                           resources GET    /resources(.:format)                                                                               redirect(301, /avo)
-#                          dashboards GET    /dashboards(.:format)                                                                              redirect(301, /avo)
-# rails_active_storage_direct_uploads POST   /rails/active_storage/direct_uploads(.:format)                                                     active_storage/direct_uploads#create
-#                     dashboard_cards GET    /dashboards/:dashboard_id/cards(.:format)                                                          avo/cards#index
-#                                     POST   /dashboards/:dashboard_id/cards(.:format)                                                          avo/cards#create
-#                  new_dashboard_card GET    /dashboards/:dashboard_id/cards/new(.:format)                                                      avo/cards#new
-#                 edit_dashboard_card GET    /dashboards/:dashboard_id/cards/:id/edit(.:format)                                                 avo/cards#edit
-#                      dashboard_card GET    /dashboards/:dashboard_id/cards/:id(.:format)                                                      avo/cards#show
-#                                     PATCH  /dashboards/:dashboard_id/cards/:id(.:format)                                                      avo/cards#update
-#                                     PUT    /dashboards/:dashboard_id/cards/:id(.:format)                                                      avo/cards#update
-#                                     DELETE /dashboards/:dashboard_id/cards/:id(.:format)                                                      avo/cards#destroy
-#                                     GET    /dashboards(.:format)                                                                              avo/dashboards#index
-#                                     POST   /dashboards(.:format)                                                                              avo/dashboards#create
-#                       new_dashboard GET    /dashboards/new(.:format)                                                                          avo/dashboards#new
-#                      edit_dashboard GET    /dashboards/:id/edit(.:format)                                                                     avo/dashboards#edit
-#                           dashboard GET    /dashboards/:id(.:format)                                                                          avo/dashboards#show
-#                                     PATCH  /dashboards/:id(.:format)                                                                          avo/dashboards#update
-#                                     PUT    /dashboards/:id(.:format)                                                                          avo/dashboards#update
-#                                     DELETE /dashboards/:id(.:format)                                                                          avo/dashboards#destroy
-#                      avo_api_search GET    /avo_api/search(.:format)                                                                          avo/search#index
-#                             avo_api GET    /avo_api/:resource_name/search(.:format)                                                           avo/search#show
-#                                     POST   /avo_api/resources/:resource_name/:id/attachments(.:format)                                        avo/attachments#create
-#                       reorder_order PATCH  /reorder/:resource_name/:id(.:format)                                                              avo/reorder#order
-#                      failed_to_load GET    /failed_to_load(.:format)                                                                          avo/home#failed_to_load
-#                                     DELETE /resources/:resource_name/:id/active_storage_attachments/:attachment_name/:attachment_id(.:format) avo/attachments#destroy
-#                                     GET    /resources/:resource_name(/:id)/actions/:action_id(.:format)                                       avo/actions#show
-#                                     POST   /resources/:resource_name(/:id)/actions/:action_id(.:format)                                       avo/actions#handle
-#                     resources_users GET    /resources/users(.:format)                                                                         avo/users#index
-#                                     POST   /resources/users(.:format)                                                                         avo/users#create
-#                  new_resources_user GET    /resources/users/new(.:format)                                                                     avo/users#new
-#                 edit_resources_user GET    /resources/users/:id/edit(.:format)                                                                avo/users#edit
-#                      resources_user GET    /resources/users/:id(.:format)                                                                     avo/users#show
-#                                     PATCH  /resources/users/:id(.:format)                                                                     avo/users#update
-#                                     PUT    /resources/users/:id(.:format)                                                                     avo/users#update
-#                                     DELETE /resources/users/:id(.:format)                                                                     avo/users#destroy
-#                 resources_registers GET    /resources/registers(.:format)                                                                     avo/registers#index
-#                                     POST   /resources/registers(.:format)                                                                     avo/registers#create
-#              new_resources_register GET    /resources/registers/new(.:format)                                                                 avo/registers#new
-#             edit_resources_register GET    /resources/registers/:id/edit(.:format)                                                            avo/registers#edit
-#                  resources_register GET    /resources/registers/:id(.:format)                                                                 avo/registers#show
-#                                     PATCH  /resources/registers/:id(.:format)                                                                 avo/registers#update
-#                                     PUT    /resources/registers/:id(.:format)                                                                 avo/registers#update
-#                                     DELETE /resources/registers/:id(.:format)                                                                 avo/registers#destroy
-#                     resources_books GET    /resources/books(.:format)                                                                         avo/books#index
-#                                     POST   /resources/books(.:format)                                                                         avo/books#create
-#                  new_resources_book GET    /resources/books/new(.:format)                                                                     avo/books#new
-#                 edit_resources_book GET    /resources/books/:id/edit(.:format)                                                                avo/books#edit
-#                      resources_book GET    /resources/books/:id(.:format)                                                                     avo/books#show
-#                                     PATCH  /resources/books/:id(.:format)                                                                     avo/books#update
-#                                     PUT    /resources/books/:id(.:format)                                                                     avo/books#update
-#                                     DELETE /resources/books/:id(.:format)                                                                     avo/books#destroy
-#          resources_associations_new GET    /resources/:resource_name/:id/:related_name/new(.:format)                                          avo/associations#new
-#        resources_associations_index GET    /resources/:resource_name/:id/:related_name(.:format)                                              avo/associations#index
-#         resources_associations_show GET    /resources/:resource_name/:id/:related_name/:related_id(.:format)                                  avo/associations#show
-#       resources_associations_create POST   /resources/:resource_name/:id/:related_name(.:format)                                              avo/associations#create
-#      resources_associations_destroy DELETE /resources/:resource_name/:id/:related_name/:related_id(.:format)                                  avo/associations#destroy
-#             avo_private_debug_index GET    /avo_private/debug(.:format)                                                                       avo/debug#index
-#            avo_private_debug_report GET    /avo_private/debug/report(.:format)                                                                avo/debug#report
-#   avo_private_debug_refresh_license POST   /avo_private/debug/refresh_license(.:format)                                                       avo/debug#refresh_license
-#                  avo_private_design GET    /avo_private/design(.:format)                                                                      avo/private#design

@@ -2,7 +2,7 @@ default: &default
   adapter: postgresql
   encoding: unicode
   host: 127.0.0.1
-  port: 54313
+  port: 54315
   pool: <%= ENV["DB_POOL"] || ENV["RAILS_MAX_THREADS"] || 5 %>
   username: <%= ENV["PG_USER"] || "postgres" %>
   variables:
@@ -10,11 +10,11 @@ default: &default
 
 development:
   <<: *default
-  database: finances_rebirth_development
+  database: finances_development
 
 test:
   <<: *default
-  database: finances_rebirth_test
+  database: finances_test
 
 production:
   url: <%= ENV['DATABASE_URL'] %>

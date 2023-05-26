@@ -11,7 +11,7 @@ module Currencyable
         inclusion: {
           in: KNOWN_CURRENCY_ISO_CODES,
           allow_nil: optional,
-          message: :invalid_currency_code # TODO: Why is that not working in AVO?
+          message: :invalid_currency_code
         }
     end
 

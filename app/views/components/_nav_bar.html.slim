@@ -1,32 +1,8 @@
-/ nav.navbar
-/   span.navbar__title Finances
-/   span.navbar__items
-/     - if @book
-/       = nav_item_link_to @book.name, @book, title: "Book '#{@book.name}'", strict: true
-/       = nav_item_link_to "Accounts", book_accounts_path(@book), title: "Accounts of book '#{@book.name}'"
-/       = nav_item_link_to "Categories", book_categories_path(@book), title: "Categories of book '#{@book.name}'"
-/     = nav_item_link_to "Books", books_path(book_id: @book&.id), strict: true, title: "List of all accessible books"
-/     - if current_user
-/       = nav_item_link_to "User", user_path(current_user, book_id: @book&.id), title: "#{current_user.display_name} (#{current_user.email})"
-
-header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap"
-  / App logo
-  .Header-item.mt-n1.mb-n1.d-none.d-md-flex
-    .h2 = "💰"
-  / Narrow screen: Navigation toggle
-  .Header-item.d-md-none
-    = c.icon_button icon: "three-bars", aria_label: "Toggle navigation menu", classes: "Header-link js-details_target btn-link"
-  .Header-item.Header-item--full.flex-column.flex-md-row.width-full.flex-order-2.flex-md-order-none.mr-0.mt-3.mt-md-0.Details-content--hidden-not-important.d-md-flex
-    / Main Navigation
-    nav.d-flex.flex-column.flex-md-row.flex-self-stretch.flex-md-self-auto id="global-nav" aria-label="Global"
-      - if @book
-        - link_classes = "Header-link mt-md-n3 mb-md-n3 py-2 py-md-3 mr-0 mr-md-3 border-top border-md-top-0 border-white-fade navbar__item--truncated"
-        = link_to @book.name, @book, title: "Book '#{@book.name}'", strict: true, class: link_classes
-        = link_to "Accounts", book_accounts_path(@book), title: "Accounts of book '#{@book.name}'", class: link_classes
-        = link_to "Categories", book_categories_path(@book), title: "Categories of book '#{@book.name}'", class: link_classes
-      = link_to "Books", books_path(book_id: @book&.id), strict: true, title: "List of all accessible books", class: link_classes
-    / Search Bar
-    / TODO: Move before the navigation links and find a way to not have it take all the possible width.
-    .header-search.flex-auto.position-relative.js-site-search.flex-self-stretch.flex-md-self-auto.mb-3.mb-md-0.mr-0.mr-md-3
-      .position-relative
-        input type="text"
+header
+  span = "💰"
+  - if @book
+    = link_to @book.name, @book, title: "Book '#{@book.name}'", strict: true
+    = link_to "Accounts", book_accounts_path(@book), title: "Accounts of book '#{@book.name}'"
+    = link_to "Categories", book_categories_path(@book), title: "Categories of book '#{@book.name}'"
+  = link_to "Books", books_path(book_id: @book&.id), strict: true, title: "List of all accessible books"
+  input type="text"

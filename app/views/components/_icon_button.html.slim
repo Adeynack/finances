@@ -3,4 +3,7 @@
 - id ||= nil
 - classes ||= ""
 
-= render Primer::Beta::IconButton.new(icon: icon.to_sym, "aria-label": aria_label, id:, classes:)
+div id=id class=classes aria-label=aria_label
+  span Icon(
+  span = icon
+  span )

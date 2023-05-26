@@ -51,9 +51,6 @@ gem "stimulus-rails"
 gem "turbo-rails"
 gem "serviceworker-rails"
 
-gem "view_component"
-gem "primer_view_components"
-
 # Specific to the project (not from the template)
 gem "closure_tree"
 gem "devise"
@@ -62,7 +59,6 @@ gem "table_print"
 gem "money-rails"
 gem "iban-tools"
 gem "montrose"
-gem "avo"
 gem "ransack"
 
 group :development, :test do

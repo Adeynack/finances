@@ -58,7 +58,7 @@ class ComponentRegistry
         content = capture { block&.call(cap) }
         locals.merge! cap.locals
         locals[:content] = content if cap.locals.none?
-        capture { render(partial: component, locals: locals) }
+        capture { render(partial: component, locals:) }
       end
     end
   end

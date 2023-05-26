@@ -1,10 +1,13 @@
 - label ||= nil
 - id ||= nil
 - scheme ||= :default # One of :danger, :default, :invisible, :link, :primary, or :secondary.
-- leading_icon ||= nil # https://primer.style/design/foundations/icons
+- leading_icon ||= nil
 - tooltip ||= nil
 
-= render(Primer::Beta::Button.new(id:, scheme:)) do |component|
-  - component.with_leading_visual_icon(icon: leading_icon) if leading_icon
-  - component.with_tooltip(text: tooltip) if tooltip
-  = label
+button id=id
+  span Icon(
+  span = leading_icon
+  span ) Label(
+  span = label
+  span )
+```
