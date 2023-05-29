@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   get "sitemaps/*path", to: "shimmer/sitemaps#show"
   resources :files, only: :show, controller: "shimmer/files"
 
-  root to: "books#index"
+  root to: "pages#home"
   resources :users
   resources :books do
     resources :accounts

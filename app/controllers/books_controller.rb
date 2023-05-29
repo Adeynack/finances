@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class BooksController < ApplicationController
-  # @route GET / (root)
   # @route GET /books (books)
   def index
     @show_all = params.key?(:all)

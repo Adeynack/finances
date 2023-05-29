@@ -1,2 +1,6 @@
-section
-  = render "register_tree_level", register_tree: @category_tree, collapsed: true
+- content_for :nav_icon
+  = "🗂️"
+- content_for :crumbs
+  li.crumbs__crumb = link_to @book.name, @book
+  li.crumbs__crumb = link_to "Categories", book_categories_path(book_id: @book), title: "Categories of book '#{@book&.name}'"
+= render "register_tree_level", register_tree: @category_tree, collapsed: true

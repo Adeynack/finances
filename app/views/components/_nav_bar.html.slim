@@ -1,8 +1,21 @@
 header
-  span = "💰"
-  - if @book
-    = link_to @book.name, @book, title: "Book '#{@book.name}'", strict: true
-    = link_to "Accounts", book_accounts_path(@book), title: "Accounts of book '#{@book.name}'"
-    = link_to "Categories", book_categories_path(@book), title: "Categories of book '#{@book.name}'"
-  = link_to "Books", books_path(book_id: @book&.id), strict: true, title: "List of all accessible books"
-  input type="text"
+  details
+    summary
+      span.nav-bar__icon
+        - if content_for :nav_icon
+          = yield :nav_icon
+        - else
+          = "💰"
+      - if content_for? :crumbs
+        nav.crumbs
+          ol.crumbs__list
+            = yield :crumbs
+    fieldset
+      ul
+        - if @book
+          li = link_to "Book #{@book.name}", @book, title: "Book '#{@book.name}'"
+          li = link_to "Accounts", book_accounts_path(@book), title: "Accounts of book '#{@book.name}'"
+          li = link_to "Categories", book_categories_path(@book), title: "Categories of book '#{@book.name}'"
+        li = link_to "Books", books_path(book_id: @book&.id), title: "List of all accessible books"
+        - if current_user
+          li = nav_item_link_to "User", user_path(current_user, book_id: @book&.id), title: "#{current_user.display_name} (#{current_user.email})"
