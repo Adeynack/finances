@@ -1,3 +1,8 @@
+- content_for :nav_icon
+  = "📚"
+- content_for :crumbs
+  = crumb "Books"
+
 section.toolbar
   - if current_user.admin?
     - if @show_all

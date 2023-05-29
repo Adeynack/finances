@@ -1,3 +1,9 @@
+- content_for :nav_icon
+  = "🏦"
+- content_for :crumbs
+  = crumb link_to @book.name, @book
+  = crumb "Accounts"
+
 section.toolbar
   - if @show_inactive
     = link_to "Hide inactives", book_accounts_path(@book), class: "toolbar__button"

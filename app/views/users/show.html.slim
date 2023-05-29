@@ -1,3 +1,9 @@
+- content_for :nav_icon
+  = "👤"
+- content_for :crumbs
+  - if current_user.admin?
+    = crumb "Users", users_path
+  = crumb "User #{@user.display_name}"
 section.toolbar
   - if @user == current_user
     = link_to "Log Out", destroy_user_session_path, data: {turbo_method: :delete}, class: "toolbar__button"
