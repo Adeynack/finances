@@ -36,17 +36,8 @@ gem "yael"
 gem "translate_client"
 
 # Assets
+gem "propshaft"
 gem "vite_rails"
-
-# Scenario 1: Propshaft
-# gem "propshaft"
-# TODO: Understand why with `propshaft`, rending is abnormally slow.
-
-# Scenario 2: What it was before attempting Propshaft
-gem "jsbundling-rails"
-gem "sassc-rails"
-gem "autoprefixer-rails"
-
 gem "stimulus-rails"
 gem "turbo-rails"
 gem "serviceworker-rails"
