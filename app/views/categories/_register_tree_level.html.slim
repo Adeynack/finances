@@ -1,9 +1,0 @@
-- register_tree.each do |register, children|
-  div class="register-tree" data={controller: "collapsable"}
-    span class=class_names("register-tree__expand-button", "register-tree__expand-button--disabled": children.blank?)
-      a> href="#" data={action: "click->collapsable#toggleCollapsed"}
-        span class=class_names("register-tree__expand-button__label", "register-tree__expand-button__label--collapsed": collapsed, "register-tree__expand-button__label--expanded": !collapsed) data={"collapsable-target": "button"}
-    = register.name
-    - if children.present?
-      div class=class_names("register-tree__children", "register-tree__children--collapsed" => collapsed) data={"collapsable-target": "children"}
-        = render "register_tree_level", register_tree: children, collapsed: true

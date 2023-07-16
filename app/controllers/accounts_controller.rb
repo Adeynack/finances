@@ -4,6 +4,6 @@ class AccountsController < ApplicationController
   # @route GET /books/:book_id/accounts (book_accounts)
   def index
     @show_inactive = params[:show_inactive] == "1"
-    @accounts = @book.accounts.scope_unless(@show_inactive, :active)
+    @account_tree = @book.accounts.scope_unless(@show_inactive, :active).hash_tree
   end
 end
