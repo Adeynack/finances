@@ -10,9 +10,9 @@ jobs:
       postgres:
         image: postgres:12
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: app
+          RAILS_ENV: test
+          REDIS_URL: redis://127.0.0.1:6379
+          DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/finances
         ports:
           - 5432:5432
         # needed because the postgres container does not provide a healthcheck
@@ -44,15 +44,11 @@ jobs:
         run: yarn build
       - name: Create PG Database
         run: bundle exec rake db:create db:migrate
-        env:
-          DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/app
-          RAILS_ENV: test
       - name: Check Ruby Typing
         run: bin/types_check
       - name: Model and Routes Annotation
         # To fix: bundle exec annotate
         env:
-          DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/finances
           ANNOTATE_FROZEN: true
         run: bundle exec annotate
       - name: Controllers Annotation
@@ -62,7 +58,3 @@ jobs:
         run: bundle exec rubocop -c .rubocop.yml
       - name: Build and test with Rake
         run: bundle exec rspec --format documentation
-        env:
-          DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/app
-          REDIS_URL: redis://127.0.0.1:6379
-          RAILS_ENV: test
