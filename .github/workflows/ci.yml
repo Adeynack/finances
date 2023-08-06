@@ -51,7 +51,7 @@ jobs:
         run: bundle exec rake db:create db:migrate
       - name: Check Ruby Typing
         # To fix: RAILS_ENV=test bin/rake db:reset:full
-        run: bin/types_update && bin/git_tracked_are_unmodified
+        run: bin/types_check
       - name: Model and Routes Annotation
         # To fix: bin/annotate
         env:
