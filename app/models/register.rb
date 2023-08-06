@@ -58,7 +58,7 @@ class Register < ApplicationRecord
   validates :expires_at, date: true
   validates :initial_balance, presence: true, numericality: {only_integer: true}
   validates :iban, iban: true
-  validates :interest_rate, numericality: {allow_nil: true}
+  validates :annual_interest_rate, numericality: {allow_nil: true}
   validates :credit_limit, numericality: {allow_nil: true, only_integer: true}
 
   scope :accounts, -> { where(type: Account.known_names) }

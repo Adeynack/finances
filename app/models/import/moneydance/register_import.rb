@@ -142,7 +142,7 @@ module Import::Moneydance
         account_number: nil, # "bank_account_number" stores the card number in MD
         institution_name: md_account["bank_name"].presence,
         iban: nil, # "bank_account_number" stores the card number in MD
-        interest_rate: md_account["apr"].presence&.to_f,
+        annual_interest_rate: md_account["apr"].presence&.to_f,
         credit_limit: md_account["credit_limit"].presence&.to_f&.then { |l| (l * 10).to_i },
         card_number: md_account["bank_account_number"].presence,
         expires_at: expiry_date(md_account["exp_year"], md_account["exp_month"])

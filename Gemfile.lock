@@ -154,6 +154,9 @@ GEM
     fugit (1.8.1)
       et-orbi (~> 1, >= 1.2.7)
       raabro (~> 1.4)
+    fuubar (2.5.1)
+      rspec-core (~> 3.0)
+      ruby-progressbar (~> 1.4)
     globalid (1.1.0)
       activesupport (>= 5.0)
     groupdate (6.3.0)
@@ -575,6 +578,7 @@ DEPENDENCIES
   document_serializable
   dotenv-rails
   friendly_id
+  fuubar
   groupdate
   guard
   guard-rspec
