@@ -50,4 +50,34 @@ class Book < ApplicationRecord
     reminders.order(:title).includes(:exchange_register, :reminder_splits).flat_map(&:debug).each { |line| logger.info(line) }
     nil
   end
+
+  def destroy!(fast: false)
+    transaction do
+      if fast
+        execute_sql variables: {book_id: id}, query: <<~SQL
+          DELETE FROM reminder_splits
+          USING reminders
+          WHERE reminder_splits.reminder_id = reminders.id
+          	AND reminders.book_id = :book_id
+        SQL
+        execute_sql variables: {book_id: id}, query: <<~SQL
+          DELETE FROM splits
+          USING exchanges, registers
+          WHERE splits.exchange_id = exchanges.id
+          	AND exchanges.register_id = registers.id
+          	AND registers.book_id = :book_id
+        SQL
+        execute_sql variables: {book_id: id}, query: <<~SQL
+          DELETE FROM exchanges
+          USING registers
+          WHERE exchanges.register_id = registers.id
+            AND registers.book_id = :book_id
+        SQL
+        reminders.delete_all
+        registers.delete_all
+      end
+
+      super()
+    end
+  end
 end

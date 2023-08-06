@@ -84,7 +84,7 @@ module Import::Moneydance
         logger.info "Book with name \"#{book_name}\" found"
         if auto_delete_book
           logger.info "Deleting book \"#{book_name}\""
-          book_candidate.destroy!
+          book_candidate.destroy! fast: true
         elsif book_candidate.present?
           raise StandardError, "A book with name \"#{book_name}\" already exist. Can only import from scratch (book must not already exist)."
         end
