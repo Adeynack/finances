@@ -34,7 +34,7 @@ module Import::Moneydance
 
     sig { params(md_reminder: StringHash).void }
     def import_reminder(md_reminder)
-      transaction = extract_transaction_hash_from_reminder(md_reminder)
+      transaction, splits = extract_transaction_hash_from_reminder(md_reminder)
       reminder = @book.reminders.create!(
         created_at: from_md_unix_date(md_reminder["txn.dtentered"], DateTime.current),
         title: md_reminder["desc"].presence,
@@ -42,34 +42,36 @@ module Import::Moneydance
         last_date: from_md_int_date(md_reminder["ldt"].presence),
         recurrence: extract_reminder_recurence(md_reminder),
         last_commit_at: from_md_unix_date(md_reminder["ts"]),
-        exchange_register_id: @register_id_by_md_acctid[transaction["acctid"]],
+        exchange_register_id: @register_id_by_md_acctid[transaction.fetch("acctid")],
         exchange_description: transaction["desc"].presence,
         exchange_memo: transaction["memo"].presence,
         exchange_status: from_md_stat(transaction["stat"])
       )
       reminder.import_origins.create! external_system: "moneydance", external_id: md_reminder["id"]
-      import_reminder_splits(transaction["splits"], reminder)
+      splits.each { |e| import_reminder_split(e, reminder) }
     end
 
-    sig { params(md_reminder: StringHash).returns(T::Hash[String, T.untyped]) }
+    sig { params(md_reminder: StringHash).returns([StringHash, T::Array[StringHash]]) }
     def extract_transaction_hash_from_reminder(md_reminder)
-      transaction_hash = {
-        "splits" => {}
-      }
+      transaction_hash = T.let({}, StringHash)
+      splits_per_index = T.let({}, T::Hash[Integer, StringHash])
+
       md_reminder.each_key do |key|
         key_parts = key.split(".")
         next unless key_parts.length > 1 && key_parts.first == "txn"
 
         if key_parts.length == 2
-          transaction_hash[key_parts[1]] = md_reminder.delete(key)
+          transaction_hash[key_parts[1].to_s] = md_reminder.delete(key).to_s
         else
           index = key_parts[1].to_i
-          split = transaction_hash["splits"][index] ||= {}
+          split = splits_per_index[index] ||= {}
           attribute = key_parts[2..].to_a.join(".")
-          split[attribute] = md_reminder.delete(key)
+          split[attribute] = md_reminder.delete(key).to_s
         end
       end
-      transaction_hash
+      ordered_splits = splits_per_index.keys.sort.map { |i| splits_per_index.fetch(i) }
+
+      [transaction_hash, ordered_splits]
     end
 
     sig { params(md_reminder: StringHash).returns(T.nilable(Montrose::Recurrence)) }
@@ -132,14 +134,6 @@ module Import::Moneydance
       return nil unless yearly_interval&.positive?
 
       Montrose.every((yearly_interval == 1) ? :year : yearly_interval.years)
-    end
-
-    sig { params(md_splits: T::Hash[String, StringHash], reminder: Reminder).void }
-    def import_reminder_splits(md_splits, reminder)
-      md_splits.keys.sort.each do |md_split_index|
-        md_split = md_splits.fetch(md_split_index)
-        import_reminder_split(md_split, reminder)
-      end
     end
 
     sig { params(md_split: StringHash, reminder: Reminder).void }

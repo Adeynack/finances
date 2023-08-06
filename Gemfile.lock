@@ -54,10 +54,6 @@ GEM
     activerecord (7.0.6)
       activemodel (= 7.0.6)
       activesupport (= 7.0.6)
-    activerecord-pg_enum (2.0.0)
-      activerecord (>= 4.1.0)
-      activesupport
-      pg
     activestorage (7.0.6)
       actionpack (= 7.0.6)
       activejob (= 7.0.6)
@@ -70,7 +66,7 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
-    addressable (2.8.4)
+    addressable (2.8.5)
       public_suffix (>= 2.0.2, < 6.0)
     amazing_print (1.5.0)
     annotate (3.2.0)
@@ -324,7 +320,7 @@ GEM
       activesupport (= 7.0.6)
       bundler (>= 1.15.0)
       railties (= 7.0.6)
-    rails-dom-testing (2.1.1)
+    rails-dom-testing (2.2.0)
       activesupport (>= 5.0.0)
       minitest
       nokogiri (>= 1.6)
@@ -466,15 +462,15 @@ GEM
     solargraph-standardrb (0.0.4)
       solargraph (>= 0.39.1)
       standard (>= 0.4.1)
-    sorbet (0.5.10941)
-      sorbet-static (= 0.5.10941)
-    sorbet-runtime (0.5.10941)
-    sorbet-static (0.5.10941-universal-darwin-21)
-    sorbet-static (0.5.10941-universal-darwin-22)
-    sorbet-static (0.5.10941-x86_64-linux)
-    sorbet-static-and-runtime (0.5.10941)
-      sorbet (= 0.5.10941)
-      sorbet-runtime (= 0.5.10941)
+    sorbet (0.5.10950)
+      sorbet-static (= 0.5.10950)
+    sorbet-runtime (0.5.10950)
+    sorbet-static (0.5.10950-universal-darwin-21)
+    sorbet-static (0.5.10950-universal-darwin-22)
+    sorbet-static (0.5.10950-x86_64-linux)
+    sorbet-static-and-runtime (0.5.10950)
+      sorbet (= 0.5.10950)
+      sorbet-runtime (= 0.5.10950)
     spoom (1.2.2)
       erubi (>= 1.10.0)
       sorbet (>= 0.5.10187)
@@ -557,7 +553,7 @@ GEM
     yard-sorbet (0.8.1)
       sorbet-runtime (>= 0.5)
       yard (>= 0.9)
-    zeitwerk (2.6.10)
+    zeitwerk (2.6.11)
 
 PLATFORMS
   x86_64-darwin-21
@@ -565,7 +561,6 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  activerecord-pg_enum
   amazing_print
   annotate
   bcrypt
