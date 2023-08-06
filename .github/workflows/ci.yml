@@ -42,7 +42,7 @@ jobs:
       - name: Lint Ruby
         run: bin/rubocop
       # - name: Translations Lint
-      #   run: bundle exec i18n-tasks health
+      #   run: bin/i18n-tasks health
       - name: Lint JS/TS
         run: yarn lint
       - name: Build Assets
@@ -50,9 +50,10 @@ jobs:
       - name: Create PG Database
         run: bundle exec rake db:create db:migrate
       - name: Check Ruby Typing
+        # To fix: RAILS_ENV=test bin/rake db:reset:full
         run: bin/types_update && bin/git_tracked_are_unmodified
       - name: Model and Routes Annotation
-        # To fix: bundle exec annotate
+        # To fix: bin/annotate
         env:
           ANNOTATE_FROZEN: true
         run: bundle exec annotate

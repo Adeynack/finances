@@ -742,6 +742,51 @@ class Category
     sig { void }
     def active_will_change!; end
 
+    sig { returns(T.nilable(::BigDecimal)) }
+    def annual_interest_rate; end
+
+    sig { params(value: T.nilable(::BigDecimal)).returns(T.nilable(::BigDecimal)) }
+    def annual_interest_rate=(value); end
+
+    sig { returns(T::Boolean) }
+    def annual_interest_rate?; end
+
+    sig { returns(T.nilable(::BigDecimal)) }
+    def annual_interest_rate_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def annual_interest_rate_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def annual_interest_rate_came_from_user?; end
+
+    sig { returns(T.nilable([T.nilable(::BigDecimal), T.nilable(::BigDecimal)])) }
+    def annual_interest_rate_change; end
+
+    sig { returns(T.nilable([T.nilable(::BigDecimal), T.nilable(::BigDecimal)])) }
+    def annual_interest_rate_change_to_be_saved; end
+
+    sig { returns(T::Boolean) }
+    def annual_interest_rate_changed?; end
+
+    sig { returns(T.nilable(::BigDecimal)) }
+    def annual_interest_rate_in_database; end
+
+    sig { returns(T.nilable([T.nilable(::BigDecimal), T.nilable(::BigDecimal)])) }
+    def annual_interest_rate_previous_change; end
+
+    sig { returns(T::Boolean) }
+    def annual_interest_rate_previously_changed?; end
+
+    sig { returns(T.nilable(::BigDecimal)) }
+    def annual_interest_rate_previously_was; end
+
+    sig { returns(T.nilable(::BigDecimal)) }
+    def annual_interest_rate_was; end
+
+    sig { void }
+    def annual_interest_rate_will_change!; end
+
     sig { returns(T.untyped) }
     def book_id; end
 
@@ -1237,51 +1282,6 @@ class Category
     sig { void }
     def institution_name_will_change!; end
 
-    sig { returns(T.nilable(::BigDecimal)) }
-    def interest_rate; end
-
-    sig { params(value: T.nilable(::BigDecimal)).returns(T.nilable(::BigDecimal)) }
-    def interest_rate=(value); end
-
-    sig { returns(T::Boolean) }
-    def interest_rate?; end
-
-    sig { returns(T.nilable(::BigDecimal)) }
-    def interest_rate_before_last_save; end
-
-    sig { returns(T.untyped) }
-    def interest_rate_before_type_cast; end
-
-    sig { returns(T::Boolean) }
-    def interest_rate_came_from_user?; end
-
-    sig { returns(T.nilable([T.nilable(::BigDecimal), T.nilable(::BigDecimal)])) }
-    def interest_rate_change; end
-
-    sig { returns(T.nilable([T.nilable(::BigDecimal), T.nilable(::BigDecimal)])) }
-    def interest_rate_change_to_be_saved; end
-
-    sig { returns(T::Boolean) }
-    def interest_rate_changed?; end
-
-    sig { returns(T.nilable(::BigDecimal)) }
-    def interest_rate_in_database; end
-
-    sig { returns(T.nilable([T.nilable(::BigDecimal), T.nilable(::BigDecimal)])) }
-    def interest_rate_previous_change; end
-
-    sig { returns(T::Boolean) }
-    def interest_rate_previously_changed?; end
-
-    sig { returns(T.nilable(::BigDecimal)) }
-    def interest_rate_previously_was; end
-
-    sig { returns(T.nilable(::BigDecimal)) }
-    def interest_rate_was; end
-
-    sig { void }
-    def interest_rate_will_change!; end
-
     sig { returns(::String) }
     def name; end
 
@@ -1424,6 +1424,9 @@ class Category
     def restore_active!; end
 
     sig { void }
+    def restore_annual_interest_rate!; end
+
+    sig { void }
     def restore_book_id!; end
 
     sig { void }
@@ -1457,9 +1460,6 @@ class Category
     def restore_institution_name!; end
 
     sig { void }
-    def restore_interest_rate!; end
-
-    sig { void }
     def restore_name!; end
 
     sig { void }
@@ -1488,6 +1488,12 @@ class Category
 
     sig { returns(T::Boolean) }
     def saved_change_to_active?; end
+
+    sig { returns(T.nilable([T.nilable(::BigDecimal), T.nilable(::BigDecimal)])) }
+    def saved_change_to_annual_interest_rate; end
+
+    sig { returns(T::Boolean) }
+    def saved_change_to_annual_interest_rate?; end
 
     sig { returns(T.nilable([T.untyped, T.untyped])) }
     def saved_change_to_book_id; end
@@ -1554,12 +1560,6 @@ class Category
 
     sig { returns(T::Boolean) }
     def saved_change_to_institution_name?; end
-
-    sig { returns(T.nilable([T.nilable(::BigDecimal), T.nilable(::BigDecimal)])) }
-    def saved_change_to_interest_rate; end
-
-    sig { returns(T::Boolean) }
-    def saved_change_to_interest_rate?; end
 
     sig { returns(T.nilable([::String, ::String])) }
     def saved_change_to_name; end
@@ -1739,6 +1739,9 @@ class Category
     def will_save_change_to_active?; end
 
     sig { returns(T::Boolean) }
+    def will_save_change_to_annual_interest_rate?; end
+
+    sig { returns(T::Boolean) }
     def will_save_change_to_book_id?; end
 
     sig { returns(T::Boolean) }
@@ -1770,9 +1773,6 @@ class Category
 
     sig { returns(T::Boolean) }
     def will_save_change_to_institution_name?; end
-
-    sig { returns(T::Boolean) }
-    def will_save_change_to_interest_rate?; end
 
     sig { returns(T::Boolean) }
     def will_save_change_to_name?; end
