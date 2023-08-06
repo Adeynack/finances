@@ -17,11 +17,12 @@ class Book < ApplicationRecord
 
   belongs_to :owner, class_name: "User"
 
+  has_many :reminders, dependent: :destroy
   has_many :registers, dependent: :destroy
+  has_many :exchanges, through: :registers
   has_many :accounts, -> { accounts }, class_name: "Register", dependent: false, inverse_of: :book
   has_many :categories, -> { categories }, class_name: "Register", dependent: false, inverse_of: :book
-  has_many :exchanges, through: :registers
-  has_many :reminders, dependent: :destroy
+  has_many :users_where_default_book, class_name: "User", foreign_key: "default_book_id", dependent: :nullify, inverse_of: :default_book
 
   has_currency :default_currency
 

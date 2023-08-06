@@ -84,4 +84,7 @@ group :development do
   gem "i18n-tasks"
   gem "annotate"
   gem "chusaku", require: false
+  gem "sorbet"
+  gem "sorbet-runtime"
+  gem "tapioca"
 end

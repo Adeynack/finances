@@ -11,8 +11,8 @@ namespace :data do
       default_currency = ENV.fetch("DEFAULT_CURRENCY", "EUR")
       auto_delete_book = ENV.fetch("AUTO_DELETE_BOOK", "0") == "1"
 
-      importer = Import::Moneydance::MoneydanceImport.new
-      importer.import logger: Logger.new($stdout), json_content:, book_owner_email:, default_currency:, auto_delete_book:
+      importer = Import::Moneydance::MoneydanceImport.new(logger: Logger.new($stdout), json_content:)
+      importer.import(book_owner_email:, default_currency:, auto_delete_book:)
     end
   end
 end

@@ -33,9 +33,10 @@ class Register < ApplicationRecord
   using ClassRefinements
 
   belongs_to :book
-  has_closure_tree order: :name
+  has_closure_tree order: :name, dependent: :destroy
 
-  has_one :default_category, class_name: "Register", required: false, dependent: false
+  has_one :default_category, class_name: "Register", required: false, dependent: false, inverse_of: :registers_where_default_category
+  has_many :registers_where_default_category, class_name: "Register", foreign_key: "default_category_id", dependent: :nullify, inverse_of: :default_category
 
   has_many :reminders, dependent: :restrict_with_error, foreign_key: "exchange_register_id", inverse_of: :exchange_register
 
@@ -46,6 +47,9 @@ class Register < ApplicationRecord
   # Splits pointing to this register. NOT splits of this register's exchanges.
   # Other Register --> Exchange --> Split --> THIS REGISTER
   has_many :splits, dependent: :destroy
+
+  # Splits from reminders pointing to this register.
+  has_many :reminder_splits, dependent: :restrict_with_exception
 
   has_currency :currency
 
