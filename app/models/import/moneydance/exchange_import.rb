@@ -47,21 +47,12 @@ module Import::Moneydance
         status: from_md_stat(md_transaction["stat"])
       )
       exchange.import_origins.create! external_system: "moneydance", external_id: md_transaction["id"]
-      import_splits(md_transaction, exchange)
+      extract_md_splits(md_transaction).each { |e| import_split(e, exchange) }
     end
 
-    sig { params(md_transaction: StringHash, exchange: Exchange).void }
-    def import_splits(md_transaction, exchange)
-      md_splits_per_index = extract_md_splits(md_transaction)
-      md_splits_per_index.keys.sort.each do |md_split_index|
-        md_split = md_splits_per_index[md_split_index]
-        import_split(md_split, exchange) if md_split
-      end
-    end
-
-    sig { params(md_transaction: StringHash).returns(T::Hash[Integer, StringHash]) }
+    sig { params(md_transaction: StringHash).returns(T::Array[StringHash]) }
     def extract_md_splits(md_transaction)
-      md_splits_per_index = {}
+      md_splits_per_index = T.let({}, T::Hash[Integer, StringHash])
       md_transaction.each do |key, value|
         key_parts = key.split(".")
         next unless key_parts.length == 2
@@ -71,7 +62,8 @@ module Import::Moneydance
         md_split = md_splits_per_index[split_index] ||= {}
         md_split[split_attribute] = value
       end
-      md_splits_per_index
+
+      md_splits_per_index.keys.sort.map { |i| md_splits_per_index.fetch(i) }
     end
 
     sig { params(md_split: StringHash, exchange: Exchange).void }

@@ -35,7 +35,7 @@ module Import::Moneydance
     def md_items_by_type
       @md_items_by_type ||= T.let(
         md_json["all_items"].group_by { |i| i["obj_type"] },
-        T.nilable(T::Hash[String, T.untyped])
+        T.nilable(T::Hash[String, StringHash])
       )
     end
 
@@ -59,7 +59,7 @@ module Import::Moneydance
     def md_accounts_by_old_id
       @md_accounts_by_old_id ||= T.let(
         (md_items_by_type["acct"] || []).index_by { |a| a["old_id"] },
-        T.nilable(T::Hash[String, T.untyped])
+        T.nilable(T::Hash[String, StringHash])
       )
     end
 
