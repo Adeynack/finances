@@ -10,6 +10,7 @@ namespace :db do
         ["Delete schema cache (schema.rb & structure.sql)", :sh, "rm -v -f db/schema.rb db/structure.sql"],
         ["Create Database", :rake, "db:create"],
         ["Migrate Database", :rake, "db:migrate"],
+        ["Update Tapioca DSL", :sh, "OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES bin/tapioca dsl"],
         ["Annotate Models", :sh, "bin/annotate --models"],
         ["Load Fixtures into Database", :rake, "db:fixtures:load"],
         ["Seed Database", :rake, "db:seed"]
