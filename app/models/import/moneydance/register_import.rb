@@ -120,7 +120,7 @@ module Import::Moneydance
       md_account["default_category"].presence&.then { |c| @register_id_by_md_old_id[c] }
     end
 
-    sig { params(md_account: StringHash, parent_register: Register, md_accounts_by_parent_id: T::Hash[T.nilable(String), StringHash]).void }
+    sig { params(md_account: StringHash, parent_register: Register, md_accounts_by_parent_id: T::Hash[T.nilable(String), T::Array[StringHash]]).void }
     def import_child_accounts(md_account, parent_register, md_accounts_by_parent_id)
       md_accounts_by_parent_id[md_account["id"]].to_a.each do |child|
         import_account_recursively parent_register:, md_account: child, md_accounts_by_parent_id:
