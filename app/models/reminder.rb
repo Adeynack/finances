@@ -64,7 +64,7 @@ class Reminder < ApplicationRecord
       "  register:    #{exchange_register.ancestry_path.join(" / ")}",
       reminder_splits.map do |split|
         [
-          "    - register: #{split.register.ancestry_path.join(" / ")}",
+          "    - register: #{split.register.ancestry_path & join(" / ")}",
           "      amount:   #{split.amount}",
           "      memo:     #{split.memo}"
         ]

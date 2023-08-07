@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# typed: true
 
 # == Schema Information
 #
@@ -30,9 +31,8 @@ class Register < ApplicationRecord
   include Taggable
   include Importable
   include AttributeStripping
-  using ClassRefinements
 
-  belongs_to :book
+  belongs_to :book, optional: false
   has_closure_tree order: :name, dependent: :destroy
 
   has_one :default_category, class_name: "Register", required: false, dependent: false, inverse_of: :registers_where_default_category
@@ -66,8 +66,8 @@ class Register < ApplicationRecord
   scope :active, -> { where(active: true) }
 
   before_create do
-    self.starts_at ||= Time.zone.today
-    self.currency_iso_code ||= book.default_currency_iso_code
+    T.unsafe(self).starts_at ||= Time.zone.today
+    T.unsafe(self).currency_iso_code ||= book&.default_currency_iso_code
   end
 
   def hierarchical_name

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# typed: true
 
 # == Schema Information
 #
@@ -29,12 +30,14 @@ class Account < Register
   # self.abstract_class = true
 
   class << self
-    using ClassRefinements
+    extend T::Sig
 
+    sig { returns(T::Array[T.class_of(Register)]) }
     def known_types
-      @account_types ||= find_child_from_files(namespace: nil).freeze
+      @account_types ||= [Asset, Bank, Card, Institution, Investment, Liability, Loan].freeze
     end
 
+    sig { returns(T::Array[String]) }
     def known_names
       @known_names ||= known_types.map(&:sti_name).freeze
     end
