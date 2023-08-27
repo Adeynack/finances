@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-# typed: true
 
 # == Schema Information
 #
@@ -18,9 +17,7 @@
 #  default_book_id        :uuid             indexed
 #
 class User < ApplicationRecord
-  extend T::Sig
-
-  T.unsafe(self).devise :database_authenticatable, :recoverable, :rememberable, :registerable, :validatable # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :recoverable, :rememberable, :registerable, :validatable # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
 
   has_many :books, dependent: :destroy, foreign_key: "owner_id", inverse_of: :owner
 

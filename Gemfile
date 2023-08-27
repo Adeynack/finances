@@ -58,9 +58,6 @@ group :development, :test do
   gem "pry-rails"
   gem "pry-doc"
   gem "pry-byebug"
-  gem "sorbet"
-  gem "sorbet-runtime"
-  gem "tapioca"
 end
 
 group :test do

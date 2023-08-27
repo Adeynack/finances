@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-# typed: true
 
 class AccountsController < ApplicationController
   # @route GET /books/:book_id/accounts (book_accounts)

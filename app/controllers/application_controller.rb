@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-# typed: true
 
 class ApplicationController < ActionController::Base
   include Shimmer::Localizable
@@ -14,7 +13,7 @@ class ApplicationController < ActionController::Base
 
   def set_book
     b = params[:book_id]&.then { Book.find(_1) }
-    b ||= pundit_user&.default_book
+    b ||= current_user&.default_book
     @book = authorize(b, :show?) if b
   end
 end

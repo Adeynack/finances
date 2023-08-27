@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-# typed: true
 
 # == Schema Information
 #
@@ -66,8 +65,8 @@ class Register < ApplicationRecord
   scope :active, -> { where(active: true) }
 
   before_create do
-    T.unsafe(self).starts_at ||= Time.zone.today
-    T.unsafe(self).currency_iso_code ||= book&.default_currency_iso_code
+    self.starts_at ||= Time.zone.today
+    self.currency_iso_code ||= book&.default_currency_iso_code
   end
 
   def hierarchical_name

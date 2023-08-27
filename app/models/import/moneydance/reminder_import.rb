@@ -1,19 +1,9 @@
 # frozen_string_literal: true
-# typed: strict
 
 module Import::Moneydance
   class ReminderImport
-    extend T::Sig
     include Import::Moneydance::Utils
 
-    sig do
-      params(
-        logger: Logger,
-        book: Book,
-        md_items_by_type: T::Hash[String, T::Array[StringHash]],
-        register_id_by_md_acctid: T::Hash[String, String]
-      ).void
-    end
     def initialize(logger:, book:, md_items_by_type:, register_id_by_md_acctid:)
       @logger = logger
       @book = book
@@ -21,7 +11,6 @@ module Import::Moneydance
       @register_id_by_md_acctid = register_id_by_md_acctid
     end
 
-    sig { void }
     def import_reminders
       @logger.info "Importing reminders"
       @md_items_by_type["reminder"].to_a.each do |md_reminder|
@@ -32,7 +21,6 @@ module Import::Moneydance
 
     private
 
-    sig { params(md_reminder: StringHash).void }
     def import_reminder(md_reminder)
       transaction, splits = extract_transaction_hash_from_reminder(md_reminder)
       reminder = @book.reminders.create!(
@@ -51,10 +39,9 @@ module Import::Moneydance
       splits.each { |e| import_reminder_split(e, reminder) }
     end
 
-    sig { params(md_reminder: StringHash).returns([StringHash, T::Array[StringHash]]) }
     def extract_transaction_hash_from_reminder(md_reminder)
-      transaction_hash = T.let({}, StringHash)
-      splits_per_index = T.let({}, T::Hash[Integer, StringHash])
+      transaction_hash = {}
+      splits_per_index = {}
 
       md_reminder.each_key do |key|
         key_parts = key.split(".")
@@ -74,7 +61,6 @@ module Import::Moneydance
       [transaction_hash, ordered_splits]
     end
 
-    sig { params(md_reminder: StringHash).returns(T.nilable(Montrose::Recurrence)) }
     def extract_reminder_recurence(md_reminder)
       schedules = [
         extract_reminder_recurence_daily(md_reminder),
@@ -88,7 +74,6 @@ module Import::Moneydance
       schedules.first
     end
 
-    sig { params(md_reminder: StringHash).returns(T.nilable(Montrose::Recurrence)) }
     def extract_reminder_recurence_daily(md_reminder)
       daily_interval = md_reminder["daily"]&.to_i
       return nil unless daily_interval&.positive?
@@ -96,9 +81,8 @@ module Import::Moneydance
       Montrose.every((daily_interval == 1) ? :day : daily_interval.days)
     end
 
-    WEEKDAY_MAPPING = T.let([nil, :sunday, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday].freeze, T::Array[T.nilable(Symbol)]) # rubocop:disable Style/MutableConstant
+    WEEKDAY_MAPPING = [nil, :sunday, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday].freeze
 
-    sig { params(md_reminder: StringHash).returns(T.nilable(Montrose::Recurrence)) }
     def extract_reminder_recurence_weekly(md_reminder)
       weekly_days = md_reminder.fetch("weeklydays", "").split(",")
       weekly_days.map! { |i| WEEKDAY_MAPPING[i.to_i] }
@@ -110,7 +94,6 @@ module Import::Moneydance
       Montrose.every((week_step == 1) ? :week : week_step.weeks, on: weekly_days)
     end
 
-    sig { params(md_reminder: StringHash).returns(T.nilable(Montrose::Recurrence)) }
     def extract_reminder_recurence_monthly(md_reminder)
       monthly_days = md_reminder.fetch("monthlydays", "").split(",")
       monthly_days.map!(&:to_i).map! do |day|
@@ -128,7 +111,6 @@ module Import::Moneydance
       Montrose.every((month_step == 1) ? :month : month_step.months, mday: monthly_days)
     end
 
-    sig { params(md_reminder: StringHash).returns(T.nilable(Montrose::Recurrence)) }
     def extract_reminder_recurence_yearly(md_reminder)
       yearly_interval = md_reminder["yearly"]&.to_i
       return nil unless yearly_interval&.positive?
@@ -136,7 +118,6 @@ module Import::Moneydance
       Montrose.every((yearly_interval == 1) ? :year : yearly_interval.years)
     end
 
-    sig { params(md_split: StringHash, reminder: Reminder).void }
     def import_reminder_split(md_split, reminder)
       split = reminder.reminder_splits.create!(
         created_at: reminder.created_at,

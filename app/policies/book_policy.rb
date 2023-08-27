@@ -1,9 +1,6 @@
 # frozen_string_literal: true
-# typed: true
 
 class BookPolicy < ApplicationPolicy
-  extend T::Sig
-
   allow_association_actions [:accounts, :categories], except: [:attach, :detach], if: :update?
 
   def index?

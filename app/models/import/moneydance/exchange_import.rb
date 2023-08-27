@@ -1,25 +1,15 @@
 # frozen_string_literal: true
-# typed: strict
 
 module Import::Moneydance
   class ExchangeImport
-    extend T::Sig
     include Import::Moneydance::Utils
 
-    sig {
-      params(
-        logger: Logger,
-        md_items_by_type: T::Hash[String, T::Array[StringHash]],
-        register_id_by_md_acctid: T::Hash[String, String]
-      ).void
-    }
     def initialize(logger:, md_items_by_type:, register_id_by_md_acctid:)
       @logger = logger
       @md_items_by_type = md_items_by_type
       @register_id_by_md_acctid = register_id_by_md_acctid
     end
 
-    sig { void }
     def import_exchanges
       @logger.info "Importing exchanges (MD transactions)"
       txn_items = @md_items_by_type["txn"].to_a
@@ -35,7 +25,6 @@ module Import::Moneydance
 
     private
 
-    sig { params(md_transaction: StringHash).void }
     def import_transaction(md_transaction)
       exchange = Exchange.create!(
         created_at: from_md_unix_date(md_transaction["dtentered"]),
@@ -50,9 +39,8 @@ module Import::Moneydance
       extract_md_splits(md_transaction).each { |e| import_split(e, exchange) }
     end
 
-    sig { params(md_transaction: StringHash).returns(T::Array[StringHash]) }
     def extract_md_splits(md_transaction)
-      md_splits_per_index = T.let({}, T::Hash[Integer, StringHash])
+      md_splits_per_index = {}
       md_transaction.each do |key, value|
         key_parts = key.split(".")
         next unless key_parts.length == 2
@@ -66,7 +54,6 @@ module Import::Moneydance
       md_splits_per_index.keys.sort.map { |i| md_splits_per_index.fetch(i) }
     end
 
-    sig { params(md_split: StringHash, exchange: Exchange).void }
     def import_split(md_split, exchange)
       split = exchange.splits.create!(
         created_at: exchange.created_at,

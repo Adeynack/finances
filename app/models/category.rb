@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-# typed: true
 
 # == Schema Information
 #
@@ -32,12 +31,10 @@ class Category < Register
   class << self
     extend T::Sig
 
-    sig { returns(T::Array[T.class_of(Register)]) }
     def known_types
       @category_types ||= [Expense, Income].freeze
     end
 
-    sig { returns(T::Array[String]) }
     def known_names
       @known_names ||= known_types.map(&:sti_name).freeze
     end
