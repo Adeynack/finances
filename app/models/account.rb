@@ -29,8 +29,6 @@ class Account < Register
   # self.abstract_class = true
 
   class << self
-    extend T::Sig
-
     def known_types
       @account_types ||= [Asset, Bank, Card, Institution, Investment, Liability, Loan].freeze
     end

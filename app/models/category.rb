@@ -29,8 +29,6 @@ class Category < Register
   # self.abstract_class = true
 
   class << self
-    extend T::Sig
-
     def known_types
       @category_types ||= [Expense, Income].freeze
     end

@@ -2,8 +2,6 @@
 
 class MontroseJSONSerializer
   class << self
-    extend T::Sig
-
     def load(source)
       return nil if source.blank?
       raise ArgumentError, "expecting Montrose Recurrence to be serialized as a hash" unless source.is_a?(Hash)
