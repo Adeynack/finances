@@ -45,7 +45,7 @@ gem "serviceworker-rails"
 # Specific to the project (not from the template)
 gem "closure_tree"
 gem "devise"
-gem "amazing_print" # awesome_print has bugs with some Rails classes
+gem "awesome_print"
 gem "table_print"
 gem "money-rails"
 gem "iban-tools"
@@ -61,6 +61,7 @@ group :development, :test do
 end
 
 group :test do
+  gem "fuubar"
   gem "capybara"
   gem "cuprite"
   gem "rack_session_access"

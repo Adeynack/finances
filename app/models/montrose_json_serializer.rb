@@ -10,7 +10,7 @@ class MontroseJSONSerializer
     end
 
     def dump(object)
-      object.to_hash
+      object&.to_hash
     end
   end
 end

@@ -29,7 +29,7 @@ class CreateRegisters < ActiveRecord::Migration[6.1]
       t.string :institution_name, comment: "Name of the institution (ex: bank) managing the registry (ex: credit card)."
       t.string :account_number, comment: "Number by which the register is referred to (ex: bank account number)."
       t.string :iban, comment: "In the case the register is identified by an International Bank Account Number (IBAN)."
-      t.decimal :interest_rate, comment: "In the case the register is being charged interests, its rate (ex: credit card)."
+      t.decimal :annual_interest_rate, comment: "In the case the register is being charged interests, its rate per year (ex: credit card)."
       t.bigint :credit_limit, comment: "In the case the register has a credit limit (ex: credit card, credit margin)."
       t.string :card_number, comment: "In the case the register is linked to a card, its number (ex: a credit card)."
     end

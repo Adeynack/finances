@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module Import::Moneydance::Utils
+  include Kernel
+
   def expiry_date(exp_year, exp_month)
     return nil if exp_year.blank?
 
@@ -23,5 +25,14 @@ module Import::Moneydance::Utils
     raise ArgumentError, "expecting a 8 digits number" unless md_date.length == 8
 
     DateTime.parse(md_date)
+  end
+
+  def from_md_stat(md_stat)
+    case md_stat.presence
+    when nil then "uncleared"
+    when "X" then "cleared"
+    when "x" then "reconciling"
+    else raise(ArgumentError, "unknown transaction stat '#{md_stat}'")
+    end
   end
 end
