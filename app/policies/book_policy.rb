@@ -1,6 +1,9 @@
 # frozen_string_literal: true
+# typed: true
 
 class BookPolicy < ApplicationPolicy
+  extend T::Sig
+
   allow_association_actions [:accounts, :categories], except: [:attach, :detach], if: :update?
 
   def index?
@@ -23,7 +26,7 @@ class BookPolicy < ApplicationPolicy
     admin? || record.owner == user
   end
 
-  class Scope < Scope
+  class Scope < ApplicationPolicy::Scope
     def resolve
       if user&.admin?
         scope.all

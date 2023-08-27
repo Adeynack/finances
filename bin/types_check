@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES bin/tapioca dsl --verify && bin/srb tc
