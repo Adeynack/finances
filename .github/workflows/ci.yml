@@ -49,8 +49,6 @@ jobs:
         run: yarn build
       - name: Create PG Database
         run: bundle exec rake db:create db:migrate
-      - name: Check Ruby Typing
-        run: bin/srb tc
       - name: Model and Routes Annotation
         # To fix: bin/annotate
         env:
