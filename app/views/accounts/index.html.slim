@@ -10,4 +10,4 @@ section.toolbar
   - else
     = link_to "Show inactives", book_accounts_path(@book, show_inactive: 1), class: "toolbar__button"
 section
-  = render "components/tree_view", tree: @account_tree, label: :name
+  = render "components/tree_view", tree: @account_tree, path: ->(a) { book_account_path(@book, a) }
