@@ -1,6 +1,15 @@
 {
-  "editor.formatOnSave": true,
   "typescript.tsdk": "node_modules/typescript/lib",
   "rubyTestExplorer.rspecCommand": "bin/rspec",
-  "rubyTestExplorer.testFramework": "rspec"
+  "rubyTestExplorer.testFramework": "rspec",
+  "ruby.lint": {
+    "rubocop": true
+  },
+  "editor.formatOnSave": true,
+  "ruby.format": "rubocop",
+  "[ruby]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "Shopify.ruby-lsp"
+  },
+  "solargraph.formatting": true
 }

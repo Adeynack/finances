@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "boot"
 
 require "rails"
@@ -18,17 +20,21 @@ require "action_cable/engine"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module TestApp
+module Finances
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
+
+    config.autoload_paths += Dir["#{root}/app/models/accounts/**/"]
+    config.autoload_paths += Dir["#{root}/app/models/categories/**/"]
+    config.autoload_paths += Dir["#{root}/app/models/refinements/**/"]
+    config.autoload_paths += Dir["#{root}/app/validators/**/"]
+
     config.time_zone = "Berlin"
 
     config.middleware.use Shimmer::CloudflareProxy
 
     config.action_mailer.default_url_options = {host: ENV["HOST"]} if ENV["HOST"].present?
     config.active_job.queue_adapter = :sidekiq
-
-    config.assets.paths << Rails.root.join("node_modules")
   end
 end

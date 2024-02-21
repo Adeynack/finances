@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 source "https://rubygems.org"
 ruby File.read(".ruby-version").strip
 
 # Core
-gem "rails", "7.0.0"
+gem "rails"
 gem "puma"
 
 # Database
@@ -34,32 +36,53 @@ gem "yael"
 gem "translate_client"
 
 # Assets
-gem "jsbundling-rails"
+gem "propshaft"
+gem "vite_rails"
 gem "stimulus-rails"
-gem "sassc-rails"
-gem "autoprefixer-rails"
 gem "turbo-rails"
 gem "serviceworker-rails"
 
+# Specific to the project (not from the template)
+gem "closure_tree"
+gem "devise"
+gem "awesome_print"
+gem "table_print"
+gem "money-rails"
+gem "iban-tools"
+gem "montrose"
+gem "ransack"
 
 group :development, :test do
+  gem "debug"
   gem "rspec-rails"
-  gem "standard"
+  gem "pry-rails"
+  gem "pry-doc"
+  gem "pry-byebug"
+end
+
+group :test do
+  gem "fuubar"
   gem "capybara"
   gem "cuprite"
-  gem "i18n-tasks", "0.9.35"
   gem "rack_session_access"
 end
 
 group :development do
   gem "listen"
   gem "web-console"
-  gem "annotate"
   gem "rb-fsevent"
   gem "letter_opener"
-  gem "debug"
-  gem "pry-rails"
   gem "guard"
   gem "guard-rspec"
+  gem "standard"
+  gem "solargraph"
   gem "solargraph-standardrb"
+  gem "rubocop"
+  gem "rubocop-rails"
+  gem "rubocop-performance"
+  gem "rubocop-rspec"
+  gem "rubocop-rake"
+  gem "i18n-tasks"
+  gem "annotate"
+  gem "chusaku", require: false
 end

@@ -1,0 +1,19 @@
+@import './modern-font-stack.scss';
+@import 'application/components/*';
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: black;
+    color: white;
+  }
+
+  a {
+    color: white;
+  }
+}
+
+.todo {
+  background-color: red;
+  color: black;
+  font-weight: bold;
+}

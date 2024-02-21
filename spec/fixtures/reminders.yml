@@ -1,0 +1,21 @@
+# == Schema Information
+#
+# Table name: reminders
+#
+#  id                   :uuid             not null, primary key
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  book_id              :uuid             not null, indexed
+#  title                :string           not null
+#  description          :text
+#  mode                 :enum             default("manual"), not null
+#  first_date           :date             not null
+#  last_date            :date
+#  recurrence           :jsonb
+#  last_commit_at       :date
+#  next_occurence_at    :date
+#  exchange_register_id :uuid             not null, indexed
+#  exchange_description :string           not null
+#  exchange_memo        :text
+#  exchange_status      :enum             default("uncleared"), not null
+#

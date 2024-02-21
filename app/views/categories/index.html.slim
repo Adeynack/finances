@@ -1,0 +1,7 @@
+- content_for :nav_icon
+  = "🗂️"
+- content_for :crumbs
+  = crumb link_to @book.name, @book
+  = crumb "Categories"
+
+= render "components/tree_view", tree: @category_tree, path: ->(c) { book_category_path(@book, c) }

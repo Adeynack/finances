@@ -1,0 +1,6 @@
+en:
+  errors:
+    messages:
+      invalid_currency_code: "%{value} is not a known ISO currency code"
+      date_not_after: expecting %{attribute} (%{value}) to be after %{after_part}
+      must_belong_to_reminder_book: must belong to the same book as the reminder

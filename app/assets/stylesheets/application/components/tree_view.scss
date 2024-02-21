@@ -1,0 +1,20 @@
+.tree-view {
+  padding-left: 16px;
+
+  &__summary::marker {
+    color: gray;
+  }
+
+  &--with-children > summary {
+    list-style-position: outside;
+  }
+
+  &--with-children[open] > summary {
+    list-style-position: outside;
+  }
+
+  &--without-children > summary {
+    list-style-type: disc;
+    list-style-position: outside;
+  }
+}

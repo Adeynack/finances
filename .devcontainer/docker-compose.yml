@@ -1,0 +1,32 @@
+version: '3'
+
+name: finances
+
+services:
+  devcontainer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 30001
+    volumes:
+      - ../..:/workspaces:cached
+    command: sleep infinity
+    network_mode: host
+
+  postgres:
+    image: postgres:16.2
+    restart: unless-stopped
+    ports:
+      - 30002:5432
+    volumes:
+      - ../tmp/postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_HOST_AUTH_METHOD: trust
+
+  redis:
+    restart: always
+    image: redis
+    ports:
+      - '6379:6379'
