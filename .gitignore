@@ -41,4 +41,7 @@ overmind.sock
 /public/vite*
 node_modules
 
+### macOS
+.DS_Store
+
 ###

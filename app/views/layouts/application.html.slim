@@ -2,5 +2,9 @@ doctype html
 html lang=I18n.locale data-color-mode="dark" data-dark-theme="dark"
   = render "components/head"
   body class=Rails.env class="modern-font-stack--geometric-humanist"
+    / Include notice/alert, so 'devise' shows failures. TODO: Decide what to do with this.
+    p.notice = notice
+    p.alert = alert
+    
     = render "components/nav_bar"
     = yield

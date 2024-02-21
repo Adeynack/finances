@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-overmind s -f Procfile.dev -p ${PORT:-3000} -P 10
+overmind s -f Procfile.dev -p ${PORT:-30001} -P 10
