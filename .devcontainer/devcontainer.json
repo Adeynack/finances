@@ -2,7 +2,7 @@
   "name": "Finances",
   "dockerComposeFile": "docker-compose.yml",
   "service": "devcontainer",
-  "workspaceFolder": "/workspaces/finances",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "remoteUser": "root",
   "postCreateCommand": "yarn install && bundle install && bin/rails db:setup",
   "forwardPorts": [
@@ -19,6 +19,9 @@
   },
   "otherPortsAttributes": {
     "onAutoForward": "ignore"
+  },
+  "containerEnv": {
+    "LOCAL_WORKSPACE_FOLDER_BASENAME": "${localWorkspaceFolderBasename}"
   },
   "remoteEnv": {
     "EDITOR": "code --wait"

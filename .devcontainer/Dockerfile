@@ -1,6 +1,6 @@
 FROM ruby:3.2
 
-WORKDIR /workspaces/finances
+WORKDIR /workspaces/${LOCAL_WORKSPACE_FOLDER_BASENAME}
 
 # Update/Upgrade to latest software, add keys and sources, install software
 RUN export DEBIAN_FRONTEND=noninteractive && apt update && apt -y upgrade
