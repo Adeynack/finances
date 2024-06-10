@@ -7,6 +7,11 @@
 # Ignore bundler config.
 /.bundle
 
+# Ignore all environment files (except templates).
+#/.env*
+#!/.env*.erb
+/.env.local
+
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
@@ -18,7 +23,7 @@
 !/tmp/pids/
 !/tmp/pids/.keep
 
-# Ignore uploaded files in development.
+# Ignore storage (uploaded files in development and any SQLite databases).
 /storage/*
 !/storage/.keep
 /tmp/storage/*
@@ -29,18 +34,10 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
-!.keep
-app/assets/builds
-
 # Misc
 /out
-/.env.local
 overmind.sock
-
-# Vite Ruby & Assets
-/public/vite*
 node_modules
-
 ### macOS
 .DS_Store
 

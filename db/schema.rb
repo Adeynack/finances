@@ -157,16 +157,12 @@ ActiveRecord::Schema[7.1].define(version: 2021_10_31_080038) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "email", null: false
-    t.string "encrypted_password", null: false
+    t.string "password_digest", null: false
     t.boolean "admin", default: false, null: false
     t.string "display_name", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at", precision: nil
-    t.datetime "remember_created_at", precision: nil
     t.uuid "default_book_id", comment: "Last opened book."
     t.index ["default_book_id"], name: "index_users_on_default_book_id"
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "books", "users", column: "owner_id"

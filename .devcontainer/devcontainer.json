@@ -4,7 +4,7 @@
   "service": "devcontainer",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "remoteUser": "root",
-  "postCreateCommand": "yarn install && bundle install && bin/rails db:setup",
+  "postCreateCommand": "bundle install && bin/rails db:setup",
   "forwardPorts": [
     30001,
     30002

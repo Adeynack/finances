@@ -10,7 +10,7 @@ default: &default
 
 development:
   <<: *default
-  database: finances_rails_dev
+  database: finances_development
 
 test:
   <<: *default

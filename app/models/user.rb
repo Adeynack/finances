@@ -4,20 +4,17 @@
 #
 # Table name: users
 #
-#  id                     :uuid             not null, primary key
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  email                  :string           not null, indexed
-#  encrypted_password     :string           not null
-#  admin                  :boolean          default(FALSE), not null
-#  display_name           :string           not null
-#  reset_password_token   :string           indexed
-#  reset_password_sent_at :datetime
-#  remember_created_at    :datetime
-#  default_book_id        :uuid             indexed
+#  id              :uuid             not null, primary key
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  email           :string           not null, indexed
+#  password_digest :string           not null
+#  admin           :boolean          default(FALSE), not null
+#  display_name    :string           not null
+#  default_book_id :uuid             indexed
 #
 class User < ApplicationRecord
-  devise :database_authenticatable, :recoverable, :rememberable, :registerable, :validatable # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  has_secure_password
 
   has_many :books, dependent: :destroy, foreign_key: "owner_id", inverse_of: :owner
 
@@ -25,5 +22,5 @@ class User < ApplicationRecord
 
   validates :email, presence: true
   validates :display_name, presence: true
-  validates :encrypted_password, presence: true
+  validates :password_digest, presence: true
 end

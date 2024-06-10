@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-wget https://github.com/DarthSim/overmind/releases/download/v2.4.0/overmind-v2.4.0-linux-arm64.gz -O ~/overmind.gz
-gunzip ~/overmind.gz
-chmod a+x ~/overmind
-mv -f ~/overmind /usr/bin
