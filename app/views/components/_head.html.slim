@@ -5,7 +5,8 @@ head
   meta name="viewport" content="width=device-width, initial-scale = 1.0, viewport-fit=cover"
   / link rel="manifest" href=manifest_path
   / link rel="apple-touch-icon" href=asset_path("app-icon.png")
-  meta name="theme-color" content="#1d2024"
+  meta name="theme-color" content="#000000"
+
   / SEO
   /= favicon_link_tag asset_path('favicon.svg')
 
@@ -14,7 +15,6 @@ head
   = csp_meta_tag
 
   / Assets
-  = stylesheet_link_tag "application", media: "all", "data-turbo-track": "reload"
-  = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
+  = vite_typescript_tag "entrypoints/application"
 
   = yield :additional_head_tags if content_for? :additional_head_tags

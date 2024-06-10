@@ -1,0 +1,13 @@
+- label ||= nil
+- id ||= nil
+- scheme ||= :default # One of :danger, :default, :invisible, :link, :primary, or :secondary.
+- leading_icon ||= nil
+- tooltip ||= nil
+
+button id=id
+  span Icon(
+  span = leading_icon
+  span ) Label(
+  span = label
+  span )
+```

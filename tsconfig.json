@@ -4,7 +4,8 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "lib": ["ES2019", "dom"],
-    "module": "es6",
+    "module": "ESnext",
+    "types": ["vite/client"],
     "moduleResolution": "node",
     "baseUrl": ".",
     "paths": {
@@ -13,7 +14,8 @@
     "sourceMap": true,
     "target": "ES2017",
     "noEmit": true,
-    "strict": true
+    "strict": true,
+    "allowSyntheticDefaultImports": true
   },
   "exclude": ["**/*.spec.ts", "node_modules", "vendor", "public"],
   "compileOnSave": false

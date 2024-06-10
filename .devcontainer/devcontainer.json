@@ -1,0 +1,47 @@
+{
+  "name": "Finances",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "devcontainer",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "remoteUser": "root",
+  "postCreateCommand": "yarn install && bundle install && bin/rails db:setup",
+  "forwardPorts": [
+    30001,
+    30002
+  ],
+  "portsAttributes": {
+    "30001": {
+      "label": "rails"
+    },
+    "30002": {
+      "label": "psql"
+    }
+  },
+  "otherPortsAttributes": {
+    "onAutoForward": "ignore"
+  },
+  "containerEnv": {
+    "LOCAL_WORKSPACE_FOLDER_BASENAME": "${localWorkspaceFolderBasename}"
+  },
+  "remoteEnv": {
+    "EDITOR": "code --wait"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode-remote.remote-containers",
+        "shopify.ruby-extensions-pack",
+        "darkriszty.markdown-table-prettify",
+        "wmaurer.change-case",
+        "zombocom.dead-end-vscode",
+        "kaiwood.endwise",
+        "yzhang.markdown-all-in-one",
+        "darkriszty.markdown-table-prettify",
+        "trybick.terminal-zoom",
+        "netcorext.uuid-generator",
+        "redhat.vscode-yaml",
+        "ms-azuretools.vscode-docker"
+      ]
+    }
+  }
+}

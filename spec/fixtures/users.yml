@@ -1,0 +1,29 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                     :uuid             not null, primary key
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  email                  :string           not null, indexed
+#  encrypted_password     :string           not null
+#  admin                  :boolean          default(FALSE), not null
+#  display_name           :string           not null
+#  reset_password_token   :string           indexed
+#  reset_password_sent_at :datetime
+#  remember_created_at    :datetime
+#  default_book_id        :uuid             indexed
+#
+joe:
+  email: joe@example.com
+  display_name: Joe
+  encrypted_password: <%= User.new.send(:password_digest, "joe") %>
+  default_book: joe
+mary:
+  email: mary@example.com
+  display_name: Proud Mary
+  encrypted_password: <%= User.new.send(:password_digest, "mary") %>
+vlad:
+  email: vlad@example.com
+  display_name: Vlad the Impaler
+  encrypted_password: <%= User.new.send(:password_digest, "vlad") %>

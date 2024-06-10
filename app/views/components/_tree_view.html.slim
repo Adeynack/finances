@@ -1,0 +1,13 @@
+- label ||= :name
+- collapsed = true if collapsed.nil?
+- tree ||= {}
+- path ||= ->(element) { element }
+
+- tree.each do |element, children|
+  - link = link_to element.send(label), path.call(element)
+  - if children.any?
+    details.tree-view open=!collapsed class=(children.any? ? "tree-view--with-children" : "tree-view--without-children")
+      summary.tree-view__summary = link
+      .tree-view__content = render "components/tree_view", tree: children, collapsed:, label:, path:
+  - else
+    .tree-view = link
