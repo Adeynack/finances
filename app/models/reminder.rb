@@ -31,7 +31,7 @@ class Reminder < ApplicationRecord
   has_many :reminder_splits, dependent: :destroy
 
   enum mode: [:manual, :auto_commit, :auto_cancel].index_with(&:to_s)
-  serialize :recurrence, MontroseJSONSerializer
+  serialize :recurrence, coder: MontroseJSONSerializer
 
   validates :title, presence: true
   validates :first_date, presence: true
