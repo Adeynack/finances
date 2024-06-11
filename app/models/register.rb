@@ -31,6 +31,11 @@ class Register < ApplicationRecord
   include Importable
   include AttributeStripping
 
+  self.inheritance_column = nil
+  ACCOUNT_TYPES = ["Asset", "Bank", "Card", "Institution", "Investment", "Liability", "Loan"].freeze
+  CATEGORY_TYPES = ["Expense", "Income"].freeze
+  KNOWN_TYPES = (ACCOUNT_TYPES + CATEGORY_TYPES).freeze
+
   belongs_to :book, optional: false
   has_closure_tree order: :name, dependent: :destroy
 
