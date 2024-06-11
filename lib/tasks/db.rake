@@ -9,8 +9,7 @@ namespace :db do
         ["Drop Database", :rake, "db:drop"],
         ["Delete schema cache (schema.rb & structure.sql)", :sh, "rm -v -f db/schema.rb db/structure.sql"],
         ["Create Database", :rake, "db:create"],
-        ["Migrate Database", :rake, "db:migrate"],
-        ["Annotate Models", :sh, "bin/annotate --models"],
+        ["Migrate Database", :rake, "db:migrate"], # automatically annotate models
         ["Load Fixtures into Database", :rake, "db:fixtures:load"],
         ["Seed Database", :rake, "db:seed"]
       ].each do |title, type, command|

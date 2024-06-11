@@ -5,10 +5,10 @@
 #  id          :uuid             not null, primary key
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  date        :date             not null, indexed
-#  register_id :uuid             not null, indexed
-#  cheque      :string
-#  description :string           not null
-#  memo        :text
+#  date        :date             not null, indexed                Date the exchange appears in the book.
+#  register_id :uuid             not null, indexed                From which register does the money come from.
+#  cheque      :string                                            Cheque information.
+#  description :string           not null                         Label of the exchange.
+#  memo        :text                                              Detail about the exchange.
 #  status      :enum             default("uncleared"), not null
 #

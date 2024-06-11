@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/ctran/annotate_models.git
+  revision: 5d01c4171990c4fe7b9b0977b05ce14a98209e53
+  branch: develop
+  specs:
+    annotate (3.2.0)
+      activerecord (>= 3.2, < 8.0)
+      rake (>= 10.4, < 14.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -75,9 +84,6 @@ GEM
       minitest (>= 5.1)
       mutex_m
       tzinfo (~> 2.0)
-    annotate (3.2.0)
-      activerecord (>= 3.2, < 8.0)
-      rake (>= 10.4, < 14.0)
     ast (2.4.2)
     awesome_print (1.9.2)
     backport (1.2.0)
@@ -437,7 +443,7 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
-  annotate
+  annotate!
   awesome_print
   bcrypt (~> 3.1.7)
   bootsnap

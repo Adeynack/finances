@@ -53,6 +53,6 @@ group :development do
   gem "rubocop-performance"
   gem "rubocop-rspec"
   gem "rubocop-rake"
-  gem "annotate"
+  gem "annotate", github: "ctran/annotate_models", branch: "develop"
   gem "chusaku", require: false
 end

@@ -11,7 +11,7 @@
 #  password_digest :string           not null
 #  admin           :boolean          default(FALSE), not null
 #  display_name    :string           not null
-#  default_book_id :uuid             indexed
+#  default_book_id :uuid             indexed                    Last opened book.
 #
 class User < ApplicationRecord
   has_secure_password

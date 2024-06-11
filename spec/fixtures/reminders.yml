@@ -9,13 +9,13 @@
 #  title                :string           not null
 #  description          :text
 #  mode                 :enum             default("manual"), not null
-#  first_date           :date             not null
-#  last_date            :date
-#  recurrence           :jsonb
-#  last_commit_at       :date
-#  next_occurence_at    :date
-#  exchange_register_id :uuid             not null, indexed
-#  exchange_description :string           not null
-#  exchange_memo        :text
+#  first_date           :date             not null                         From when to apply the reminder.
+#  last_date            :date                                              Until when to apply the reminder (optional).
+#  recurrence           :jsonb                                             Expressed as a 'Montrose::Recurrence' JSON. For one-shot reminders, `nil`, happening only on `first_date`.
+#  last_commit_at       :date                                              Last time for which this reminder was committed. `nil` means it never was.
+#  next_occurence_at    :date                                              Next time this reminder is scheduled for. Serves as a cache to quickly obtain all reminders that are due.
+#  exchange_register_id :uuid             not null, indexed                From which register does the money come from.
+#  exchange_description :string           not null                         Label of the exchange.
+#  exchange_memo        :text                                              Detail about the exchange.
 #  exchange_status      :enum             default("uncleared"), not null
 #

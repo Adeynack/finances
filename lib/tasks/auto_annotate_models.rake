@@ -13,7 +13,7 @@ if Rails.env.development? || Rails.env.test?
       # "active_admin" => "false",
       # "additional_file_patterns" => [],
       "routes" => "true",
-      # "models" => "true",
+      "models" => "true",
       "position_in_routes" => "after",
       # "position_in_class" => "before",
       # "position_in_test" => "before",
@@ -54,7 +54,8 @@ if Rails.env.development? || Rails.env.test?
       # "trace" => "false",
       # "wrapper_open" => nil,
       # "wrapper_close" => nil,
-      "with_comment" => "false" # disabled until `annotate` allows for putting comment in the last column instead of with the name (maybe submit a PR to `annotate` with that option).
+      "with_comment" => "false", # disabled until `annotate` allows for putting comment in the last column instead of with the name (maybe submit a PR to `annotate` with that option).
+      "with_comment_column" => "true"
     )
   end
 
