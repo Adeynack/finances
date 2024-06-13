@@ -472,6 +472,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rake
   rubocop-rspec
+  rubocop-rspec_rails
   shimmer
   solargraph
   solargraph-standardrb

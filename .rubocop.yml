@@ -12,11 +12,12 @@ AllCops:
 inherit_gem:
   shimmer: config/rubocop_base.yml
 
-# TODO: Sync with Shimmer
+require:
+  - rubocop-rspec_rails
+
 Style/TernaryParentheses:
   Enabled: false
 
-# TODO: Sync with Shimmer
-Metrics/AbcSize:
-  Enabled: false
-  Max: 9999 # for some reason, `Enabled: false` does not disable it 🤷🏼‍♂️
+# Metrics/AbcSize:
+#   Enabled: false
+#   Max: 9999 # for some reason, `Enabled: false` does not disable it 🤷🏼‍♂️
