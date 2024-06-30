@@ -17,6 +17,8 @@ end
 # == Route Map
 #
 #                                   Prefix Verb URI Pattern                                                                                       Controller#Action
+#                           graphiql_rails      /graphiql                                                                                         GraphiQL::Rails::Engine {:graphql_path=>"/graphql"}
+#                                  graphql POST /graphql(.:format)                                                                                graphql#execute
 #                       rails_health_check GET  /up(.:format)                                                                                     rails/health#show
 #            rails_postmark_inbound_emails POST /rails/action_mailbox/postmark/inbound_emails(.:format)                                           action_mailbox/ingresses/postmark/inbound_emails#create
 #               rails_relay_inbound_emails POST /rails/action_mailbox/relay/inbound_emails(.:format)                                              action_mailbox/ingresses/relay/inbound_emails#create
@@ -41,3 +43,6 @@ end
 #                       rails_disk_service GET  /rails/active_storage/disk/:encoded_key/*filename(.:format)                                       active_storage/disk#show
 #                update_rails_disk_service PUT  /rails/active_storage/disk/:encoded_token(.:format)                                               active_storage/disk#update
 #                     rails_direct_uploads POST /rails/active_storage/direct_uploads(.:format)                                                    active_storage/direct_uploads#create
+#
+# Routes for GraphiQL::Rails::Engine:
+#        GET  /           graphiql/rails/editors#show

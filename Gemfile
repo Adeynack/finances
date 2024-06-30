@@ -16,6 +16,7 @@ gem "bootsnap", require: false
 
 # GraphQL
 gem "graphql", "~> 2.3"
+gem "graphiql-rails"
 
 # Extensions
 gem "shimmer"
@@ -61,4 +62,3 @@ group :development do
   gem "annotate", github: "ctran/annotate_models", branch: "develop"
   gem "chusaku", require: false
 end
-gem "graphiql-rails", group: :development

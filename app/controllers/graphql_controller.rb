@@ -10,10 +10,7 @@ class GraphqlController < ApplicationController
     variables = prepare_variables(params[:variables])
     query = params[:query]
     operation_name = params[:operationName]
-    context = {
-      # Query context goes here, for example:
-      # current_user: current_user,
-    }
+    context = {session:, current_api_session:}
     result = FinancesSchema.execute(query, variables:, context:, operation_name:)
     render json: result
   rescue => e
