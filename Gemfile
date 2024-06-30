@@ -14,6 +14,9 @@ gem "tzinfo-data", platforms: [:windows, :jruby]
 gem "bootsnap", require: false
 # gem "image_processing", "~> 1.2" # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 
+# GraphQL
+gem "graphql", "~> 2.3"
+
 # Extensions
 gem "shimmer"
 gem "dotenv-rails"
@@ -57,3 +60,4 @@ group :development do
   gem "annotate", github: "ctran/annotate_models", branch: "develop"
   gem "chusaku", require: false
 end
+gem "graphiql-rails", group: :development

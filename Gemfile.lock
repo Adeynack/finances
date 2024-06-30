@@ -134,6 +134,10 @@ GEM
       ruby-progressbar (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    graphiql-rails (1.10.0)
+      railties
+    graphql (2.3.7)
+      base64
     guard (2.18.1)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
@@ -453,6 +457,8 @@ DEPENDENCIES
   debug
   dotenv-rails
   fuubar
+  graphiql-rails
+  graphql (~> 2.3)
   guard
   guard-rspec
   iban-tools
