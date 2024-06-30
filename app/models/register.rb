@@ -32,6 +32,7 @@ class Register < ApplicationRecord
   include AttributeStripping
 
   self.inheritance_column = nil
+
   ACCOUNT_TYPES = ["Asset", "Bank", "Card", "Institution", "Investment", "Liability", "Loan"].freeze
   CATEGORY_TYPES = ["Expense", "Income"].freeze
   KNOWN_TYPES = (ACCOUNT_TYPES + CATEGORY_TYPES).freeze
@@ -65,8 +66,8 @@ class Register < ApplicationRecord
   validates :annual_interest_rate, numericality: {allow_nil: true}
   validates :credit_limit, numericality: {allow_nil: true, only_integer: true}
 
-  scope :accounts, -> { where(type: Account.known_names) }
-  scope :categories, -> { where(type: Category.known_names) }
+  scope :accounts, -> { where(type: ACCOUNT_TYPES) }
+  scope :categories, -> { where(type: CATEGORY_TYPES) }
   scope :active, -> { where(active: true) }
 
   before_create do
