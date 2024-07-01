@@ -41,4 +41,7 @@ node_modules
 ### macOS
 .DS_Store
 
+# Generated GraphQL Code
+__generated__
+
 ###
