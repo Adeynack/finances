@@ -19,8 +19,8 @@ class ApiSession < ApplicationRecord
 
   class << self
     def log_in(email:, password:, rails_session:, current_api_session:)
-      user = User.find_by(email:) || raise(CreateNewSessionError, "user not found")
-      raise(CreateNewSessionError, "incorrect password") unless user.authenticate(password)
+      user = User.find_by(email:)
+      raise(CreateNewSessionError, "invalid credentials") unless user&.authenticate(password)
 
       # If the request is already authenticated by bearer token, `current_api_session` is already set.
       # Otherwise, if the token of the current session is still valid, use the same session (do not create a new one for nothing).
