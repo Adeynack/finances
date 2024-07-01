@@ -38,11 +38,10 @@ module Currencyable
 
       # Money Object Setter
       define_method :"#{attribute_name}=" do |new_value|
-        raise ArgumentError, "#{attribute_name} cannot be nil" if optional && new_value.nil?
         raise ArgumentError, "#{attribute_name} expected to be of type #{Money::Currency.name}" unless new_value.nil? || new_value.is_a?(Money::Currency)
 
         instance_variable_set(money_instance_variable, new_value)
-        public_send :"#{model_attribute}=", new_value.iso_code
+        public_send :"#{model_attribute}=", new_value&.iso_code
       end
     end
   end
