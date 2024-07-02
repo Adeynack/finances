@@ -3,8 +3,8 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
     origins(
-      "http://localhost:8080",
-      "http://127.0.0.1:8080"
+      "http://localhost:30002",
+      "http://127.0.0.1:30002"
     )
 
     resource "*",

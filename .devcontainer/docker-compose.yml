@@ -8,9 +8,11 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 30001
+      - 30001:30001
+      - 30002:30002
     volumes:
       - ../..:/workspaces:cached
+      - ../tmp/gem_home:/usr/local/bundle:delegate
     command: sleep infinity
     network_mode: host
 
@@ -18,7 +20,7 @@ services:
     image: postgres:16.2
     restart: unless-stopped
     ports:
-      - 30002:5432
+      - 30099:5432
     volumes:
       - ../tmp/postgres-data:/var/lib/postgresql/data
     environment:

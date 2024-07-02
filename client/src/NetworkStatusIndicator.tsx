@@ -12,7 +12,7 @@ function NetworkStatusIndicator({ error, networkStatus }: Props) {
   switch (networkStatus) {
     case NetworkStatus.error:
       pill = '🔴';
-      message = 'Error' + error ? `: ${error}` : '';
+      message = 'Error' + (error ? `: ${error}` : '');
       break;
     case NetworkStatus.fetchMore:
       pill = '🟡';
