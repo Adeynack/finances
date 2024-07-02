@@ -1,3 +1,4 @@
+import { DatabaseOutlined, FileUnknownOutlined, LoadingOutlined, ReloadOutlined, StopOutlined } from "@ant-design/icons";
 import { ApolloError, NetworkStatus } from "@apollo/client";
 
 interface Props {
@@ -7,43 +8,48 @@ interface Props {
 
 function NetworkStatusIndicator({ error, networkStatus }: Props) {
   let message: string;
-  let pill: string;
+
+  let icon: JSX.Element;
 
   switch (networkStatus) {
     case NetworkStatus.error:
-      pill = '🔴';
+      icon = <StopOutlined />;
       message = 'Error' + (error ? `: ${error}` : '');
       break;
     case NetworkStatus.fetchMore:
-      pill = '🟡';
+      icon = <LoadingOutlined spin={true} />
       message = 'FetchMore';
       break;
     case NetworkStatus.loading:
-      pill = '🟡';
+      icon = <LoadingOutlined spin={true} />
       message = 'Loading';
       break;
     case NetworkStatus.poll:
-      pill = '🟡';
+      icon = <LoadingOutlined spin={true} />
       message = 'Poll';
       break;
     case NetworkStatus.ready:
-      pill = '🟢';
+      icon = <DatabaseOutlined />;
       message = 'Ready';
       break;
     case NetworkStatus.refetch:
       message = 'Refetch';
-      pill = '🟡';
+      icon = <ReloadOutlined spin={true} />
       break;
     case NetworkStatus.setVariables:
-      pill = '🟡';
+      icon = <LoadingOutlined spin={true} />
       message = 'Set Variables';
       break;
     default:
-      pill = '⚫️';
+      icon = <FileUnknownOutlined />;
       message = `${networkStatus}`;
   }
 
-  return <span>{pill}&nbsp;{message}</span>
+  return (
+    <span>
+      {icon}&nbsp;{message}
+    </span>
+  );
 }
 
 export default NetworkStatusIndicator;

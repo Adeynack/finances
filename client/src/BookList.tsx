@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { gql } from './__generated__/gql';
 import NetworkStatusIndicator from './NetworkStatusIndicator';
+import { Button } from 'antd';
 
 const GET_BOOK_LIST = gql(`
   query GetBookList {
@@ -33,7 +34,7 @@ function BookList() {
             </li>
           ))}
         </ul>}
-      <button onClick={() => refetch()}>Refetch book list</button>
+      <Button onClick={() => refetch()}>Refetch book list</Button>
     </div >
   )
 }
