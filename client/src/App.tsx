@@ -1,6 +1,6 @@
-import { ConfigProvider, App as AntApp, Switch } from 'antd'
+import { ConfigProvider, App as AntApp } from 'antd'
 import './App.css'
-import BookList from './BookList'
+import { BookList } from './BookList'
 import { useMemo, useState } from 'react'
 import { defaultOptions, Options, OptionsContext, OptionsSetterContext, themeFromOptions } from './components/core/options'
 import { BodyStyler } from './components/core/BodyStyler'
@@ -18,8 +18,8 @@ function App() {
   return (
     <>
       <ConfigProvider theme={themeConfig}>
-        <BodyStyler />
         <AntApp>
+          <BodyStyler />
           <OptionsContext.Provider value={options}>
             <OptionsSetterContext.Provider value={{ changeOptions }}>
               <ThemeSwitch />

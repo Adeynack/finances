@@ -16,7 +16,7 @@ const GET_BOOK_LIST = gql(`
   }
 `);
 
-function BookList() {
+export function BookList() {
   const { loading, data, error, refetch, networkStatus } = useQuery(
     GET_BOOK_LIST, {
     notifyOnNetworkStatusChange: true
@@ -38,5 +38,3 @@ function BookList() {
     </div >
   )
 }
-
-export default BookList;
