@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { gql } from './__generated__/gql';
-import NetworkStatusIndicator from './NetworkStatusIndicator';
 import { Button } from 'antd';
+import NetworkStatusIndicator from './components/apollo/NetworkStatusIndicator';
 
 const GET_BOOK_LIST = gql(`
   query GetBookList {

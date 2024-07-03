@@ -9,7 +9,7 @@ RUN apt -y install --no-install-recommends postgresql-client pspg libpq-dev
 RUN apt -y install --no-install-recommends tmux
 
 # Install NodeJS & npm & yarn
-RUN curl -fsSL https://deb.nodesource.com/setup_21.x | bash - && apt-get install -y nodejs && npm install -g yarn
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && apt-get install -y nodejs && npm install -g yarn
 
 # Install Go dependencies
 RUN apt -y install --no-install-recommends golang

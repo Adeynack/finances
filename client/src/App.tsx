@@ -4,6 +4,7 @@ import BookList from './BookList'
 import { useMemo, useState } from 'react'
 import { defaultOptions, Options, OptionsContext, OptionsSetterContext, themeFromOptions } from './components/core/options'
 import { BodyStyler } from './components/core/BodyStyler'
+import { ThemeSwitch } from './components/core/ThemeSwitch'
 
 function App() {
   const [options, setOptions] = useState(defaultOptions());
@@ -21,9 +22,7 @@ function App() {
         <AntApp>
           <OptionsContext.Provider value={options}>
             <OptionsSetterContext.Provider value={{ changeOptions }}>
-              <Switch title='Dark mode?' value={options.theme === 'dark'} onChange={(checked) => {
-                setOptions({ ...options, theme: checked ? 'dark' : 'light' })
-              }} />
+              <ThemeSwitch />
               <BookList />
             </OptionsSetterContext.Provider>
           </OptionsContext.Provider>
