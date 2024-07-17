@@ -20,7 +20,7 @@ export function defaultOptions(): Options {
 export const OptionsContext = createContext(defaultOptions());
 
 export const OptionsSetterContext = createContext({
-  changeOptions: (_options: Partial<Options>) => { },
+  changeOptions: () => { },
 });
 
 export function themeFromOptions(optionTheme: Options['theme']): ThemeConfig {

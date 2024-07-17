@@ -1,10 +1,9 @@
 import { ConfigProvider, App as AntApp } from 'antd'
 import './App.css'
-import { BookList } from './BookList'
 import { useMemo, useState } from 'react'
 import { defaultOptions, Options, OptionsContext, OptionsSetterContext, themeFromOptions } from './components/core/options'
 import { BodyStyler } from './components/core/BodyStyler'
-import { ThemeSwitch } from './components/core/ThemeSwitch'
+import MainLayout from './components/core/MainLayout'
 
 function App() {
   const [options, setOptions] = useState(defaultOptions());
@@ -22,8 +21,7 @@ function App() {
           <BodyStyler />
           <OptionsContext.Provider value={options}>
             <OptionsSetterContext.Provider value={{ changeOptions }}>
-              <ThemeSwitch />
-              <BookList />
+              <MainLayout />
             </OptionsSetterContext.Provider>
           </OptionsContext.Provider>
         </AntApp>
