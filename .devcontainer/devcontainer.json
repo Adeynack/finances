@@ -45,8 +45,7 @@
         "netcorext.uuid-generator",
         "redhat.vscode-yaml",
         "ms-azuretools.vscode-docker",
-        "dbaeumer.vscode-eslint",
-        "github.vscode-github-actions"
+        "dbaeumer.vscode-eslint"
       ]
     }
   }
