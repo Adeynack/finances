@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+bin/bootstrap && rm -f ./.overmind.sock && bin/dev
