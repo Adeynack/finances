@@ -62,4 +62,5 @@ group :development do
   gem "rubocop-graphql"
   gem "annotate", github: "ctran/annotate_models", branch: "develop"
   gem "chusaku", require: false
+  gem "ruby-lsp-rspec", require: false
 end

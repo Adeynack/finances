@@ -36,7 +36,6 @@
 /config/master.key
 # Misc
 /out
-overmind.sock
 node_modules
 ### macOS
 .DS_Store

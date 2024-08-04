@@ -48,14 +48,14 @@
         "wmaurer.change-case",
         "yzhang.markdown-all-in-one",
         "zombocom.dead-end-vscode"
-      ]
-    },
-    "settings": {
-      "typescript.tsdk": "node_modules/typescript/lib",
-      "rubyLsp.rubyVersionManager": "none",
-      "[ruby]": {
-        "editor.formatOnSave": true,
-        "editor.defaultFormatter": "Shopify.ruby-lsp"
+      ],
+      "settings": {
+        "typescript.tsdk": "node_modules/typescript/lib",
+        "rubyLsp.rubyVersionManager": "none",
+        "[ruby]": {
+          "editor.formatOnSave": true,
+          "editor.defaultFormatter": "Shopify.ruby-lsp"
+        }
       }
     }
   }

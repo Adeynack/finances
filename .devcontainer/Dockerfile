@@ -1,20 +1,16 @@
-FROM ruby:3.3
+FROM mcr.microsoft.com/devcontainers/ruby:1-3.3-bullseye
 
 WORKDIR /workspaces/${LOCAL_WORKSPACE_FOLDER_BASENAME}
 
 # Update/Upgrade to latest software, add keys and sources, install software
+RUN wget -O- https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" | tee /etc/apt/sources.list.d/postgres.list
+
 RUN export DEBIAN_FRONTEND=noninteractive && apt update && apt -y upgrade
-RUN apt-get update && export DEBIAN_FRONTEND=noninteractive
-RUN apt -y install --no-install-recommends postgresql-client pspg libpq-dev
-RUN apt -y install --no-install-recommends tmux
+RUN apt -y install --no-install-recommends postgresql-client-16 pspg libpq-dev
 
 # Install NodeJS & npm & yarn
-RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && apt-get install -y nodejs && npm install -g yarn
-
-# Install Go dependencies
-RUN apt -y install --no-install-recommends golang
-ENV GOBIN=/usr/local/bin
-RUN go install github.com/DarthSim/overmind/v2@latest
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && apt-get install -y nodejs
 
 # Environment
 ENV PS1="\[\]\w\$ \[\]"
