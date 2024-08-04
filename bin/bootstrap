@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-echo "\n\nBootstrapping development setup" && \
-  echo "\n\n---[ Installing Ruby dependencies ]---" && \
-  bundle install && \
-  echo "\n\n---[ Installing Javascript/TypeScript dependencies ]---" && \
-  yarn install && \
-  echo "\n\n---[ Setting database up (create, seed, load dev/test fixtures) ]---" && \
-  bin/rails db:setup db:seed db:fixtures:load

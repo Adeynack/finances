@@ -18,7 +18,4 @@ RUN go install github.com/DarthSim/overmind/v2@latest
 
 # Environment
 ENV PS1="\[\]\w\$ \[\]"
-ENV PGHOST=127.0.0.1
-ENV PGPORT=30099
-ENV PGUSER=postgres
 ENV PAGER=pspg

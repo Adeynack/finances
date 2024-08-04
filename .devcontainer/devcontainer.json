@@ -4,8 +4,7 @@
   "service": "devcontainer",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "remoteUser": "root",
-  "postCreateCommand": "bin/bootstrap",
-  "postStartCommand": "bin/redev",
+  "postCreateCommand": "bin/setup",
   "forwardPorts": [
     30001,
     30002,
@@ -26,9 +25,7 @@
     "onAutoForward": "ignore"
   },
   "containerEnv": {
-    "LOCAL_WORKSPACE_FOLDER_BASENAME": "${localWorkspaceFolderBasename}"
-  },
-  "remoteEnv": {
+    "LOCAL_WORKSPACE_FOLDER_BASENAME": "${localWorkspaceFolderBasename}",
     "EDITOR": "code --wait"
   },
   "customizations": {
