@@ -31,20 +31,32 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "ms-vscode-remote.remote-containers",
-        "shopify.ruby-extensions-pack",
+        "bierner.markdown-mermaid",
         "darkriszty.markdown-table-prettify",
-        "wmaurer.change-case",
-        "zombocom.dead-end-vscode",
+        "dbaeumer.vscode-eslint",
+        "eamodio.gitlens",
+        "esbenp.prettier-vscode",
+        "EditorConfig.EditorConfig",
+        "GraphQL.vscode-graphql",
         "kaiwood.endwise",
-        "yzhang.markdown-all-in-one",
-        "darkriszty.markdown-table-prettify",
-        "trybick.terminal-zoom",
+        "ms-azuretools.vscode-docker",
+        "ms-vscode-remote.remote-containers",
         "netcorext.uuid-generator",
         "redhat.vscode-yaml",
-        "ms-azuretools.vscode-docker",
-        "dbaeumer.vscode-eslint"
+        "shopify.ruby-extensions-pack",
+        "trybick.terminal-zoom",
+        "wmaurer.change-case",
+        "yzhang.markdown-all-in-one",
+        "zombocom.dead-end-vscode"
       ]
+    },
+    "settings": {
+      "typescript.tsdk": "node_modules/typescript/lib",
+      "rubyLsp.rubyVersionManager": "none",
+      "[ruby]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "Shopify.ruby-lsp"
+      }
     }
   }
 }
