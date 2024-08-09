@@ -59112,11 +59112,11 @@
   }
 
   // app/frontend/__generated__/graphql.ts
-  var GetBookListDocument = { "kind": "Document", "definitions": [{ "kind": "OperationDefinition", "operation": "query", "name": { "kind": "Name", "value": "GetBookList" }, "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "books" }, "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "id" } }, { "kind": "Field", "name": { "kind": "Name", "value": "name" } }, { "kind": "Field", "name": { "kind": "Name", "value": "owner" }, "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "displayName" } }] } }] } }] } }] };
+  var GetBookListDocument = { "kind": "Document", "definitions": [{ "kind": "OperationDefinition", "operation": "query", "name": { "kind": "Name", "value": "GetBookList" }, "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "books" }, "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "id" } }, { "kind": "Field", "name": { "kind": "Name", "value": "name" } }, { "kind": "Field", "name": { "kind": "Name", "value": "owner" }, "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "displayName" } }, { "kind": "Field", "name": { "kind": "Name", "value": "email" } }] } }] } }] } }] };
 
   // app/frontend/__generated__/gql.ts
   var documents = {
-    "\n  query GetBookList {\n    books {\n      id\n      name\n      owner {\n        displayName\n      }\n    }\n  }\n": GetBookListDocument
+    "\n  query GetBookList {\n    books {\n      id\n      name\n      owner {\n        displayName\n        email\n      }\n    }\n  }\n": GetBookListDocument
   };
   function gql(source) {
     return documents[source] ?? {};
@@ -59171,6 +59171,7 @@
       name
       owner {
         displayName
+        email
       }
     }
   }
@@ -59182,7 +59183,7 @@
         notifyOnNetworkStatusChange: true
       }
     );
-    return /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("p", null, /* @__PURE__ */ React.createElement(NetworkStatusIndicator_default, { error, networkStatus })), data && !loading && /* @__PURE__ */ React.createElement("ul", null, data.books.map((book) => /* @__PURE__ */ React.createElement("li", { key: book.id }, /* @__PURE__ */ React.createElement("span", null, book.name), /* @__PURE__ */ React.createElement("span", null, "(", book.owner.displayName, ")")))), /* @__PURE__ */ React.createElement(button_default2, { onClick: () => refetch() }, "Refetch book list"));
+    return /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("p", null, /* @__PURE__ */ React.createElement(NetworkStatusIndicator_default, { error, networkStatus })), data && !loading && /* @__PURE__ */ React.createElement("ul", null, data.books.map((book) => /* @__PURE__ */ React.createElement("li", { key: book.id }, /* @__PURE__ */ React.createElement("span", null, "001"), /* @__PURE__ */ React.createElement("span", null, book.name), /* @__PURE__ */ React.createElement("span", null, "(", book.owner.displayName, " [", book.owner.email, "])")))), /* @__PURE__ */ React.createElement(button_default2, { onClick: () => refetch() }, "Refetch book list"));
   }
 
   // app/frontend/components/core/ThemeSwitch.tsx

@@ -14,14 +14,14 @@
       "name": "Vite",
       "type": "node-terminal",
       "request": "launch",
-      "command": "yarn build --watch",
-      "preLaunchTask": "Sleepdelay"
+      "command": "yarn build --watch"
     },
     {
       "name": "gql-compile",
       "type": "node-terminal",
       "request": "launch",
-      "command": "yarn gql-compile --watch"
+      "command": "yarn gql-compile --watch",
+      "preLaunchTask": "Sleepdelay"
     }
   ],
   "compounds": [

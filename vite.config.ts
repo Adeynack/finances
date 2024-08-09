@@ -1,6 +1,6 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import Rails from 'vite-plugin-rails';
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import Rails from "vite-plugin-rails";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -8,5 +8,5 @@ export default defineConfig({
   clearScreen: false,
   server: {
     port: 30002,
-  }
-})
+  },
+});

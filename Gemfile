@@ -6,8 +6,6 @@ ruby File.read(".ruby-version").strip
 
 gem "rails", "~> 7.1.3", ">= 7.1.3.4"
 gem "rack-cors"
-gem "sprockets-rails"
-gem "vite_rails"
 gem "pg", "~> 1.1"
 gem "puma", ">= 5.0"
 gem "importmap-rails" # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
@@ -15,6 +13,10 @@ gem "bcrypt", "~> 3.1.7" # Use Active Model has_secure_password [https://guides.
 gem "tzinfo-data", platforms: [:windows, :jruby]
 gem "bootsnap", require: false
 # gem "image_processing", "~> 1.2" # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
+
+# Assets
+gem "sprockets-rails"
+gem "vite_rails"
 
 # GraphQL
 gem "graphql", "~> 2.3"

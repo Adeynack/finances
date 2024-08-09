@@ -10,6 +10,7 @@ const GET_BOOK_LIST = gql(`
       name
       owner {
         displayName
+        email
       }
     }
   }
@@ -28,8 +29,9 @@ export function BookList() {
         <ul>
           {data.books.map(book => (
             <li key={book.id}>
+              <span>001</span>
               <span>{book.name}</span>
-              <span>({book.owner.displayName})</span>
+              <span>({book.owner.displayName} [{book.owner.email}])</span>
             </li>
           ))}
         </ul>}
