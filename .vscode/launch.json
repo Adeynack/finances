@@ -20,7 +20,8 @@
       "name": "gql-watch",
       "type": "node-terminal",
       "request": "launch",
-      "command": "yarn gql-watch"
+      "command": "yarn gql-watch",
+      "preLaunchTask": "Sleepdelay"
     }
   ],
   "compounds": [

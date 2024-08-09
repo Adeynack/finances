@@ -43,4 +43,7 @@ node_modules
 # Generated GraphQL Code
 __generated__
 
+# Client (frontend) distribution
+client/dist/
+
 ###

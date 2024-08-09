@@ -28,9 +28,8 @@ export function BookList() {
       {data && !loading &&
         <ul>
           {data.books.map(book => (
-            <li key={book.id}>
-              <span>{book.name}</span>
-              <span>({book.owner.displayName})</span>
+            <li key={book.id} title={`Owned by ${book.owner.displayName} (${book.owner.email})`} >
+              {book.name}
             </li>
           ))}
         </ul>}
