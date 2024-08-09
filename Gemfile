@@ -7,6 +7,7 @@ ruby File.read(".ruby-version").strip
 gem "rails", "~> 7.1.3", ">= 7.1.3.4"
 gem "rack-cors"
 gem "sprockets-rails"
+gem "vite_rails"
 gem "pg", "~> 1.1"
 gem "puma", ">= 5.0"
 gem "importmap-rails" # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
@@ -62,5 +63,6 @@ group :development do
   gem "rubocop-graphql"
   gem "annotate", github: "ctran/annotate_models", branch: "develop"
   gem "chusaku", require: false
+  gem "ruby-lsp-rails"
   gem "ruby-lsp-rspec", require: false
 end

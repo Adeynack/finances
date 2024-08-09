@@ -14,13 +14,14 @@
       "name": "Vite",
       "type": "node-terminal",
       "request": "launch",
-      "command": "yarn dev"
+      "command": "yarn build --watch",
+      "preLaunchTask": "Sleepdelay"
     },
     {
-      "name": "gql-watch",
+      "name": "gql-compile",
       "type": "node-terminal",
       "request": "launch",
-      "command": "yarn gql-watch"
+      "command": "yarn gql-compile --watch"
     }
   ],
   "compounds": [
@@ -29,7 +30,7 @@
       "configurations": [
         "Rails",
         "Vite",
-        "gql-watch"
+        "gql-compile"
       ],
       "stopAll": true,
       "presentation": {
