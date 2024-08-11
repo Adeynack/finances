@@ -40,7 +40,7 @@ jobs:
           bin/git_tracked_are_unmodified
       - name: Controllers Annotation
         run: >- # To fix: bin/chusaku
-          bundle exec chusaku --dry-run --exit-with-error-on-annotation &&
+          bundle exec chusaku &&
           bin/git_tracked_are_unmodified
       - name: Lint with Rubocop
         run: bundle exec rubocop -c .rubocop.yml
