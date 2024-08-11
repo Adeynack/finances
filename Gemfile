@@ -47,6 +47,7 @@ group :test do
 end
 
 group :development do
+  gem "faraday"
   gem "web-console"
   gem "guard"
   gem "guard-rspec"

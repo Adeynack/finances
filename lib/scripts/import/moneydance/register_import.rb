@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
-module Import::Moneydance
+require_relative "utils"
+
+module MoneydanceImport
   class RegisterImport
-    include Import::Moneydance::Utils
+    include MoneydanceImport::Utils
 
     def initialize(logger:, md_items_by_type:, register_id_by_md_acctid:, register_id_by_md_old_id:, book:, md_currencies_by_id:)
       @logger = logger

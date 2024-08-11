@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
-module Import::Moneydance
+import_relative "utils"
+
+module MoneydanceImport
   class ReminderImport
-    include Import::Moneydance::Utils
+    include MoneydanceImport::Utils
 
     def initialize(logger:, book:, md_items_by_type:, register_id_by_md_acctid:)
       @logger = logger
@@ -52,7 +54,7 @@ module Import::Moneydance
         else
           index = key_parts[1].to_i
           split = splits_per_index[index] ||= {}
-          attribute = key_parts[2..].to_a.join(".")
+          attribute = key_parts.drop(2).to_a.join(".")
           split[attribute] = md_reminder.delete(key).to_s
         end
       end

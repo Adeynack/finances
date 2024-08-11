@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
-module Import::Moneydance
+require_relative "utils"
+
+module MoneydanceImport
   class ExchangeImport
-    include Import::Moneydance::Utils
+    include MoneydanceImport::Utils
 
     def initialize(logger:, md_items_by_type:, register_id_by_md_acctid:)
       @logger = logger
@@ -46,7 +48,7 @@ module Import::Moneydance
         next unless key_parts.length == 2
 
         split_index = key_parts.first.to_i
-        split_attribute = key_parts[1..].to_a.join(".")
+        split_attribute = key_parts.drop(1).to_a.join(".")
         md_split = md_splits_per_index[split_index] ||= {}
         md_split[split_attribute] = value
       end
