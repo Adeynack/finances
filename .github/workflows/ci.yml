@@ -35,19 +35,23 @@ jobs:
       - name: Create PG Database
         run: bundle exec rake db:create db:migrate
       - name: Model and Routes Annotation
-        # To fix: bin/annotate
-        env:
-          ANNOTATE_FROZEN: true
-        run: bundle exec annotate
+        run: >- # To fix: bin/annotate
+          bundle exec annotate &&
+          bin/git_tracked_are_unmodified
       - name: Controllers Annotation
-        # To fix: bin/chusaku
-        run: bundle exec chusaku --dry-run --exit-with-error-on-annotation
+        run: >- # To fix: bin/chusaku
+          bundle exec chusaku --dry-run --exit-with-error-on-annotation &&
+          bin/git_tracked_are_unmodified
       - name: Lint with Rubocop
         run: bundle exec rubocop -c .rubocop.yml
       - name: Install JavaScript Dependencies
         run: yarn install
       - name: Generate GraphQL Client Code
-        run: "bin/rails server --daemon --port 30001 --binding localhost && sleep 5 && yarn gql-compile && kill $(cat tmp/pids/server.pid)"
+        run: >-
+          bin/rails server --daemon --port 30001 --binding localhost &&
+          sleep 5 &&
+          yarn gql-compile &&
+          kill $(cat tmp/pids/server.pid)
       - name: Lint JS/TS
         run: yarn lint
       - name: Build and test with Rake
