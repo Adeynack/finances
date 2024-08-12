@@ -12,5 +12,13 @@ module Mutations
       raise GraphQL::ExecutionError, "Not authorized" unless context[:current_api_session].present?
       true
     end
+
+    def current_user
+      context[:current_api_session]&.user
+    end
+
+    def authorize(resource, permission = "#{field.name.underscore}?")
+      Pundit.authorize(current_user, resource, permission)
+    end
   end
 end

@@ -12,7 +12,11 @@ class BookPolicy < ApplicationPolicy
   end
 
   def create?
-    admin?
+    user
+  end
+
+  def create_book?
+    create?
   end
 
   def update?
@@ -21,6 +25,10 @@ class BookPolicy < ApplicationPolicy
 
   def destroy?
     admin? || record.owner == user
+  end
+
+  def destroy_book_fast?
+    admin? && destroy?
   end
 
   class Scope < ApplicationPolicy::Scope
