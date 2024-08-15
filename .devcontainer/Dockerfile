@@ -15,3 +15,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && apt-get install
 # Environment
 ENV PS1="\[\]\w\$ \[\]"
 ENV PAGER=pspg
+
+# Go is not installed by default, but if using the optional `bin/dev` dev setup, then it becomes necessary.
+ENV GOBIN=/usr/local/bin
+ENV GO111MODULE=on
