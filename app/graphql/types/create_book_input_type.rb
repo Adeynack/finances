@@ -3,8 +3,7 @@
 module Types
   class CreateBookInputType < Types::BaseInputObject
     argument :id, ID, required: false
-    auto_arguments Book,
-      :name,
-      :default_currency_iso_code
+    argument :name, String, required: true
+    argument :default_currency_iso_code, String, required: true
   end
 end

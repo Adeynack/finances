@@ -2,12 +2,24 @@
 
 module Types
   class RegisterType < Types::BaseObject
-    auto_fields Register,
-      :id, :created_at, :updated_at, :name, :type,
-      :book_id, :parent_id, :starts_at, :expires_at,
-      :currency_iso_code, :notes, :initial_balance,
-      :active, :default_category_id, :institution_name,
-      :account_number, :iban, :annual_interest_rate,
-      :credit_limit, :card_number
+    field :id, ID, null: false
+    field :created_at, GraphQL::Types::ISO8601DateTime, null: false
+    field :name, String, null: false
+    field :type, Types::RegisterTypeType, null: false
+    field :book_id, ID, null: false
+    field :parent_id, ID, null: true
+    field :starts_at, GraphQL::Types::ISO8601Date, null: false
+    field :expires_at, GraphQL::Types::ISO8601Date, null: true
+    field :currency_iso_code, String, null: false
+    field :notes, String, null: true
+    field :initial_balance, Integer, null: false
+    field :active, Boolean, null: false
+    field :default_category_id, ID, null: false
+    field :institution_name, String, null: true
+    field :account_number, String, null: true
+    field :iban, String, null: true
+    field :annual_interest_rate, Float, null: true
+    field :credit_limit, Integer, null: true
+    field :card_number, String, null: true
   end
 end
