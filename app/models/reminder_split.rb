@@ -10,7 +10,7 @@
 #  reminder_id        :uuid             not null, indexed
 #  register_id        :uuid             not null, indexed                To which register is the money going to for this split.
 #  amount             :integer          not null
-#  counterpart_amount :integer                                           Amount in the destination register, if it differs from 'amount' (ex: an exchange rate applies).
+#  counterpart_amount :integer                                           Amount in the destination register, if it differs from 'amount' (eg: an exchange rate applies).
 #  memo               :text                                              Detail about the exchange, to show in the destination register.
 #  status             :enum             default("uncleared"), not null
 #

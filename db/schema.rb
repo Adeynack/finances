@@ -79,19 +79,19 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_30_201354) do
     t.enum "type", null: false, enum_type: "register_type"
     t.uuid "book_id", null: false
     t.uuid "parent_id", comment: "A null parent means it is a root register."
-    t.date "starts_at", null: false, comment: "Opening date of the register."
-    t.date "expires_at", comment: "Optional expiration date of the register (ex: for a credit card)."
+    t.date "starts_at", comment: "Opening date of the register (eg: for accounts, but not for categories)."
+    t.date "expires_at", comment: "Optional expiration date of the register (eg: for a credit card)."
     t.string "currency_iso_code", limit: 3, null: false
     t.text "notes"
     t.bigint "initial_balance", default: 0, null: false
     t.boolean "active", default: true, null: false
     t.uuid "default_category_id", comment: "The category automatically selected when entering a new exchange from this register."
-    t.string "institution_name", comment: "Name of the institution (ex: bank) managing the registry (ex: credit card)."
-    t.string "account_number", comment: "Number by which the register is referred to (ex: bank account number)."
+    t.string "institution_name", comment: "Name of the institution (eg: bank) managing the registry (eg: credit card)."
+    t.string "account_number", comment: "Number by which the register is referred to (eg: bank account number)."
     t.string "iban", comment: "In the case the register is identified by an International Bank Account Number (IBAN)."
-    t.decimal "annual_interest_rate", comment: "In the case the register is being charged interests, its rate per year (ex: credit card)."
-    t.bigint "credit_limit", comment: "In the case the register has a credit limit (ex: credit card, credit margin)."
-    t.string "card_number", comment: "In the case the register is linked to a card, its number (ex: a credit card)."
+    t.decimal "annual_interest_rate", comment: "In the case the register is being charged interests, its rate per year (eg: credit card)."
+    t.bigint "credit_limit", comment: "In the case the register has a credit limit (eg: credit card, credit margin)."
+    t.string "card_number", comment: "In the case the register is linked to a card, its number (eg: a credit card)."
     t.index ["book_id"], name: "index_registers_on_book_id"
     t.index ["default_category_id"], name: "index_registers_on_default_category_id"
     t.index ["parent_id"], name: "index_registers_on_parent_id"
@@ -103,7 +103,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_30_201354) do
     t.uuid "reminder_id", null: false
     t.uuid "register_id", null: false, comment: "To which register is the money going to for this split."
     t.integer "amount", null: false
-    t.integer "counterpart_amount", comment: "Amount in the destination register, if it differs from 'amount' (ex: an exchange rate applies)."
+    t.integer "counterpart_amount", comment: "Amount in the destination register, if it differs from 'amount' (eg: an exchange rate applies)."
     t.text "memo", comment: "Detail about the exchange, to show in the destination register."
     t.enum "status", default: "uncleared", null: false, enum_type: "exchange_status"
     t.index ["register_id"], name: "index_reminder_splits_on_register_id"
@@ -136,7 +136,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_30_201354) do
     t.uuid "exchange_id", null: false
     t.uuid "register_id", null: false, comment: "To which register is the money going to for this split."
     t.integer "amount", null: false
-    t.integer "counterpart_amount", comment: "Amount in the destination register, if it differs from 'amount' (ex: an exchange rate applies)."
+    t.integer "counterpart_amount", comment: "Amount in the destination register, if it differs from 'amount' (eg: an exchange rate applies)."
     t.text "memo", comment: "Detail about the exchange, to show in the destination register."
     t.enum "status", default: "uncleared", null: false, enum_type: "exchange_status"
     t.index ["exchange_id"], name: "index_splits_on_exchange_id"

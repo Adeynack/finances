@@ -44,7 +44,7 @@ module MoneydanceImport
     end
 
     def import!
-      update_and_save_book!
+      create_book
       RegisterImport.new(api_client:, logger:, md_items_by_type:, register_id_by_md_acctid:, register_id_by_md_old_id:, book:, md_currencies_by_id:).import_accounts
       # ReminderImport.new(api_client:, logger:, book:, md_items_by_type:, register_id_by_md_acctid:).import_reminders
       # ExchangeImport.new(api_client:, logger:, md_items_by_type:, register_id_by_md_acctid:).import_exchanges
@@ -52,7 +52,7 @@ module MoneydanceImport
 
     private
 
-    def update_and_save_book!
+    def create_book
       file_name = md_json["metadata"]["file_name"]
       export_date = md_json["metadata"]["export_date"].to_s
       book_name = "#{file_name} (#{export_date[0..3]}-#{export_date[4..5]}-#{export_date[6..7]})"
@@ -69,7 +69,10 @@ module MoneydanceImport
       end
 
       logger.info "Create book with name \"#{book_name}\""
-      @book = api_client.create_book(name: book_name, default_currency_iso_code: default_currency)
+      @book = api_client.create_book(
+        name: book_name,
+        default_currency_iso_code: default_currency
+      )
     end
   end
 end

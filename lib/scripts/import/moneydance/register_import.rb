@@ -73,11 +73,11 @@ module MoneydanceImport
       register = create_register(md_account:, parent_register:)
       @register_id_by_md_acctid[md_account.fetch("id")] = register.id
       @register_id_by_md_old_id[md_account.fetch("old_id")] = register.id
-      register.import_origins.create! external_system: "moneydance", external_id: md_account.fetch("id")
       import_child_accounts(md_account, register, md_accounts_by_parent_id)
     end
 
     def create_register(md_account:, parent_register:)
+      binding.irb if md_account.fetch("name") == "CPD EOP"
       register = {
         type: register_type(md_account),
         # created_at: from_md_unix_date(md_account["creation_date"]),
@@ -89,7 +89,9 @@ module MoneydanceImport
         initial_balance: md_account["sbal"]&.then(&:to_i),
         active: md_account["is_inactive"] != "y",
         default_category_id: extract_default_category_id(md_account),
-        notes: md_account["comment"]&.strip.presence
+        notes: md_account["comment"]&.strip.presence,
+        # TODO: Get rid of the `import_origin` model completely, and save this information as a `meta` JSON field on the registry.
+        import_origin: {system: "Moneydance", id: md_account.fetch("id")}
       }
       assign_account_information(md_account:, register:)
       @api_client.create_register(**register)

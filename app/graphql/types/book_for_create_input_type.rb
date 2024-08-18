@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Types
-  class CreateBookInputType < Types::BaseInputObject
+  class BookForCreateInputType < Types::BaseInputObject
     argument :id, ID, required: false
     argument :name, String, required: true
     argument :default_currency_iso_code, String, required: true

@@ -84,7 +84,13 @@ module MoneydanceImport
       variables = map_variables_for_call(variables)
       verbose_query(query:, variables:) if verbose
       result = api_client.post(nil, {query:, variables:}.to_json)
-      raise GraphQLError, result.body["errors"].first["message"] if expect_success && result.body.key?("errors")
+      if expect_success && result.body.key?("errors")
+        logger.error <<~ERROR if verbose
+          Query failed. Full body:
+          #{JSON.pretty_generate(result.body["errors"]).indent(2)}
+        ERROR
+        raise GraphQLError, result.body["errors"].first["message"]
+      end
 
       result.body
     end
@@ -128,7 +134,7 @@ module MoneydanceImport
 
     def create_book(name:, default_currency_iso_code:)
       r = query! variables: {book: {name:, default_currency_iso_code:}}, query: <<~GQL
-        mutation CreateBook($book: CreateBookInput!) {
+        mutation CreateBook($book: BookForCreateInput!) {
           createBook(input: {book: $book}) {
             book {
               id
@@ -153,8 +159,9 @@ module MoneydanceImport
     end
 
     def create_register(**args)
-      r = query! variables: args, query: <<~GQL
-        mutation CreateRegister($register CreateRegisterInput!) {
+      # args = args.slice(:name, :type, :book_id, :initial_balance, :currency_iso_code, :active) # TODO: remove after tests
+      r = query! variables: {register: args}, query: <<~GQL
+        mutation CreateRegister($register: RegisterForCreateInput!) {
           createRegister(input: {register: $register}) {
             register {
               id

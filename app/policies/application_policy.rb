@@ -8,6 +8,16 @@ class ApplicationPolicy
     @record = record
   end
 
+  def book_editor?(resource = record)
+    if resource.is_a?(Book)
+      resource.owner_id == user.id
+    elsif resource.respond_to?(:book)
+      book_editor?(resource.book)
+    else
+      raise ArgumentError, "no way to determine which book is being edited"
+    end
+  end
+
   def admin?
     user&.admin?
   end
@@ -49,7 +59,7 @@ class ApplicationPolicy
       allowed_actions = (allowed_actions.presence || ASSOCIATION_ACTIONS) - options[:except]
       ASSOCIATION_ACTIONS.each do |action|
         Array.wrap(association_names).each do |association_name|
-          define_method "#{action}_#{association_name}?" do
+          define_method :"#{action}_#{association_name}?" do
             allowed_actions.include?(action) && (!options[:if] || send(options[:if]))
           end
         end
