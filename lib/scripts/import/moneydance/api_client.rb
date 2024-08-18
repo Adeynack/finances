@@ -4,9 +4,11 @@ require "faraday"
 
 module MoneydanceImport
   class ApiClient
-    attr_reader :api_client
+    attr_reader :logger, :api_client, :verbose
 
-    def initialize(api_url:)
+    def initialize(logger:, api_url:, verbose:)
+      @logger = logger
+      @verbose = verbose
       @api_client = ::Faraday.new(url: api_url) do |f|
         f.request :json
         f.response :json
@@ -16,18 +18,46 @@ module MoneydanceImport
 
     class GraphQLError < StandardError; end
 
-    Book = Data.define(:id, :name).freeze
+    Book = Data.define(
+      :id,
+      :name
+    ).freeze
+
+    Register = Data.define(
+      :id,
+      :createdAt,
+      :name,
+      :type,
+      :bookId,
+      :parentId,
+      :startsAt,
+      :expiresAt,
+      :currencyIsoCode,
+      :notes,
+      :initialBalance,
+      :active,
+      :defaultCategoryId,
+      :institutionName,
+      :accountNumber,
+      :iban,
+      :annualInterestRate,
+      :creditLimit,
+      :cardNumber
+    ).freeze
 
     class << self
-      def login_and_use(api_url:, api_email:, api_password:)
-        client = new(api_url:)
+      def login_and_use(logger:, api_url:, api_email:, api_password:, verbose: false)
+        client = new(logger:, api_url:, verbose:)
         client.login(email: api_email, password: api_password)
-        begin
-          yield client if block_given?
-        rescue
-          client.logout
-          raise
-        end
+
+        yield client if block_given?
+      rescue Faraday::ConnectionFailed => e
+        logger.error "Connection to API not possible: #{e.message}"
+        exit 1
+      rescue
+        logger.error "Query to API failed. Automatically logging out."
+        client.logout
+        raise
       end
     end
 
@@ -39,10 +69,21 @@ module MoneydanceImport
       api_client.headers["Authorization"] = "Bearer #{value}"
     end
 
+    def map_variables_for_call(variables)
+      case variables
+      when Hash
+        variables.transform_keys { _1.to_s.camelize(:lower) }.transform_values { map_variables_for_call(_1) }
+      when Array
+        variables.map { map_variables_for_call(_1) }
+      else
+        variables
+      end
+    end
+
     def query(query:, variables: {}, expect_success: false)
-      variables = variables.transform_keys { _1.to_s.camelize(:lower) }
+      variables = map_variables_for_call(variables)
+      verbose_query(query:, variables:) if verbose
       result = api_client.post(nil, {query:, variables:}.to_json)
-      # binding.irb
       raise GraphQLError, result.body["errors"].first["message"] if expect_success && result.body.key?("errors")
 
       result.body
@@ -86,12 +127,9 @@ module MoneydanceImport
     end
 
     def create_book(name:, default_currency_iso_code:)
-      r = query! variables: {name:, default_currency_iso_code:}, query: <<~GQL
-        mutation CreateBook($name: String!, $defaultCurrencyIsoCode: String!) {
-          createBook(input: {
-            name: $name,
-            defaultCurrencyIsoCode: $defaultCurrencyIsoCode
-          }) {
+      r = query! variables: {book: {name:, default_currency_iso_code:}}, query: <<~GQL
+        mutation CreateBook($book: CreateBookInput!) {
+          createBook(input: {book: $book}) {
             book {
               id
               name
@@ -112,6 +150,48 @@ module MoneydanceImport
           }
         }
       GQL
+    end
+
+    def create_register(**args)
+      r = query! variables: args, query: <<~GQL
+        mutation CreateRegister($register CreateRegisterInput!) {
+          createRegister(input: {register: $register}) {
+            register {
+              id
+              createdAt
+              name
+              type
+              bookId
+              parentId
+              startsAt
+              expiresAt
+              currencyIsoCode
+              notes
+              initialBalance
+              active
+              defaultCategoryId
+              institutionName
+              accountNumber
+              iban
+              annualInterestRate
+              creditLimit
+              cardNumber
+            }
+          }
+        }
+      GQL
+      Register.new(**r.dig("createRegister", "register"))
+    end
+
+    private
+
+    def verbose_query(query:, variables:)
+      logger.info <<~LOG
+        Querying the GraphQL Endpoint
+          Query:
+        #{query.indent(4)}  Variables:
+        #{JSON.pretty_generate(variables || {}).indent(4)}
+      LOG
     end
   end
 end

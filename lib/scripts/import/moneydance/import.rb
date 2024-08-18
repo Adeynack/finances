@@ -14,6 +14,7 @@ end
 @input_filepath = nil
 @api_email = ENV["FINANCES_API_EMAIL"]
 @api_password = ENV["FINANCES_API_PASSWORD"]
+@api_verbose = false
 @default_currency = nil
 @auto_delete_book = false
 
@@ -47,6 +48,10 @@ OptionParser.new do |opts|
     "--api-password PASSWORD",
     "The password to use to log in to the API. Alternatively, the environment FINANCES_API_PASSWORD is used."
   ) { @api_password = _1 }
+  opts.on(
+    "--api-verbose",
+    "Output the API calls"
+  ) { @api_verbose = true }
 end.parse!
 
 {
@@ -59,11 +64,12 @@ end.parse!
   instance_variable_get(:"@#{variable}").present? || error(message)
 end
 
+logger = Logger.new($stdout)
 json_content = File.read @input_filepath
 
-MoneydanceImport::ApiClient.login_and_use(api_url: @api_url, api_email: @api_email, api_password: @api_password) do |api_client|
+MoneydanceImport::ApiClient.login_and_use(logger:, api_url: @api_url, api_email: @api_email, api_password: @api_password, verbose: @api_verbose) do |api_client|
   MoneydanceImport::MoneydanceImport.new(
-    logger: Logger.new($stdout),
+    logger:,
     json_content:,
     api_client:,
     default_currency: @default_currency,

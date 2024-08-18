@@ -2,6 +2,7 @@
 
 require_relative "utils"
 require_relative "api_client"
+require_relative "register_import"
 
 module MoneydanceImport
   class MoneydanceImport
@@ -44,7 +45,7 @@ module MoneydanceImport
 
     def import!
       update_and_save_book!
-      # RegisterImport.new(api_client:, logger:, md_items_by_type:, register_id_by_md_acctid:, register_id_by_md_old_id:, book:, md_currencies_by_id:).import_accounts
+      RegisterImport.new(api_client:, logger:, md_items_by_type:, register_id_by_md_acctid:, register_id_by_md_old_id:, book:, md_currencies_by_id:).import_accounts
       # ReminderImport.new(api_client:, logger:, book:, md_items_by_type:, register_id_by_md_acctid:).import_reminders
       # ExchangeImport.new(api_client:, logger:, md_items_by_type:, register_id_by_md_acctid:).import_exchanges
     end

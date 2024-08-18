@@ -20,5 +20,8 @@ module Mutations
     def authorize(resource, permission = "#{field.name.underscore}?")
       Pundit.authorize(current_user, resource, permission)
     end
+
+    def auto_parameter(model, *attributes)
+    end
   end
 end

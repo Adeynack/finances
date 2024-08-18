@@ -2,18 +2,13 @@
 
 module Mutations
   class CreateBook < BaseMutation
-    argument :name, String, required: true
-    argument :default_currency_iso_code, String, required: true
+    argument :book, Types::CreateBookInputType, required: true
 
     field :book, Types::BookType, null: false
 
-    def resolve(name:, default_currency_iso_code:)
-      book = authorize(Book).create!(
-        owner: current_user,
-        name:, default_currency_iso_code:
-      )
-
-      {book:}
+    def resolve(book:)
+      new_book = authorize(Book).create!(owner: current_user, **book)
+      {book: new_book}
     end
   end
 end
