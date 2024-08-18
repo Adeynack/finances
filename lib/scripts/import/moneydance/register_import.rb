@@ -77,7 +77,6 @@ module MoneydanceImport
     end
 
     def create_register(md_account:, parent_register:)
-      binding.irb if md_account.fetch("name") == "CPD EOP"
       register = {
         type: register_type(md_account),
         # created_at: from_md_unix_date(md_account["creation_date"]),
