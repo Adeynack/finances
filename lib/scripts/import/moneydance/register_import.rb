@@ -79,11 +79,10 @@ module MoneydanceImport
     def create_register(md_account:, parent_register:)
       register = {
         type: register_type(md_account),
-        # created_at: from_md_unix_date(md_account["creation_date"]),
         name: md_account["name"].presence&.strip,
         book_id: @book.id,
         parent_id: parent_register&.id,
-        starts_at: from_md_int_date(md_account["date_created"]),
+        starts_at: md_account["creation_date"]&.then { (_1.length == 8) ? from_md_int_date(_1) : from_md_unix_date(_1) },
         currency_iso_code: extract_currency_iso_code(md_account),
         initial_balance: md_account["sbal"]&.then(&:to_i),
         active: md_account["is_inactive"] != "y",

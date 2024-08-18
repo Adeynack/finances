@@ -4,7 +4,6 @@ module Types
   class RegisterForCreateInputType < Types::BaseInputObject
     argument :id, ID, required: false
     argument :import_origin, Types::ImportOriginInputType, required: false
-    argument :created_at, GraphQL::Types::ISO8601DateTime, required: false
     argument :name, String, required: true
     argument :type, Types::RegisterTypeType, required: true
     argument :book_id, ID, required: true

@@ -64,7 +64,6 @@ still used in this document.
   - [ ] CRUD
   - [ ] Apply `auto_commit` reminders
 
-
 ## Model Requirements Brainstorm
 
 ### Accounts
@@ -163,7 +162,7 @@ of _Moneydance_.
 
 ### Convert from Epoch
 
-In _Moneydance_, the `ts` field on transaction is specified in _Epoch_ (aka _Unix Time_).
+In _Moneydance_, the `ts` field (last updated at) on transaction is specified in _Epoch_ (aka _Unix Time_).
 
 ```ruby
 DateTime.strptime("1614116785891",'%Q')

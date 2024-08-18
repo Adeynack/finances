@@ -31,7 +31,7 @@ module MoneydanceImport
         first_date: from_md_int_date(md_reminder["sdt"].presence),
         last_date: from_md_int_date(md_reminder["ldt"].presence),
         recurrence: extract_reminder_recurence(md_reminder),
-        last_commit_at: from_md_unix_date(md_reminder["ts"]),
+        last_commit_at: from_md_unix_date(md_reminder["ts"]), # TODO: Is `ts` not "last updated at" like on registers?
         exchange_register_id: @register_id_by_md_acctid[transaction.fetch("acctid")],
         exchange_description: transaction["desc"].presence,
         exchange_memo: transaction["memo"].presence,

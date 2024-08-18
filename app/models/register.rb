@@ -71,8 +71,16 @@ class Register < ApplicationRecord
   scope :active, -> { where(active: true) }
 
   before_create do
-    self.starts_at ||= Time.zone.today
+    self.starts_at ||= Time.zone.today if account?
     self.currency_iso_code ||= book&.default_currency_iso_code
+  end
+
+  def account?
+    ACCOUNT_TYPES.include?(type)
+  end
+
+  def category?
+    CATEGORY_TYPES.include?(type)
   end
 
   def hierarchical_name
