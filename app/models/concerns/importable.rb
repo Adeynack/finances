@@ -4,6 +4,6 @@ module Importable
   extend ActiveSupport::Concern
 
   included do
-    has_many :import_origins, as: :subject, dependent: :delete_all
+    has_one :import_origin, as: :subject, dependent: :destroy
   end
 end

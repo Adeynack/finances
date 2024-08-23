@@ -37,7 +37,7 @@ module MoneydanceImport
         memo: md_transaction["memo"].presence,
         status: from_md_stat(md_transaction["stat"])
       )
-      exchange.import_origins.create! external_system: "moneydance", external_id: md_transaction["id"]
+      exchange.create_import_origin! external_system: "moneydance", external_id: md_transaction["id"]
       extract_md_splits(md_transaction).each { |e| import_split(e, exchange) }
     end
 
@@ -66,7 +66,7 @@ module MoneydanceImport
         status: from_md_stat(md_split["stat"])
       )
       md_split["tags"].to_s.split("\t").each { |tag_name| split.tag tag_name }
-      split.import_origins.create! external_system: "moneydance", external_id: md_split["id"]
+      split.create_import_origin! external_system: "moneydance", external_id: md_split["id"]
     end
   end
 end

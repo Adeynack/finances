@@ -8,6 +8,6 @@ module Types
     field :owner_id, ID, null: false
     field :owner, Types::UserType, null: false
     field :default_currency_iso_code, String, null: false
-    field :import_origins, Types::ImportOriginType, null: true
+    field :import_origin, Types::ImportOriginType, null: true
   end
 end

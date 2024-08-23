@@ -37,6 +37,8 @@ class Register < ApplicationRecord
   CATEGORY_TYPES = ["Expense", "Income"].freeze
   KNOWN_TYPES = (ACCOUNT_TYPES + CATEGORY_TYPES).freeze
 
+  enum type: KNOWN_TYPES.index_by { _1.underscore.to_sym }
+
   belongs_to :book, optional: false
   has_closure_tree order: :name, dependent: :destroy
 

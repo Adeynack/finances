@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 module Types
-  class RegisterType < Types::BaseObject
+  class AccountType < Types::BaseObject
     field :id, ID, null: false
+    field :import_origin, Types::ImportOriginType, null: true
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :name, String, null: false
-    field :type, Types::RegisterTypeType, null: false
+    field :type, Types::AccountTypeType, null: false
     field :book_id, ID, null: false
     field :parent_id, ID, null: true
     field :starts_at, GraphQL::Types::ISO8601Date, null: true

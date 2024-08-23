@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class RegisterPolicy < ApplicationPolicy
-  def create_register?
+  def create_category?
+    book_editor?
+  end
+
+  def create_account?
     book_editor?
   end
 

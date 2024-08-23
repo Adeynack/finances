@@ -23,26 +23,36 @@ module MoneydanceImport
       :name
     ).freeze
 
-    Register = Data.define(
+    Category = Data.define(
       :id,
-      :createdAt,
+      :name,
+      :income,
+      :book_id,
+      :parent_id,
+      :currency_iso_code,
+      :notes,
+      :active
+    ).freeze
+
+    Account = Data.define(
+      :id,
       :name,
       :type,
-      :bookId,
-      :parentId,
-      :startsAt,
-      :expiresAt,
-      :currencyIsoCode,
+      :book_id,
+      :parent_id,
+      :starts_at,
+      :expires_at,
+      :currency_iso_code,
       :notes,
-      :initialBalance,
+      :initial_balance,
       :active,
-      :defaultCategoryId,
-      :institutionName,
-      :accountNumber,
+      :default_category_id,
+      :institution_name,
+      :account_number,
       :iban,
-      :annualInterestRate,
-      :creditLimit,
-      :cardNumber
+      :annual_interest_rate,
+      :credit_limit,
+      :card_number
     ).freeze
 
     class << self
@@ -69,19 +79,30 @@ module MoneydanceImport
       api_client.headers["Authorization"] = "Bearer #{value}"
     end
 
-    def map_variables_for_call(variables)
+    def to_camel_string_hash(variables)
       case variables
       when Hash
-        variables.transform_keys { _1.to_s.camelize(:lower) }.transform_values { map_variables_for_call(_1) }
+        variables.transform_keys { _1.to_s.camelize(:lower) }.transform_values { to_camel_string_hash(_1) }
       when Array
-        variables.map { map_variables_for_call(_1) }
+        variables.map { to_camel_string_hash(_1) }
       else
         variables
       end
     end
 
+    def to_underscore_sym_hash(result)
+      case result
+      when Hash
+        result.transform_keys { _1.underscore.to_sym }.transform_values { to_underscore_sym_hash(_1) }
+      when Array
+        result.map { to_underscore_sym_hash(_1) }
+      else
+        result
+      end
+    end
+
     def query(query:, variables: {}, expect_success: false)
-      variables = map_variables_for_call(variables)
+      variables = to_camel_string_hash(variables)
       verbose_query(query:, variables:) if verbose
       result = api_client.post(nil, {query:, variables:}.to_json)
       if expect_success && result.body.key?("errors")
@@ -92,11 +113,11 @@ module MoneydanceImport
         raise GraphQLError, result.body["errors"].first["message"]
       end
 
-      result.body
+      to_underscore_sym_hash(result.body)
     end
 
     def query!(query:, variables: {})
-      query(query:, variables:, expect_success: true)["data"]
+      query(query:, variables:, expect_success: true).fetch(:data)
     end
 
     def login(email:, password:)
@@ -107,7 +128,7 @@ module MoneydanceImport
           }
         }
       GQL
-      self.token = result.dig("logIn", "token")
+      self.token = result.dig(:log_in, :token)
     end
 
     def logout
@@ -129,7 +150,7 @@ module MoneydanceImport
           }
         }
       GQL
-      r["books"].map { Book.new(**_1) }
+      r[:books].map { Book.new(**_1) }
     end
 
     def create_book(name:, default_currency_iso_code:)
@@ -143,7 +164,7 @@ module MoneydanceImport
           }
         }
       GQL
-      Book.new(**r.dig("createBook", "book"))
+      Book.new(**r.dig(:create_book, :book))
     end
 
     def destroy_book_fast(id:)
@@ -158,14 +179,32 @@ module MoneydanceImport
       GQL
     end
 
-    def create_register(**args)
-      # args = args.slice(:name, :type, :book_id, :initial_balance, :currency_iso_code, :active) # TODO: remove after tests
-      r = query! variables: {register: args}, query: <<~GQL
-        mutation CreateRegister($register: RegisterForCreateInput!) {
-          createRegister(input: {register: $register}) {
-            register {
+    def create_category(category:)
+      r = query! variables: {category:}, query: <<~GQL
+        mutation CreateCategory($category: CategoryForCreateInput!) {
+          createCategory(input: {category: $category}) {
+            category {
               id
-              createdAt
+              name
+              income
+              bookId
+              parentId
+              currencyIsoCode
+              notes
+              active
+            }
+          }
+        }
+      GQL
+      Category.new(**r.dig(:create_category, :category))
+    end
+
+    def create_account(account:)
+      r = query! variables: {account:}, query: <<~GQL
+        mutation CreateAccount($account: AccountForCreateInput!) {
+          createAccount(input: {account: $account}) {
+            account {
+              id
               name
               type
               bookId
@@ -187,7 +226,7 @@ module MoneydanceImport
           }
         }
       GQL
-      Register.new(**r.dig("createRegister", "register"))
+      Account.new(**r.dig(:create_account, :account))
     end
 
     private

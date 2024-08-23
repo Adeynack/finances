@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 module Types
-  class RegisterForCreateInputType < Types::BaseInputObject
+  class AccountForCreateInputType < Types::BaseInputObject
     argument :id, ID, required: false
     argument :import_origin, Types::ImportOriginInputType, required: false
     argument :name, String, required: true
-    argument :type, Types::RegisterTypeType, required: true
+    argument :type, Types::AccountTypeType, required: true
     argument :book_id, ID, required: true
     argument :parent_id, ID, required: false
     argument :starts_at, GraphQL::Types::ISO8601Date, required: false
@@ -21,6 +21,5 @@ module Types
     argument :annual_interest_rate, Float, required: false
     argument :credit_limit, Integer, required: false
     argument :card_number, String, required: false
-    argument :import_origins, Types::ImportOriginInputType, required: false
   end
 end
