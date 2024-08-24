@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
+require "progress_bar"
 require_relative "utils"
 
 module MoneydanceImport
   class RegisterImport
     include MoneydanceImport::Utils
 
-    def initialize(api_client:, logger:, md_items_by_type:, register_id_by_md_acctid:, register_id_by_md_old_id:, book:, md_currencies_by_id:)
+    def initialize(api_client:, md_items_by_type:, register_id_by_md_acctid:, register_id_by_md_old_id:, book:, md_currencies_by_id:)
       @api_client = api_client
-      @logger = logger
       @md_items_by_type = md_items_by_type
       @register_id_by_md_acctid = register_id_by_md_acctid
       @register_id_by_md_old_id = register_id_by_md_old_id
@@ -17,36 +17,38 @@ module MoneydanceImport
     end
 
     def import_accounts
-      @logger.info "Importing registers (MD accounts)"
+      puts "Importing registers (MD accounts)"
 
-      md_accounts_by_parent_id = @md_items_by_type["acct"].to_a.group_by { |a| a["parentid"] }
-      root_accounts = md_accounts_by_parent_id[nil].to_a
-      raise StandardError, "More than one root account found." if root_accounts.length > 1
+      md_accounts = @md_items_by_type["acct"].to_a
+      md_accounts_by_parent_id = md_accounts.group_by { |a| a["parentid"] }
 
-      root_account = root_accounts.first
-      raise StandardError, "No root account found." if root_account.blank?
+      root_account_id = md_accounts_by_parent_id[nil].sole.fetch("id")
+      first_level_accounts_per_type = md_accounts_by_parent_id.fetch(root_account_id).group_by { |a| a.fetch("type") }
 
-      first_level_accounts_per_type = md_accounts_by_parent_id[root_account.fetch("id")].to_a.group_by { |a| a.fetch("type") }
       batches = [
         first_level_accounts_per_type.delete("i").to_a,
         first_level_accounts_per_type.delete("e").to_a,
         first_level_accounts_per_type.values.flatten
       ]
-      batches.each { |accounts_to_import| import_account_batch(accounts_to_import, md_accounts_by_parent_id) }
+      bar = ProgressBar.new(md_accounts.size - 1) # do not count the root account
+      @api_client.bar = bar
+      batches.each { |accounts_to_import| import_account_batch(bar:, accounts_to_import:, md_accounts_by_parent_id:) }
+    ensure
+      @api_client.bar = nil
     end
 
     private
 
-    def import_account_batch(accounts_to_import, md_accounts_by_parent_id)
+    def import_account_batch(bar:, accounts_to_import:, md_accounts_by_parent_id:)
       types = accounts_to_import.map { |a| a.fetch("type") }.uniq!.sort
-      @logger.info "Importer MD accounts of type#{types.many? ? "s" : ""} #{types.join(", ")}"
+      bar.puts "Importer MD accounts of type#{types.many? ? "s" : ""} #{types.join(", ")}"
 
       accounts_to_import.each do |md_account|
-        import_account_recursively parent_register: nil, md_account:, md_accounts_by_parent_id:
+        import_account_recursively bar:, parent_register: nil, md_account:, md_accounts_by_parent_id:
       end
     end
 
-    def register_type(md_account)
+    def register_type(md_account:)
       case md_account["type"]
       when "a" then "Asset"
       when "b" then "Bank"
@@ -68,29 +70,31 @@ module MoneydanceImport
       end
     end
 
-    def import_account_recursively(parent_register:, md_account:, md_accounts_by_parent_id:)
-      @logger.info "Importing MD '#{md_account["type"]}' type account \"#{md_account["name"]}\" (ID \"#{md_account["id"]}\")"
-      register = create_register(md_account:, parent_register:)
+    def import_account_recursively(bar:, parent_register:, md_account:, md_accounts_by_parent_id:)
+      bar.puts "Importing MD '#{md_account["type"]}' type account \"#{md_account["name"]}\" (ID \"#{md_account["id"]}\")"
+      register = create_register(bar:, md_account:, parent_register:)
       @register_id_by_md_acctid[md_account.fetch("id")] = register.id
       @register_id_by_md_old_id[md_account.fetch("old_id")] = register.id
-      import_child_accounts(md_account, register, md_accounts_by_parent_id)
+      import_child_accounts(bar:, md_account:, parent_register: register, md_accounts_by_parent_id:)
     end
 
-    def create_register(md_account:, parent_register:)
+    def create_register(bar:, md_account:, parent_register:)
       register_base = {
-        type: register_type(md_account),
+        type: register_type(md_account:),
         name: md_account["name"].presence&.strip,
         book_id: @book.id,
-        currency_iso_code: extract_currency_iso_code(md_account),
+        currency_iso_code: extract_currency_iso_code(md_account:),
         active: md_account["is_inactive"] != "y",
         notes: md_account["comment"]&.strip.presence,
         import_origin: {system: "Moneydance", id: md_account.fetch("id")}
       }
-      if ["Income", "Expense"].include?(register_base[:type])
+      register = if ["Income", "Expense"].include?(register_base[:type])
         create_category(md_account:, category: register_base, parent_register:)
       else
         create_account(md_account:, account: register_base, parent_register:)
       end
+      bar.increment!
+      register
     end
 
     def create_category(md_account:, category:, parent_register:)
@@ -103,23 +107,23 @@ module MoneydanceImport
         parent_id: parent_register&.id,
         starts_at: md_account["creation_date"]&.then { (_1.length == 8) ? from_md_int_date(_1) : from_md_unix_date(_1) },
         initial_balance: md_account["sbal"]&.then(&:to_i),
-        default_category_id: extract_default_category_id(md_account)
+        default_category_id: extract_default_category_id(md_account:)
       )
       assign_account_information(md_account:, account:)
       @api_client.create_account(account:)
     end
 
-    def extract_currency_iso_code(md_account)
+    def extract_currency_iso_code(md_account:)
       md_account["currid"].presence&.then { |curr_id| @md_currencies_by_id[curr_id]&.[]("currid") }
     end
 
-    def extract_default_category_id(md_account)
+    def extract_default_category_id(md_account:)
       md_account["default_category"].presence&.then { |c| @register_id_by_md_old_id[c] }
     end
 
-    def import_child_accounts(md_account, parent_register, md_accounts_by_parent_id)
+    def import_child_accounts(bar:, md_account:, parent_register:, md_accounts_by_parent_id:)
       md_accounts_by_parent_id[md_account["id"]].to_a.each do |child|
-        import_account_recursively parent_register:, md_account: child, md_accounts_by_parent_id:
+        import_account_recursively bar:, parent_register:, md_account: child, md_accounts_by_parent_id:
       end
     end
 

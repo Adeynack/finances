@@ -8,7 +8,6 @@ module MoneydanceImport
   class MoneydanceImport
     include Utils
 
-    attr_reader :logger
     attr_reader :md_json
     attr_reader :api_client
     attr_reader :default_currency
@@ -17,8 +16,7 @@ module MoneydanceImport
     attr_reader :register_id_by_md_old_id
     attr_reader :register_id_by_md_acctid
 
-    def initialize(logger:, json_content:, api_client:, default_currency:, auto_delete_book: false)
-      @logger = logger
+    def initialize(json_content:, api_client:, default_currency:, auto_delete_book: false)
       @register_id_by_md_old_id = {}
       @register_id_by_md_acctid = {}
       @md_json = JSON.parse(json_content)
@@ -45,9 +43,9 @@ module MoneydanceImport
 
     def import!
       create_book
-      RegisterImport.new(api_client:, logger:, md_items_by_type:, register_id_by_md_acctid:, register_id_by_md_old_id:, book:, md_currencies_by_id:).import_accounts
-      # ReminderImport.new(api_client:, logger:, book:, md_items_by_type:, register_id_by_md_acctid:).import_reminders
-      # ExchangeImport.new(api_client:, logger:, md_items_by_type:, register_id_by_md_acctid:).import_exchanges
+      RegisterImport.new(api_client:, md_items_by_type:, register_id_by_md_acctid:, register_id_by_md_old_id:, book:, md_currencies_by_id:).import_accounts
+      # ReminderImport.new(api_client:, book:, md_items_by_type:, register_id_by_md_acctid:).import_reminders
+      # ExchangeImport.new(api_client:, md_items_by_type:, register_id_by_md_acctid:).import_exchanges
     end
 
     private
@@ -59,16 +57,16 @@ module MoneydanceImport
       book_candidate = api_client.list_books.find { _1.name == book_name }
 
       if book_candidate.present?
-        logger.info "Book with name \"#{book_name}\" found"
+        puts "Book with name \"#{book_name}\" found"
         if auto_delete_book
-          logger.info "Deleting book \"#{book_name}\""
+          puts "Deleting book \"#{book_name}\""
           api_client.destroy_book_fast(id: book_candidate.id)
         elsif book_candidate.present?
           raise StandardError, "A book with name \"#{book_name}\" already exist. Can only import from scratch (book must not already exist)."
         end
       end
 
-      logger.info "Create book with name \"#{book_name}\""
+      puts "Create book with name \"#{book_name}\""
       @book = api_client.create_book(
         name: book_name,
         default_currency_iso_code: default_currency

@@ -4,12 +4,13 @@ require "faraday"
 
 module MoneydanceImport
   class ApiClient
-    attr_reader :logger, :api_client, :verbose
+    attr_reader :api_url, :verbose
+    attr_accessor :bar
 
-    def initialize(logger:, api_url:, verbose:)
-      @logger = logger
+    def initialize(api_url:, verbose:)
+      @bar = nil
       @verbose = verbose
-      @api_client = ::Faraday.new(url: api_url) do |f|
+      @http_client = ::Faraday.new(url: api_url) do |f|
         f.request :json
         f.response :json
         f.response :raise_error
@@ -56,27 +57,37 @@ module MoneydanceImport
     ).freeze
 
     class << self
-      def login_and_use(logger:, api_url:, api_email:, api_password:, verbose: false)
-        client = new(logger:, api_url:, verbose:)
-        client.login(email: api_email, password: api_password)
+      def login_and_use(api_url:, api_email:, api_password:, verbose: false)
+        client = new(api_url:, verbose:)
+        begin
+          client.login(email: api_email, password: api_password)
 
-        yield client if block_given?
-      rescue Faraday::ConnectionFailed => e
-        logger.error "Connection to API not possible: #{e.message}"
-        exit 1
-      rescue
-        logger.error "Query to API failed. Automatically logging out."
-        client.logout
-        raise
+          yield client if block_given?
+        rescue Faraday::ConnectionFailed => e
+          client.log "Connection to API not possible: #{e.message}"
+          exit 1
+        rescue
+          client.log "Query to API failed. Automatically logging out."
+          client.logout
+          raise
+        end
+      end
+    end
+
+    def log(message)
+      if bar
+        bar.puts message
+      else
+        puts message
       end
     end
 
     def token
-      api_client.headers["Authorization"]
+      @http_client.headers["Authorization"]
     end
 
     def token=(value)
-      api_client.headers["Authorization"] = "Bearer #{value}"
+      @http_client.headers["Authorization"] = "Bearer #{value}"
     end
 
     def to_camel_string_hash(variables)
@@ -104,9 +115,9 @@ module MoneydanceImport
     def query(query:, variables: {}, expect_success: false)
       variables = to_camel_string_hash(variables)
       verbose_query(query:, variables:) if verbose
-      result = api_client.post(nil, {query:, variables:}.to_json)
+      result = @http_client.post(nil, {query:, variables:}.to_json)
       if expect_success && result.body.key?("errors")
-        logger.error <<~ERROR if verbose
+        log <<~ERROR if verbose
           Query failed. Full body:
           #{JSON.pretty_generate(result.body["errors"]).indent(2)}
         ERROR
@@ -232,7 +243,7 @@ module MoneydanceImport
     private
 
     def verbose_query(query:, variables:)
-      logger.info <<~LOG
+      log <<~LOG
         Querying the GraphQL Endpoint
           Query:
         #{query.indent(4)}  Variables:
