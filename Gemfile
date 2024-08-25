@@ -48,7 +48,7 @@ end
 
 group :development do
   gem "faraday"
-  gem "progress_bar"
+  gem "ruby-progressbar"
   gem "web-console"
   gem "guard"
   gem "guard-rspec"

@@ -1,25 +1,16 @@
 # frozen_string_literal: true
 
-require "progress_bar"
+require "ruby-progressbar"
 require_relative "utils"
 
 module MoneydanceImport
-  class RegisterImport
+  RegisterImport = Data.define(:create_progress_bar, :api_client, :md_items_by_type, :register_id_by_md_acctid, :register_id_by_md_old_id, :book, :md_currencies_by_id) do
     include MoneydanceImport::Utils
-
-    def initialize(api_client:, md_items_by_type:, register_id_by_md_acctid:, register_id_by_md_old_id:, book:, md_currencies_by_id:)
-      @api_client = api_client
-      @md_items_by_type = md_items_by_type
-      @register_id_by_md_acctid = register_id_by_md_acctid
-      @register_id_by_md_old_id = register_id_by_md_old_id
-      @book = book
-      @md_currencies_by_id = md_currencies_by_id
-    end
 
     def import_accounts
       puts "Importing registers (MD accounts)"
 
-      md_accounts = @md_items_by_type["acct"].to_a
+      md_accounts = md_items_by_type["acct"].to_a
       md_accounts_by_parent_id = md_accounts.group_by { |a| a["parentid"] }
 
       root_account_id = md_accounts_by_parent_id[nil].sole.fetch("id")
@@ -30,18 +21,18 @@ module MoneydanceImport
         first_level_accounts_per_type.delete("e").to_a,
         first_level_accounts_per_type.values.flatten
       ]
-      bar = ProgressBar.new(md_accounts.size - 1) # do not count the root account
-      @api_client.bar = bar
+      bar = create_progress_bar.call title: "Importing categories & accounts", total: md_accounts.size - 1 # do not count the root account
+      api_client.bar = bar
       batches.each { |accounts_to_import| import_account_batch(bar:, accounts_to_import:, md_accounts_by_parent_id:) }
     ensure
-      @api_client.bar = nil
+      api_client.bar = nil
     end
 
     private
 
     def import_account_batch(bar:, accounts_to_import:, md_accounts_by_parent_id:)
       types = accounts_to_import.map { |a| a.fetch("type") }.uniq!.sort
-      bar.puts "Importer MD accounts of type#{types.many? ? "s" : ""} #{types.join(", ")}"
+      bar.log "Importer MD accounts of type#{types.many? ? "s" : ""} #{types.join(", ")}"
 
       accounts_to_import.each do |md_account|
         import_account_recursively bar:, parent_register: nil, md_account:, md_accounts_by_parent_id:
@@ -71,10 +62,10 @@ module MoneydanceImport
     end
 
     def import_account_recursively(bar:, parent_register:, md_account:, md_accounts_by_parent_id:)
-      bar.puts "Importing MD '#{md_account["type"]}' type account \"#{md_account["name"]}\" (ID \"#{md_account["id"]}\")"
+      bar.log "Importing MD '#{md_account["type"]}' type account \"#{md_account["name"]}\" (ID \"#{md_account["id"]}\")"
       register = create_register(bar:, md_account:, parent_register:)
-      @register_id_by_md_acctid[md_account.fetch("id")] = register.id
-      @register_id_by_md_old_id[md_account.fetch("old_id")] = register.id
+      register_id_by_md_acctid[md_account.fetch("id")] = register.id
+      register_id_by_md_old_id[md_account.fetch("old_id")] = register.id
       import_child_accounts(bar:, md_account:, parent_register: register, md_accounts_by_parent_id:)
     end
 
@@ -82,7 +73,7 @@ module MoneydanceImport
       register_base = {
         type: register_type(md_account:),
         name: md_account["name"].presence&.strip,
-        book_id: @book.id,
+        book_id: book.id,
         currency_iso_code: extract_currency_iso_code(md_account:),
         active: md_account["is_inactive"] != "y",
         notes: md_account["comment"]&.strip.presence,
@@ -93,13 +84,13 @@ module MoneydanceImport
       else
         create_account(md_account:, account: register_base, parent_register:)
       end
-      bar.increment!
+      bar.increment
       register
     end
 
     def create_category(md_account:, category:, parent_register:)
       category[:income] = category.delete(:type) == "Income"
-      @api_client.create_category(category:)
+      api_client.create_category(category:)
     end
 
     def create_account(md_account:, account:, parent_register:)
@@ -110,15 +101,15 @@ module MoneydanceImport
         default_category_id: extract_default_category_id(md_account:)
       )
       assign_account_information(md_account:, account:)
-      @api_client.create_account(account:)
+      api_client.create_account(account:)
     end
 
     def extract_currency_iso_code(md_account:)
-      md_account["currid"].presence&.then { |curr_id| @md_currencies_by_id[curr_id]&.[]("currid") }
+      md_account["currid"].presence&.then { |curr_id| md_currencies_by_id[curr_id]&.[]("currid") }
     end
 
     def extract_default_category_id(md_account:)
-      md_account["default_category"].presence&.then { |c| @register_id_by_md_old_id[c] }
+      md_account["default_category"].presence&.then { |c| register_id_by_md_old_id[c] }
     end
 
     def import_child_accounts(bar:, md_account:, parent_register:, md_accounts_by_parent_id:)
@@ -152,5 +143,5 @@ module MoneydanceImport
         account_number: md_account["invst_account_number"]
       )
     end
-  end
+  end.freeze
 end

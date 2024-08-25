@@ -8,21 +8,19 @@ module MoneydanceImport
   class MoneydanceImport
     include Utils
 
-    attr_reader :md_json
-    attr_reader :api_client
-    attr_reader :default_currency
-    attr_reader :auto_delete_book
-    attr_reader :book
-    attr_reader :register_id_by_md_old_id
-    attr_reader :register_id_by_md_acctid
+    attr_reader :json_content, :create_progress_bar, :api_client, :default_currency, :auto_delete_book
+    attr_reader :md_json, :book, :register_id_by_md_old_id, :register_id_by_md_acctid
 
-    def initialize(json_content:, api_client:, default_currency:, auto_delete_book: false)
-      @register_id_by_md_old_id = {}
-      @register_id_by_md_acctid = {}
-      @md_json = JSON.parse(json_content)
+    def initialize(json_content:, create_progress_bar:, api_client:, default_currency:, auto_delete_book:)
+      @json_content = json_content
+      @create_progress_bar = create_progress_bar
       @api_client = api_client
       @default_currency = default_currency
       @auto_delete_book = auto_delete_book
+
+      @register_id_by_md_old_id = {}
+      @register_id_by_md_acctid = {}
+      @md_json = JSON.parse(json_content)
     end
 
     def md_items_by_type
@@ -43,7 +41,7 @@ module MoneydanceImport
 
     def import!
       create_book
-      RegisterImport.new(api_client:, md_items_by_type:, register_id_by_md_acctid:, register_id_by_md_old_id:, book:, md_currencies_by_id:).import_accounts
+      RegisterImport.new(create_progress_bar:, api_client:, md_items_by_type:, register_id_by_md_acctid:, register_id_by_md_old_id:, book:, md_currencies_by_id:).import_accounts
       # ReminderImport.new(api_client:, book:, md_items_by_type:, register_id_by_md_acctid:).import_reminders
       # ExchangeImport.new(api_client:, md_items_by_type:, register_id_by_md_acctid:).import_exchanges
     end

@@ -57,26 +57,27 @@ module MoneydanceImport
     ).freeze
 
     class << self
-      def login_and_use(api_url:, api_email:, api_password:, verbose: false)
+      def login_use_logout(api_url:, api_email:, api_password:, verbose: false)
         client = new(api_url:, verbose:)
         begin
+          client.log "Logging in"
           client.login(email: api_email, password: api_password)
 
           yield client if block_given?
+          nil
         rescue Faraday::ConnectionFailed => e
           client.log "Connection to API not possible: #{e.message}"
           exit 1
-        rescue
-          client.log "Query to API failed. Automatically logging out."
+        ensure
+          client.log "Logging out"
           client.logout
-          raise
         end
       end
     end
 
     def log(message)
       if bar
-        bar.puts message
+        bar.log message
       else
         puts message
       end

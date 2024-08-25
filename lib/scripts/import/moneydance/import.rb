@@ -66,11 +66,18 @@ end
 
 json_content = File.read @input_filepath
 
-MoneydanceImport::ApiClient.login_and_use(api_url: @api_url, api_email: @api_email, api_password: @api_password, verbose: @api_verbose) do |api_client|
+create_progress_bar = ->(**kwargs) do
+  format = "%t (%a, %c/%u) [%B] %E"
+  ProgressBar.create format:, **kwargs
+end
+
+MoneydanceImport::ApiClient.login_use_logout(api_url: @api_url, api_email: @api_email, api_password: @api_password, verbose: @api_verbose) do |api_client|
   MoneydanceImport::MoneydanceImport.new(
+    create_progress_bar:,
     json_content:,
     api_client:,
     default_currency: @default_currency,
     auto_delete_book: @auto_delete_book
   ).import!
+  nil
 end
