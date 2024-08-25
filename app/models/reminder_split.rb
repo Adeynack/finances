@@ -20,4 +20,10 @@ class ReminderSplit < ApplicationRecord
 
   belongs_to :reminder
   belongs_to :register
+
+  enum status: Exchange.statuses
+
+  def book_id
+    reminder.book_id
+  end
 end

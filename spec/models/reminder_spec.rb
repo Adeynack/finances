@@ -28,7 +28,7 @@ RSpec.describe Reminder do
 
   it "create a reminder with a recurence" do
     book = books(:joe)
-    first_bank = registers(:first_bank)
+    first_bank = registers(:joe_first_bank)
     reminder = book.reminders.create!(
       title: "Test 1",
       last_date: nil,
@@ -44,7 +44,7 @@ RSpec.describe Reminder do
 
   it "create a reminder with no recurence" do
     book = books(:joe)
-    first_bank = registers(:first_bank)
+    first_bank = registers(:joe_first_bank)
     reminder = book.reminders.create!(
       title: "Test 1",
       last_date: nil,
@@ -57,7 +57,7 @@ RSpec.describe Reminder do
 
   it "create a reminder passing IDs for register and book" do
     book = books(:joe)
-    first_bank = registers(:first_bank)
+    first_bank = registers(:joe_first_bank)
     Reminder.create!(
       book_id: book.id,
       exchange_register_id: first_bank.id,
@@ -68,7 +68,7 @@ RSpec.describe Reminder do
 
   it "fails if the register does not belong to the same book" do
     book = books(:joe)
-    other_register = registers(:blood_bank)
+    other_register = registers(:vlad_blood_bank)
     reminder = book.reminders.build(
       title: "Test 1",
       exchange_description: "Reminder Exchange Template",
@@ -80,7 +80,7 @@ RSpec.describe Reminder do
 
   it "fails if the last date is before first date" do
     reminder = books(:joe).reminders.build(
-      exchange_register_id: registers(:first_bank).id,
+      exchange_register_id: registers(:joe_first_bank).id,
       title: "Bleh",
       exchange_description: "Foo",
       first_date: 2.days.from_now,

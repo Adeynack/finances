@@ -23,16 +23,28 @@
 #  credit_limit         :bigint                                     In the case the register has a credit limit (eg: credit card, credit margin).
 #  card_number          :string                                     In the case the register is linked to a card, its number (eg: a credit card).
 #
-first_bank:
+joe_first_bank:
   name: First Bank
   type: Bank
   book: joe
-  starts_at: 2020-01-01
+  starts_at: "2020-01-01"
   currency_iso_code: EUR
 
-blood_bank:
+joe_fruits:
+  name: Fruits
+  type: Expense
+  book: joe
+  currency_iso_code: EUR
+
+joe_meat:
+  name: Meat
+  type: Expense
+  book: joe
+  currency_iso_code: EUR
+
+vlad_blood_bank:
   name: Vlad's Personal Blood Investment Bank
   type: Bank
   book: vlad
-  starts_at: 1361-07-01
+  starts_at: "1361-07-01"
   currency_iso_code: RON

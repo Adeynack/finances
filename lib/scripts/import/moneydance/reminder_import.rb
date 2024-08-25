@@ -1,47 +1,60 @@
 # frozen_string_literal: true
 
-import_relative "utils"
+require_relative "utils"
+require "montrose"
 
 module MoneydanceImport
   class ReminderImport
     include MoneydanceImport::Utils
 
-    def initialize(logger:, book:, md_items_by_type:, register_id_by_md_acctid:)
-      @logger = logger
+    def initialize(create_progress_bar:, api_client:, book:, md_items_by_type:, register_id_by_md_acctid:)
+      @api_client = api_client
+      @create_progress_bar = create_progress_bar
       @book = book
       @md_items_by_type = md_items_by_type
       @register_id_by_md_acctid = register_id_by_md_acctid
     end
 
     def import_reminders
-      @logger.info "Importing reminders"
-      @md_items_by_type["reminder"].to_a.each do |md_reminder|
-        @logger.info "Importing reminder '#{md_reminder["desc"]}' (#{md_reminder["id"]})"
-        import_reminder(md_reminder)
+      puts "Importing reminders"
+      reminders = @md_items_by_type["reminder"].to_a
+
+      bar = @create_progress_bar.call title: "Creating reminders", total: reminders.size
+      @api_client.bar = bar
+
+      reminders.each do |md_reminder|
+        bar.log "Importing reminder '#{md_reminder["desc"]}' (#{md_reminder["id"]})"
+        import_reminder(bar:, md_reminder:)
       end
+    ensure
+      @api_client.bar = nil
     end
 
     private
 
-    def import_reminder(md_reminder)
-      transaction, splits = extract_transaction_hash_from_reminder(md_reminder)
-      reminder = @book.reminders.create!(
-        created_at: from_md_unix_date(md_reminder["txn.dtentered"], DateTime.current),
+    def import_reminder(bar:, md_reminder:)
+      transaction, splits = extract_transaction_hash_from_reminder(md_reminder:)
+      reminder = {
+        import_origin: {system: "moneydance", id: md_reminder["id"]},
+        # created_at: from_md_unix_date(md_reminder["txn.dtentered"], DateTime.current),
+        book_id: @book.id,
         title: md_reminder["desc"].presence,
+        mode: "manual",
         first_date: from_md_int_date(md_reminder["sdt"].presence),
         last_date: from_md_int_date(md_reminder["ldt"].presence),
-        recurrence: extract_reminder_recurence(md_reminder),
+        recurrence: extract_reminder_recurence(md_reminder).as_json,
         last_commit_at: from_md_unix_date(md_reminder["ts"]), # TODO: Is `ts` not "last updated at" like on registers?
         exchange_register_id: @register_id_by_md_acctid[transaction.fetch("acctid")],
         exchange_description: transaction["desc"].presence,
         exchange_memo: transaction["memo"].presence,
-        exchange_status: from_md_stat(transaction["stat"])
-      )
-      reminder.import_origins.create! external_system: "moneydance", external_id: md_reminder["id"]
-      splits.each { |e| import_reminder_split(e, reminder) }
+        exchange_status: from_md_stat(transaction["stat"]),
+        splits: splits.map { import_reminder_split(_1) }
+      }
+      @api_client.create_reminder(reminder:)
+      bar.increment
     end
 
-    def extract_transaction_hash_from_reminder(md_reminder)
+    def extract_transaction_hash_from_reminder(md_reminder:)
       transaction_hash = {}
       splits_per_index = {}
 
@@ -120,20 +133,16 @@ module MoneydanceImport
       Montrose.every((yearly_interval == 1) ? :year : yearly_interval.years)
     end
 
-    def import_reminder_split(md_split, reminder)
-      split = reminder.reminder_splits.create!(
-        created_at: reminder.created_at,
+    def import_reminder_split(md_split)
+      {
         register_id: @register_id_by_md_acctid[md_split.fetch("acctid")],
         amount: md_split["samt"].to_i,
         counterpart_amount: md_split["pamt"].to_i,
         memo: md_split["desc"].presence,
-        status: from_md_stat(md_split["stat"])
-      )
-      md_split.fetch("tags", "").split("\t").each { |tag| split.tag(tag) }
-      split.import_origins.create! external_system: "moneydance", external_id: md_split["id"]
-    rescue
-      @logger.error "Error importing reminder split #{md_split["id"]}"
-      raise
+        status: from_md_stat(md_split["stat"]),
+        tags: md_split.fetch("tags", "").split("\t"),
+        import_origin: {system: "moneydance", id: md_split["id"]}
+      }
     end
   end
 end

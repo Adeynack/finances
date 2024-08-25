@@ -241,6 +241,16 @@ module MoneydanceImport
       Account.new(**r.dig(:create_account, :account))
     end
 
+    def create_reminder(reminder:)
+      query! variables: {reminder:}, query: <<~GQL
+        mutation CreateReminder($reminder: ReminderForCreateInput!) {
+          createReminder(input: {reminder: $reminder}) {
+            clientMutationId
+          }
+        }
+      GQL
+    end
+
     private
 
     def verbose_query(query:, variables:)

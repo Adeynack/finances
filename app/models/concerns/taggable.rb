@@ -9,7 +9,8 @@ module Taggable
 
     def tag(tag)
       tag_record = tag.is_a?(Tag) ? tag : Tag.find_or_create_by(name: tag)
-      tags << tag_record unless tags.exists?(name: tag_record.name)
+      already_tagged = (new_record? || tags.loaded?) ? tags.any? { _1.name == tag_record.name } : tags.exists?(name: tag_record.name)
+      tags << tag_record unless already_tagged
     end
 
     def untag(tag)
@@ -17,6 +18,10 @@ module Taggable
       return if tag_record.nil?
 
       taggings.find_by(tag: tag_record)&.destroy!
+    end
+
+    def tag_names
+      tags.map(&:name)
     end
   end
 end

@@ -12,7 +12,7 @@ module Mutations
       type = category_attr.delete(:income) ? :income : :expense
       new_category = Register.new(category_attr.merge(type:))
       authorize(new_category).save!
-      new_category.create_import_origin external_id: import_origin[:id], external_system: import_origin[:system] if import_origin
+      new_category.create_import_origin! external_id: import_origin[:id], external_system: import_origin[:system] if import_origin
       {category: new_category}
     end
   end

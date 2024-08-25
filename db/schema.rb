@@ -149,6 +149,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_30_201354) do
     t.uuid "tag_id", null: false
     t.string "subject_type", null: false
     t.uuid "subject_id", null: false
+    t.uuid "book_id", null: false
+    t.index ["book_id"], name: "index_taggings_on_book_id"
     t.index ["subject_type", "subject_id"], name: "index_taggings_on_subject"
     t.index ["subject_type", "subject_id"], name: "index_taggings_on_subject_type_and_subject_id"
     t.index ["tag_id", "subject_type", "subject_id"], name: "index_taggings_on_tag_id_and_subject_type_and_subject_id", unique: true

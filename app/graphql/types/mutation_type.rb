@@ -5,6 +5,7 @@ module Types
     field :create_account, mutation: Mutations::CreateAccount
     field :create_book, mutation: Mutations::CreateBook
     field :create_category, mutation: Mutations::CreateCategory
+    field :create_reminder, mutation: Mutations::CreateReminder
     field :destroy_book_fast, mutation: Mutations::DestroyBookFast
     field :log_in, mutation: Mutations::LogIn
     field :log_out, mutation: Mutations::LogOut
