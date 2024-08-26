@@ -19,11 +19,12 @@ class ReminderSplit < ApplicationRecord
   include Importable
 
   belongs_to :reminder
+  has_one :book, through: :reminder
   belongs_to :register
 
   enum status: Exchange.statuses
 
-  def book_id
-    reminder.book_id
+  def book
+    super || reminder.book
   end
 end

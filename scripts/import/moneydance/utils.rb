@@ -26,6 +26,8 @@ module MoneydanceImport
       raise ArgumentError, "expecting a 8 digits number" unless md_date.length == 8
 
       DateTime.parse(md_date)
+    rescue Date::Error => e
+      raise ArgumentError, "Failed to parse date \"#{md_date}\" (Date::Error) #{e.message}"
     end
 
     def from_md_stat(md_stat)

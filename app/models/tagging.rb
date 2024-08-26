@@ -15,11 +15,12 @@
 class Tagging < ApplicationRecord
   belongs_to :tag
   belongs_to :subject, polymorphic: true
+  belongs_to :book
 
   validate :validate_book_id_with_subject
 
   before_validation do
-    self.book_id = subject.book_id if book_id.blank?
+    self.book_id = subject.book.id if book_id.blank?
   end
 
   private

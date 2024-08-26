@@ -11,7 +11,7 @@ module GraphQLHelper
 
   def gql_data(query:, variables:)
     result = gql(query:, variables:)
-    expect(result["errors"]).to be_blank
+    raise "GraphQL Errors: #{JSON.pretty_generate(result["errors"])}" if result["errors"].present?
     result.fetch("data")
   end
 end

@@ -5,22 +5,25 @@ require "rails_helper"
 RSpec.describe "CreateReminder", type: :graphql do
   fixtures :all
 
+  let(:query) do
+    <<~GQL
+      mutation CreateReminder($reminder: ReminderForCreateInput!) {
+        createReminder(input: {reminder: $reminder}) {
+          reminder {
+            id
+            splits {
+              tags
+            }
+          }
+        }
+      }
+    GQL
+  end
+
   context "logged in as Joe" do
     before { login! user: users(:joe) }
 
     it "creates a new reminder" do
-      query = <<~GQL
-        mutation CreateReminder($reminder: ReminderForCreateInput!) {
-          createReminder(input: {reminder: $reminder}) {
-            reminder {
-              id
-              splits {
-                tags
-              }
-            }
-          }
-        }
-      GQL
       variables = {"reminder" => {
         "bookId" => books(:joe).id,
         "importOrigin" => {system: "moneydance", id: "123"},

@@ -19,5 +19,10 @@ class Split < ApplicationRecord
   include Importable
 
   belongs_to :exchange
+  has_one :book, through: :exchange
   belongs_to :register # destination of the exchange's split
+
+  def book
+    super || exchange.book
+  end
 end

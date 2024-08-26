@@ -19,6 +19,7 @@ class Exchange < ApplicationRecord
   include Importable
 
   belongs_to :register # origin of the exchange
+  has_one :book, through: :register
 
   has_many :splits, dependent: :destroy
 

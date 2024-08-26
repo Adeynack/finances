@@ -251,6 +251,16 @@ module MoneydanceImport
       GQL
     end
 
+    def create_exchange(exchange:)
+      query! variables: {exchange:}, query: <<~GQL
+        mutation CreateExchange($exchange: ExchangeForCreateInput!) {
+          createExchange(input: {exchange: $exchange}) {
+            clientMutationId
+          }
+        }
+      GQL
+    end
+
     private
 
     def verbose_query(query:, variables:)

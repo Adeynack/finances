@@ -12,7 +12,7 @@ module Mutations
       reminder.splits.each do |s|
         new_split = new_reminder.reminder_splits.new(s.to_h.except(:import_origin, :tags))
         new_split.import_origin = s.import_origin&.to_model
-        s.tags.each { new_split.tag(_1) }
+        s.tags&.each { new_split.tag(_1) }
       end
       new_reminder.save!
       {reminder: new_reminder}
