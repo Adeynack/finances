@@ -22,6 +22,7 @@ module MoneydanceImport
 
       ordered_md_transactions = txn_items.sort_by { |t| t.fetch("dtentered") }
       ordered_md_transactions.each_with_index do |md_transaction, index|
+        bar.log "Import exchange on #{from_md_unix_date(md_transaction["dtentered"]).to_date} '#{md_transaction["desc"]}' (#{md_transaction["id"]})"
         import_transaction(md_transaction:)
         bar.increment
       end
