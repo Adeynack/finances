@@ -4,11 +4,11 @@ AllCops:
   DisplayStyleGuide: true
   NewCops: disable
   Exclude:
-    - 'vendor/bundle/**/*'
-    - 'bin/**/*'
-    - 'db/schema.rb'
-    - 'node_modules/**/*'
-    - 'tmp/**/*'
+    - "vendor/bundle/**/*"
+    - "bin/**/*"
+    - "db/schema.rb"
+    - "node_modules/**/*"
+    - "tmp/**/*"
 
 inherit_gem:
   shimmer: config/rubocop_base.yml
@@ -19,3 +19,6 @@ require:
 # Metrics/AbcSize:
 #   Enabled: false
 #   Max: 9999 # for some reason, `Enabled: false` does not disable it 🤷🏼‍♂️
+
+Rails/FilePath:
+  Enabled: true

@@ -4,12 +4,12 @@ module Types
   class QueryType < Types::BaseObject
     field :me, Types::UserType, null: true
     def me
-      context[:current_api_session]&.user
+      current_user
     end
 
-    field :books, [Types::BookType], null: false
+    field :books, Types::BookType.connection_type, null: false
     def books
-      Book.all # todo: Secure this to only the books accessible by the logged in user.
+      policy_scope(Book)
     end
   end
 end

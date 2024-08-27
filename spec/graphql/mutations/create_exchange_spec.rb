@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "CreateExchange", type: :graphql do
+RSpec.describe Mutations::CreateExchange, type: :graphql do
   fixtures :all
 
   let(:query) do

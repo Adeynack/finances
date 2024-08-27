@@ -9,6 +9,10 @@
 #  owner_id                  :uuid             not null, indexed
 #  default_currency_iso_code :string(3)        not null
 #
+cthulhu:
+  name: The World's End Book
+  owner: cthulhu
+  default_currency_iso_code: EUR
 joe:
   name: Joe's Book
   owner: joe

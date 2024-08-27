@@ -1,21 +1,29 @@
 # frozen_string_literal: true
 
 class ApplicationPolicy
-  attr_reader :user, :record
+  attr_reader :scope, :record
 
-  def initialize(user, record)
-    @user = user
+  def initialize(pundit_scope, record)
+    @scope = pundit_scope
     @record = record
   end
 
   def book_editor?(resource = record)
     if resource.is_a?(Book)
-      resource.owner_id == user.id
+      resource.owner_id == current_user.id
     elsif resource.respond_to?(:book)
       book_editor?(resource.book)
     else
       raise ArgumentError, "no way to determine which book is being edited"
     end
+  end
+
+  def current_api_session
+    scope[:current_api_session]
+  end
+
+  def current_user
+    current_api_session&.user
   end
 
   def admin?
@@ -68,8 +76,12 @@ class ApplicationPolicy
   end
 
   class Scope
-    def initialize(user, scope)
-      @user = user
+    include ContextScopable
+
+    attr_reader :context
+
+    def initialize(context, scope)
+      @context = context
       @scope = scope
     end
 

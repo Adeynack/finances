@@ -11,6 +11,11 @@
 #  display_name    :string           not null
 #  default_book_id :uuid             indexed                    Last opened book.
 #
+cthulhu:
+  email: cthulhu@example.com
+  display_name: Cthulhu
+  password_digest: <%= BCrypt::Password.create("cthulhu") %>
+  admin: true
 joe:
   email: joe@example.com
   display_name: Joe

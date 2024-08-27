@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module GraphQLHelper
-  def gql(query:, variables:)
+  def gql(query:, variables: nil)
     context = {
       session: nil,
       current_api_session:
@@ -9,7 +9,7 @@ module GraphQLHelper
     FinancesSchema.execute(query, variables:, context:)
   end
 
-  def gql_data(query:, variables:)
+  def gql_data(query:, variables: nil)
     result = gql(query:, variables:)
     raise "GraphQL Errors: #{JSON.pretty_generate(result["errors"])}" if result["errors"].present?
     result.fetch("data")

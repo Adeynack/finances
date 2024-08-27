@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "CreateReminder", type: :graphql do
+RSpec.describe Mutations::CreateReminder, type: :graphql do
   fixtures :all
 
   let(:query) do

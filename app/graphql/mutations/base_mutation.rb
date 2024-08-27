@@ -2,6 +2,8 @@
 
 module Mutations
   class BaseMutation < GraphQL::Schema::RelayClassicMutation
+    include ContextScopable
+
     argument_class Types::BaseArgument
     field_class Types::BaseField
     input_object_class Types::BaseInputObject
@@ -9,19 +11,8 @@ module Mutations
 
     def authorized?(**args)
       # by default, require authentication for all mutations
-      raise GraphQL::ExecutionError, "Not authorized" unless context[:current_api_session].present?
+      raise GraphQL::ExecutionError, "Not authorized" unless current_api_session.present?
       true
-    end
-
-    def current_user
-      context[:current_api_session]&.user
-    end
-
-    def authorize(resource, permission = "#{field.name.underscore}?")
-      Pundit.authorize(current_user, resource, permission)
-    end
-
-    def auto_parameter(model, *attributes)
     end
   end
 end

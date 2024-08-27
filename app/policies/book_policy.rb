@@ -33,13 +33,9 @@ class BookPolicy < ApplicationPolicy
 
   class Scope < ApplicationPolicy::Scope
     def resolve
-      if user&.admin?
-        scope.all
-      elsif user
-        user.books
-      else
-        scope.none
-      end
+      return scope.none unless current_user # no user, no books
+      return scope.all if current_user.admin? # admin sees all
+      current_user.books # only the current user's owned books
     end
   end
 end
