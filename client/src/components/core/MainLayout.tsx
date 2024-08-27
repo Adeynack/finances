@@ -4,6 +4,7 @@ import { BookList } from "../../BookList";
 import { ThemeSwitch } from "./ThemeSwitch";
 import React from "react";
 import { AccountBookOutlined, BookOutlined, FolderOutlined, UserOutlined } from "@ant-design/icons";
+import { createBrowserRouter, Link, Outlet, RouterProvider, useNavigate } from "react-router-dom";
 
 const layoutStyle: React.CSSProperties = {
   margin: -8
@@ -32,11 +33,14 @@ export default function MainLayout() {
     backgroundColor: colorBgContainer,
   }
 
+  const navigate = useNavigate();
+
+  // todo: https://reactrouter.com/en/main/start/tutorial#adding-a-router
   return (
     <Layout style={layoutStyle}>
       <Header style={headerStyle}>
         <div style={titleStyle}>
-          💰 Finances
+          <Link to={'/'}>💰 Finances</Link>
         </div>
         <Menu
           style={menuStyle}
@@ -47,6 +51,7 @@ export default function MainLayout() {
               label: 'Book',
               icon: <BookOutlined />,
               title: "Book's root & other books",
+              onClick: () => navigate('/books')
             },
             {
               key: 'accounts',
@@ -70,8 +75,7 @@ export default function MainLayout() {
         />
       </Header>
       <Content style={contentStyle}>
-        <ThemeSwitch />
-        <BookList />
+        <Outlet />
       </Content>
     </Layout >
   )

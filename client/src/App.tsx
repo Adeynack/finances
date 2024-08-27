@@ -5,6 +5,20 @@ import { defaultOptions, Options, OptionsContext, OptionsSetterContext, themeFro
 import { BodyStyler } from './components/core/BodyStyler'
 import MainLayout from './components/core/MainLayout'
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { ThemeSwitch } from './components/core/ThemeSwitch'
+import { BookList } from './BookList'
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <ThemeSwitch />
+  },
+  {
+    path: "/books",
+    element: <BookList />
+  }
+]);
 
 function App() {
   const [options, setOptions] = useState(() => defaultOptions());
@@ -20,7 +34,9 @@ function App() {
           <BodyStyler />
           <OptionsContext.Provider value={options}>
             <OptionsSetterContext.Provider value={{ changeOptions }}>
-              <MainLayout />
+              <RouterProvider router={router}>
+                <MainLayout />
+              </RouterProvider>
             </OptionsSetterContext.Provider>
           </OptionsContext.Provider>
         </AntApp>
