@@ -6,11 +6,18 @@ import NetworkStatusIndicator from './components/apollo/NetworkStatusIndicator';
 const GET_BOOK_LIST = gql(`
   query GetBookList {
     books {
-      id
-      name
-      owner {
-        displayName
-        email
+      pageInfo {
+        hasNextPage
+      }
+      edges {
+        node {
+          id
+          name
+          owner {
+            displayName
+            email
+          }
+        }
       }
     }
   }
@@ -26,14 +33,18 @@ export function BookList() {
     <div>
       <p><NetworkStatusIndicator error={error} networkStatus={networkStatus} /></p>
       {data && !loading &&
-        <ul>
-          {data.books.map(book => (
-            <li key={book.id} title={`Owned by ${book.owner.displayName} (${book.owner.email})`} >
-              {book.name}
-            </li>
-          ))}
-        </ul>}
-      <Button onClick={() => refetch()}>Refetch book list</Button>
+        <>
+          <ul>
+            {data.books.edges?.map(edge => edge?.node).map(book => (
+              <li key={book?.id} title={`Owned by ${book?.owner.displayName} (${book?.owner.email})`} >
+                {book?.name}
+              </li>
+            ))}
+          </ul>
+          {data.books.pageInfo.hasNextPage && <Button onClick={() => alert('TODO: Load more')}>Load more</Button>}
+          <Button onClick={() => refetch()}>Refetch book list</Button>
+        </>
+      }
     </div >
   )
 }
