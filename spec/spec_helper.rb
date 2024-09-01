@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-unless ENV["SKIP_COVERAGE"]
+unless ENV["COVERAGE"] == "0" # enabled by default
   require "simplecov"
   SimpleCov.start "rails" do
     enable_coverage :branch

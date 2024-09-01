@@ -56,3 +56,5 @@ jobs:
         run: yarn lint
       - name: Ruby Tests & Coverage
         run: bundle exec rspec --format documentation
+        env:
+          COVERAGE: 1

@@ -15,6 +15,7 @@ class GraphqlController < ApplicationController
     result = FinancesSchema.execute(query, variables:, context:, operation_name:)
     render json: result
   rescue => e
+    # :nocov: # 🔽 Generated code & Error management
     raise e unless Rails.env.development?
     handle_error_in_development(e)
   end
@@ -47,4 +48,6 @@ class GraphqlController < ApplicationController
 
     render json: {errors: [{message: e.message, backtrace: e.backtrace}], data: {}}, status: :internal_server_error
   end
+
+    # :nocov: # 🔼 Generated code & Error management
 end
