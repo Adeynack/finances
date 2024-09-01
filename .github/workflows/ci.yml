@@ -54,5 +54,5 @@ jobs:
           kill $(cat tmp/pids/server.pid)
       - name: Lint JS/TS
         run: yarn lint
-      - name: Build and test with Rake
+      - name: Ruby Tests & Coverage
         run: bundle exec rspec --format documentation

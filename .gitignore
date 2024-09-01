@@ -46,4 +46,7 @@ __generated__
 # Client (frontend) distribution
 client/dist/
 
+# Test Coverage Results / Reports
+coverage/
+
 ###

@@ -44,6 +44,7 @@ end
 group :test do
   gem "fuubar"
   gem "rack_session_access"
+  gem "simplecov", require: false
 end
 
 group :development do
