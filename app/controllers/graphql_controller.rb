@@ -49,5 +49,5 @@ class GraphqlController < ApplicationController
     render json: {errors: [{message: e.message, backtrace: e.backtrace}], data: {}}, status: :internal_server_error
   end
 
-    # :nocov: # 🔼 Generated code & Error management
+  # :nocov: # 🔼 Generated code & Error management
 end
