@@ -47,7 +47,8 @@
         "trybick.terminal-zoom",
         "wmaurer.change-case",
         "yzhang.markdown-all-in-one",
-        "zombocom.dead-end-vscode"
+        "zombocom.dead-end-vscode",
+        "anykeyh.simplecov-vscode"
       ],
       "settings": {
         "typescript.tsdk": "node_modules/typescript/lib",

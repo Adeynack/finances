@@ -36,7 +36,7 @@ class Reminder < ApplicationRecord
   validates :title, presence: true
   validates :first_date, presence: true
   validates :last_date, date: {after: :first_date}
-  validates :exchange_register, inclusion: {in: ->(r) { r.book.registers }, message: :must_belong_to_reminder_book}
+  validates :exchange_register, inclusion: {if: :book, in: ->(r) { r.book.registers.to_a }, message: :must_belong_to_reminder_book}
   validates :exchange_description, presence: true
 
   before_validation do
@@ -45,31 +45,45 @@ class Reminder < ApplicationRecord
   end
 
   def calculate_next_occurence_at
-    return nil if last_date&.past?
     return first_date unless recurrence
 
-    starting_at = [last_commit_at, first_date].compact.max if last_commit_at
-    starting_at ||= [Time.zone.today, starting_at].compact.max
-    recurrence.starting(starting_at).first
+    next_occurence = if last_commit_at&.after?(first_date)
+      # this reminder was last comitted after its first date
+      # next occurence after last_commit_at, excluding today
+      candidates = recurrence.starting(last_commit_at).first(2)
+      (candidates[0] == last_commit_at) ? candidates[1] : candidates[0]
+    else
+      # last_commit_at is nil, or before first_date
+      # first ocurence starting first_date
+      recurrence.starting(first_date).first
+    end
+
+    # Make sure we do not schedule this reminder after its last date.
+    return nil if last_date && next_occurence.after?(last_date)
+
+    next_occurence
   end
 
   def debug
     [
       "Reminder: #{title}",
-      "  description: #{description}",
-      "  mode:        #{mode}",
-      "  first date:  #{first_date}",
-      "  last date:   #{last_date}",
-      "  recurrence:  #{recurrence.to_json}",
-      "  register:    #{exchange_register.ancestry_path.to_a.join(" / ")}",
+      "  description:    #{description}",
+      "  mode:           #{mode}",
+      "  first date:     #{first_date}",
+      "  last date:      #{last_date}",
+      "  recurrence:     #{recurrence.to_json}",
+      "  last commit:    #{last_commit_at}",
+      "  next occurence: #{next_occurence_at} (calculated: #{calculate_next_occurence_at})",
+      "  register:       #{exchange_register.hierarchical_name}",
+      "  splits:         #{reminder_splits.size}",
       reminder_splits.map do |split|
         [
-          "    - register: #{split.register.ancestry_path.to_a.join(" / ")}",
+          "    - register: #{split.register.hierarchical_name}",
           "      amount:   #{split.amount}",
           "      memo:     #{split.memo}"
         ]
       end,
       ""
-    ].flatten
+    ].flatten.map!(&:rstrip).join("\n")
   end
 end

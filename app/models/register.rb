@@ -86,6 +86,7 @@ class Register < ApplicationRecord
   end
 
   def hierarchical_name
-    self_and_ancestors.pluck(:name).reverse.join(" > ")
+    until_self = parent_id ? self_and_ancestors : [self]
+    until_self.pluck(:name).reverse.join(" > ")
   end
 end
