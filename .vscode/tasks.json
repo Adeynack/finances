@@ -16,6 +16,17 @@
         "panel": "new",
         "close": true
       }
+    },
+    {
+      "label": "Wait for API server",
+      "type": "shell",
+      "command": "yarn wait-on http://localhost:30001 -delay 1000 -t 20s",
+      "group": "none",
+      "presentation": {
+        "reveal": "silent",
+        "panel": "new",
+        "close": true
+      }
     }
   ]
 }
