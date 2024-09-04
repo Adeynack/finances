@@ -79,6 +79,10 @@ jobs:
           bundler-cache: true
       - name: Create PG Database
         run: bundle exec rake db:create db:schema:load
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
       - name: Install JavaScript Dependencies
         run: yarn install
       - name: Starting Rails server
@@ -94,6 +98,10 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
       - name: Install JavaScript Dependencies
         run: yarn install
       - name: Generate GraphQL Client Code from local schema file
