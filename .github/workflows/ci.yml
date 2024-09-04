@@ -44,17 +44,15 @@ jobs:
           bin/git_tracked_are_unmodified
       - name: Lint with Rubocop
         run: bundle exec rubocop -c .rubocop.yml
-      - name: Install JavaScript Dependencies
-        run: yarn install
-      - name: Generate GraphQL Client Code
-        run: >-
-          bin/rails server --daemon --port 30001 --binding localhost &&
-          sleep 5 &&
-          yarn gql-compile &&
-          kill $(cat tmp/pids/server.pid)
-      - name: Lint JS/TS
-        run: yarn lint
       - name: Ruby Tests & Coverage
         run: bundle exec rspec --format documentation
-        env:
-          COVERAGE: 1
+      - name: Install JavaScript Dependencies
+        run: yarn install
+      - name: Starting Rails server (used for rest of workflow)
+        run: >-
+          bin/rails server --daemon --port 30001 --binding localhost &
+          yarn wait-on http://localhost:30001 -delay 1000 -t 20s
+      - name: Generate GraphQL Client Code
+        run: yarn gql-compile
+      - name: Lint JS/TS
+        run: yarn lint
