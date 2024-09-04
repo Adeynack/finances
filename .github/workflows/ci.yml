@@ -83,8 +83,8 @@ jobs:
         run: yarn install
       - name: Starting Rails server
         run: >-
-          bin/rails server --port 30001 --binding localhost &
-          yarn wait-on http://localhost:30001 -t 20s
+          bin/rails server --port 30001 --binding 127.0.0.1 &
+          yarn wait-on http://127.0.0.1:30001 -t 20s
       - name: Generate GraphQL schema file & ensure it is up to date
         run: >- # To fix, while Rails server is running: yarn gql:gen
           yarn gql:gen &&
