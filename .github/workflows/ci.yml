@@ -1,11 +1,27 @@
-name: CI
+name: Pull-Request
 
 on: [push]
 
 jobs:
-  lint-test:
+  rails-basics:
     runs-on: ubuntu-20.04
+    env:
+      RAILS_ENV: test
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - name: Controllers Annotation
+        run: >- # To fix: bin/chusaku
+          bundle exec chusaku &&
+          bin/git_tracked_are_unmodified
+      - name: Lint with Rubocop
+        run: bundle exec rubocop -c .rubocop.yml
 
+  rails-with-db:
+    runs-on: ubuntu-20.04
     services:
       postgres:
         image: postgres:16
@@ -17,42 +33,75 @@ jobs:
           - 5432:5432
         # needed because the postgres container does not provide a healthcheck
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-
     env:
       RAILS_ENV: test
       DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/finances
-
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: "22.x"
-          cache: yarn
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
       - name: Create PG Database
-        run: bundle exec rake db:create db:migrate
+        run: bundle exec rake db:create
+      - name: Migrate DB
+        run: >- # To fix: bin/rails db:migrate
+          bundle exec rake db:migrate &&
+          bin/git_tracked_are_unmodified
       - name: Model and Routes Annotation
         run: >- # To fix: bin/annotate
           bundle exec annotate &&
           bin/git_tracked_are_unmodified
-      - name: Controllers Annotation
-        run: >- # To fix: bin/chusaku
-          bundle exec chusaku &&
-          bin/git_tracked_are_unmodified
-      - name: Lint with Rubocop
-        run: bundle exec rubocop -c .rubocop.yml
       - name: Ruby Tests & Coverage
         run: bundle exec rspec --format documentation
+
+  graphql-code-gen:
+    runs-on: ubuntu-20.04
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: finances
+        ports:
+          - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/finances
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - name: Create PG Database
+        run: bundle exec rake db:create db:schema:load
       - name: Install JavaScript Dependencies
         run: yarn install
       - name: Starting Rails server (used for rest of workflow)
         run: >-
           bin/rails server --daemon --port 30001 --binding localhost &
-          yarn wait-on http://localhost:30001 -delay 1000 -t 20s
-      - name: Generate GraphQL Client Code
-        run: yarn gql-compile
+          yarn wait-on http://localhost:30001 -t 20s
+      - name: Generate GraphQL schema file & ensure it is up to date
+        run: >- # To fix, while Rails server is running: yarn gql:gen
+          yarn gql:gen &&
+          bin/git_tracked_are_unmodified
+
+  client:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install JavaScript Dependencies
+        run: yarn install
+      - name: Generate GraphQL Client Code from local schema file
+        run: yarn gql:gen
+        env:
+          SCHEMA_PATH: ./schema.generated.graphql
       - name: Lint JS/TS
         run: yarn lint
+      - name: Tests
+        run: >-
+          echo "TODO: Add client JS/TS testing"
