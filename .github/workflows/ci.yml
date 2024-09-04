@@ -79,17 +79,16 @@ jobs:
           bundler-cache: true
       - name: Create PG Database
         run: bundle exec rake db:create db:schema:load
+      - name: Starting Rails server
+        run: bin/rails server --port 30001 --binding 127.0.0.1 &
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 22
       - name: Install JavaScript Dependencies
         run: yarn install
-      - name: Starting Rails server
-        run: bin/rails server --port 30001 --binding 127.0.0.1 &
       - name: Generate GraphQL schema file & ensure it is up to date
         run: >- # To fix, while Rails server is running: yarn gql:gen
-          yarn wait-on http://127.0.0.1:30001 -t 20s &&
           yarn gql:gen &&
           bin/git_tracked_are_unmodified
 
