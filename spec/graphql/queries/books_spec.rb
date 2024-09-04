@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "Query Books", type: :graphql do
-  fixtures :users, :books
+  fixtures :all
 
   let(:query) do
     <<~GQL

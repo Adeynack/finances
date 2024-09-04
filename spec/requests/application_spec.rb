@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "Application", type: :request do
-  fixtures :users
+  fixtures :all
 
   let(:headers) { nil }
   let(:session) { {} }

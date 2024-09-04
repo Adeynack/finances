@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "Me", type: :graphql do
-  fixtures :users
+  fixtures :all
 
   let(:query) do
     <<~GQL
