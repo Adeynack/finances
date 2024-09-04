@@ -170,6 +170,8 @@ RSpec.describe Reminder do
   end
 
   describe "#debug" do
+    before { travel_to "2024-09-03" }
+
     let(:reminder) do
       Reminder.new(
         book: books(:joe),
