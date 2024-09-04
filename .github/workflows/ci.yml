@@ -81,9 +81,9 @@ jobs:
         run: bundle exec rake db:create db:schema:load
       - name: Install JavaScript Dependencies
         run: yarn install
-      - name: Starting Rails server (used for rest of workflow)
+      - name: Starting Rails server
         run: >-
-          bin/rails server --daemon --port 30001 --binding localhost &
+          bin/rails server --port 30001 --binding localhost &
           yarn wait-on http://localhost:30001 -t 20s
       - name: Generate GraphQL schema file & ensure it is up to date
         run: >- # To fix, while Rails server is running: yarn gql:gen
