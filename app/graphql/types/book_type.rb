@@ -9,5 +9,6 @@ module Types
     field :owner, Types::UserType, null: false
     field :default_currency_iso_code, String, null: false
     field :import_origin, Types::ImportOriginType, null: true
+    field :foo, String, null: false
   end
 end
