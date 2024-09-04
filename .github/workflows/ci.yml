@@ -86,12 +86,10 @@ jobs:
       - name: Install JavaScript Dependencies
         run: yarn install
       - name: Starting Rails server
-        # Using specific IP address, see https://github.com/jeffbski/wait-on/issues/86#issuecomment-1538072041
-        run: >-
-          bin/rails server --port 30001 --binding 172.17.0.1 &
-          yarn wait-on http://172.17.0.1:30001 -t 20s
+        run: bin/rails server --port 30001 --binding 127.0.0.1 &
       - name: Generate GraphQL schema file & ensure it is up to date
         run: >- # To fix, while Rails server is running: yarn gql:gen
+          yarn wait-on http://127.0.0.1:30001 -t 20s &&
           yarn gql:gen &&
           bin/git_tracked_are_unmodified
 
