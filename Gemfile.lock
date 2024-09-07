@@ -1,4 +1,13 @@
 GIT
+  remote: https://github.com/ClosureTree/closure_tree.git
+  revision: 53f4dc5f4c38fdd895c08682bd4a7d194b059c0b
+  branch: master
+  specs:
+    closure_tree (8.0.0)
+      activerecord (>= 6.1.0)
+      with_advisory_lock (>= 5.0.0)
+
+GIT
   remote: https://github.com/ctran/annotate_models.git
   revision: 5d01c4171990c4fe7b9b0977b05ce14a98209e53
   branch: develop
@@ -84,6 +93,9 @@ GEM
       minitest (>= 5.1)
       mutex_m
       tzinfo (~> 2.0)
+    acts_as_list (1.2.2)
+      activerecord (>= 6.1)
+      activesupport (>= 6.1)
     ast (2.4.2)
     awesome_print (1.9.2)
     backport (1.2.0)
@@ -97,9 +109,6 @@ GEM
     builder (3.3.0)
     chusaku (1.3.1)
       railties (>= 3.0)
-    closure_tree (7.4.0)
-      activerecord (>= 4.2.10)
-      with_advisory_lock (>= 4.0.0)
     coderay (1.1.3)
     concurrent-ruby (1.3.4)
     connection_pool (2.4.1)
@@ -473,12 +482,13 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
+  acts_as_list
   annotate!
   awesome_print
   bcrypt (~> 3.1.7)
   bootsnap
   chusaku
-  closure_tree
+  closure_tree!
   countries
   debug
   dotenv-rails

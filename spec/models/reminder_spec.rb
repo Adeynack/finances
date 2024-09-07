@@ -25,6 +25,7 @@ require "rails_helper"
 
 RSpec.describe Reminder do
   fixtures :all
+  before(:each) { ApplicationRecord.rebuild_all! }
 
   describe "creaating a new reminder" do
     it "creates it with a recurence" do
@@ -173,14 +174,14 @@ RSpec.describe Reminder do
     before { travel_to "2024-09-03" }
 
     let(:reminder) do
-      Reminder.new(
+      Reminder.create!(
         book: books(:joe),
         recurrence: Montrose.every(:month, mday: 15),
         title: "Text",
         exchange_register: registers(:joe_first_bank),
         exchange_description: "Test",
         reminder_splits:
-      ).tap(&:validate!)
+      )
     end
 
     subject { reminder.debug }
@@ -194,7 +195,7 @@ RSpec.describe Reminder do
       end
 
       it("returns the expected") do
-        should eq <<~VALUE
+        should eq <<~VALUE.chomp
           Reminder: Text
             description:
             mode:           manual
@@ -205,10 +206,10 @@ RSpec.describe Reminder do
             next occurence: 2024-09-15 (calculated: 2024-09-15 00:00:00 +0000)
             register:       First Bank
             splits:         2
-              - register: Fruits
+              - register: Food > Fruits
                 amount:   100
                 memo:
-              - register: Meat
+              - register: Food > Meat
                 amount:   100
                 memo:
         VALUE
@@ -219,7 +220,7 @@ RSpec.describe Reminder do
       let(:reminder_splits) { [] }
 
       it("returns the expected") do
-        should eq <<~VALUE
+        should eq <<~VALUE.chomp
           Reminder: Text
             description:
             mode:           manual

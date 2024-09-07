@@ -5,10 +5,17 @@
 #  id                 :uuid             not null, primary key
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
-#  exchange_id        :uuid             not null, indexed
-#  register_id        :uuid             not null, indexed                To which register is the money going to for this split.
+#  exchange_id        :uuid             not null, indexed, indexed => [position]
+#  register_id        :uuid             not null, indexed                          To which register is the money going to for this split.
+#  position           :integer          not null, indexed => [exchange_id]
 #  amount             :integer          not null
-#  counterpart_amount :integer                                           Amount in the destination register, if it differs from 'amount' (eg: an exchange rate applies).
-#  memo               :text                                              Detail about the exchange, to show in the destination register.
+#  counterpart_amount :integer                                                     Amount in the destination register, if it differs from 'amount' (eg: an exchange rate applies).
+#  memo               :text                                                        Detail about the exchange, to show in the destination register.
 #  status             :enum             default("uncleared"), not null
 #
+joe_fruits_1_joe_fruits:
+  exchange: joe_fruits_1
+  register: joe_fruits
+  position: 0
+  amount: 10
+  counterpart_amount: -10

@@ -20,14 +20,18 @@ class CreateReminders < ActiveRecord::Migration[6.1]
       t.text :exchange_memo, comment: "Detail about the exchange."
       t.enum :exchange_status, enum_type: :exchange_status, null: false, default: "uncleared"
     end
+
     create_table :reminder_splits, id: :uuid do |t|
       t.timestamps
       t.references :reminder, type: :uuid, foreign_key: true, null: false
       t.references :register, type: :uuid, foreign_key: true, null: false, comment: "To which register is the money going to for this split."
+      t.integer :position, null: false
       t.integer :amount, null: false
       t.integer :counterpart_amount, comment: "Amount in the destination register, if it differs from 'amount' (eg: an exchange rate applies)."
       t.text :memo, comment: "Detail about the exchange, to show in the destination register."
       t.enum :status, enum_type: :exchange_status, null: false, default: "uncleared"
+
+      t.index [:reminder_id, :position], unique: true
     end
   end
 end

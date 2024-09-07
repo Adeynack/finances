@@ -76,14 +76,13 @@ class Reminder < ApplicationRecord
       "  next occurence: #{next_occurence_at} (calculated: #{calculate_next_occurence_at})",
       "  register:       #{exchange_register.hierarchical_name}",
       "  splits:         #{reminder_splits.size}",
-      reminder_splits.map do |split|
+      *reminder_splits.flat_map do |split|
         [
           "    - register: #{split.register.hierarchical_name}",
           "      amount:   #{split.amount}",
           "      memo:     #{split.memo}"
         ]
-      end,
-      ""
-    ].flatten.map!(&:rstrip).join("\n")
+      end
+    ].map(&:rstrip).join("\n")
   end
 end

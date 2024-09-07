@@ -29,13 +29,14 @@ class Book < ApplicationRecord
   validates :name, presence: true
 
   def debug_registers_tree
+    result = []
     exchange_count_per_register_id = Exchange.group(:register_id).count
     split_count_per_register_id = Split.group(:register_id).count
 
-    logger.info "Book '#{name}'"
+    result << "Book '#{name}'"
     output_register = ->(level:, node:) do
       node.each do |r, children|
-        logger.info [
+        result << [
           "#{"|   " * (level - 1)}|- #{r.type} '#{r.name}' (#{r.currency_iso_code})#{" ⛔️" unless r.active}",
           "#{exchange_count_per_register_id.fetch(r.id, 0) + split_count_per_register_id.fetch(r.id, 0)} exchanges (#{exchange_count_per_register_id.fetch(r.id, 0)} + #{split_count_per_register_id.fetch(r.id, 0)})"
         ].join(" // ")
@@ -43,12 +44,15 @@ class Book < ApplicationRecord
       end
     end
     output_register.call(level: 1, node: registers.hash_tree)
-    nil
+
+    result.join("\n")
   end
 
   def debug_reminders
-    reminders.order(:title).includes(:exchange_register, :reminder_splits).flat_map(&:debug).each { |line| logger.info(line) }
-    nil
+    reminders.order(:title)
+      .includes(:exchange_register, :reminder_splits)
+      .map(&:debug)
+      .join("\n")
   end
 
   def destroy!(fast: false)

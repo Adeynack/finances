@@ -12,3 +12,8 @@
 #  memo        :text                                              Detail about the exchange.
 #  status      :enum             default("uncleared"), not null
 #
+joe_fruits_1:
+  date: "2020-01-01"
+  register: joe_first_bank
+  description: Fruits
+  status: cleared

@@ -28,7 +28,8 @@ gem "countries", require: "countries/global"
 gem "pundit"
 
 # Data
-gem "closure_tree"
+gem "acts_as_list"
+gem "closure_tree", github: "ClosureTree/closure_tree", branch: "master"
 gem "awesome_print"
 gem "table_print"
 gem "money-rails"

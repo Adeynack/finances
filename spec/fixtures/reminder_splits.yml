@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: reminder_splits
@@ -15,19 +13,9 @@
 #  memo               :text                                                        Detail about the exchange, to show in the destination register.
 #  status             :enum             default("uncleared"), not null
 #
-class ReminderSplit < ApplicationRecord
-  include Taggable
-  include Importable
-
-  belongs_to :reminder
-  has_one :book, through: :reminder
-  belongs_to :register
-
-  acts_as_list scope: :reminder
-
-  enum status: Exchange.statuses
-
-  def book
-    super || reminder.book
-  end
-end
+joe_monthly_fruits_fruits:
+  reminder: joe_monthly_fruits
+  register: joe_fruits
+  position: 0
+  amount: 1000
+  counterpart_amount: -1000

@@ -102,11 +102,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_30_201354) do
     t.datetime "updated_at", null: false
     t.uuid "reminder_id", null: false
     t.uuid "register_id", null: false, comment: "To which register is the money going to for this split."
+    t.integer "position", null: false
     t.integer "amount", null: false
     t.integer "counterpart_amount", comment: "Amount in the destination register, if it differs from 'amount' (eg: an exchange rate applies)."
     t.text "memo", comment: "Detail about the exchange, to show in the destination register."
     t.enum "status", default: "uncleared", null: false, enum_type: "exchange_status"
     t.index ["register_id"], name: "index_reminder_splits_on_register_id"
+    t.index ["reminder_id", "position"], name: "index_reminder_splits_on_reminder_id_and_position", unique: true
     t.index ["reminder_id"], name: "index_reminder_splits_on_reminder_id"
   end
 
@@ -135,10 +137,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_30_201354) do
     t.datetime "updated_at", null: false
     t.uuid "exchange_id", null: false
     t.uuid "register_id", null: false, comment: "To which register is the money going to for this split."
+    t.integer "position", null: false
     t.integer "amount", null: false
     t.integer "counterpart_amount", comment: "Amount in the destination register, if it differs from 'amount' (eg: an exchange rate applies)."
     t.text "memo", comment: "Detail about the exchange, to show in the destination register."
     t.enum "status", default: "uncleared", null: false, enum_type: "exchange_status"
+    t.index ["exchange_id", "position"], name: "index_splits_on_exchange_id_and_position", unique: true
     t.index ["exchange_id"], name: "index_splits_on_exchange_id"
     t.index ["register_id"], name: "index_splits_on_register_id"
   end
