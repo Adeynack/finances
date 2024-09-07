@@ -4,5 +4,5 @@ set -e
 (which overmind > /dev/null) || bin/install_overmind
 
 echo "---[ Starting development environment ]---"
-overmind status > /dev/null 2>&1 || rm -rf .overmind.sock
+overmind status > /dev/null 2>&1 || overmind quit || rm -rf .overmind.sock
 overmind s -f Procfile.dev -p ${PORT:-30001} -P 10

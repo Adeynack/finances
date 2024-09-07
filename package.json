@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite client --config vite.config.ts",
     "build": "tsc -b && vite build",
+    "test": "echo TODO",
     "lint": "yarn lint:types && yarn lint:style && yarn lint:format",
     "lint:types": "tsc --noEmit",
     "lint:style": "eslint client/**/*.ts --max-warnings 0 --report-unused-disable-directives",

@@ -27,7 +27,7 @@ if (SCHEMA_PATH.startsWith("http://")) {
             "# THIS FILE IS AUTO-GENERATED, DO NOT MODIFY.",
             "# The source of truth is the API server",
             "# To re-generate, ensure the server is running on port 30001",
-            "# and execute: yarn gql-compile",
+            "# and execute: yarn gql:gen",
             "#",
           ],
         },

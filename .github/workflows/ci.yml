@@ -109,5 +109,4 @@ jobs:
       - name: Lint JS/TS
         run: yarn lint
       - name: Tests
-        run: >-
-          echo "TODO: Add client JS/TS testing"
+        run: yarn test
