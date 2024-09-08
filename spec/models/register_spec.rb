@@ -37,6 +37,34 @@ RSpec.describe Register do
     end
   end
 
+  describe "account?" do
+    Register::ACCOUNT_TYPES.each do |type|
+      it "is true for #{type}" do
+        expect(Register.new(type:)).to be_account
+      end
+    end
+
+    (Register::KNOWN_TYPES - Register::ACCOUNT_TYPES).each do |type|
+      it "is false for #{type}" do
+        expect(Register.new(type:)).not_to be_account
+      end
+    end
+  end
+
+  describe "category" do
+    Register::CATEGORY_TYPES.each do |type|
+      it "is true for #{type}" do
+        expect(Register.new(type:)).to be_category
+      end
+    end
+
+    (Register::KNOWN_TYPES - Register::CATEGORY_TYPES).each do |type|
+      it "is false for #{type}" do
+        expect(Register.new(type:)).not_to be_category
+      end
+    end
+  end
+
   describe "IBAN" do
     it "cannot create a card when IBAN is not valid" do
       r = Register.new name: "Visa", book: books(:joe), iban: "foo"
@@ -53,6 +81,38 @@ RSpec.describe Register do
       r = Register.new name: "Visa", book: books(:joe), currency_iso_code: "FOO"
       expect(r.validate).to be_falsy
       expect(r.errors.details[:currency_iso_code]).to eq [{error: :inclusion, value: "FOO"}]
+    end
+  end
+
+  describe "#hierarchical_name" do
+    before(:each) { Register.rebuild! }
+
+    subject { register.hierarchical_name }
+
+    context "when the register is at the root" do
+      let(:register) { registers(:joe_first_bank) }
+
+      it("is the name of the register itself") { should eq "First Bank" }
+    end
+
+    context "when the register is nested" do
+      let(:register) { registers(:joe_fruits) }
+
+      it("is the full path to the register, separated by a special character") do
+        should eq "Food:Fruits"
+      end
+    end
+
+    context "when the separator character is part of the name" do
+      it "fails to validate" do
+        register = registers(:joe_fruits)
+        register.name = "Foo:Bar"
+        expect(register.validate).to be false
+        expect(register.errors.sole).to have_attributes(
+          attribute: :name,
+          type: :contains_separator_character
+        )
+      end
     end
   end
 end

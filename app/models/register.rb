@@ -37,8 +37,6 @@ class Register < ApplicationRecord
   CATEGORY_TYPES = ["Expense", "Income"].freeze
   KNOWN_TYPES = (ACCOUNT_TYPES + CATEGORY_TYPES).freeze
 
-  enum type: KNOWN_TYPES.index_by { _1.underscore.to_sym }
-
   belongs_to :book, optional: false
   has_closure_tree order: :name, dependent: :destroy
 
@@ -61,8 +59,10 @@ class Register < ApplicationRecord
   has_currency :currency
 
   validates :name, presence: true
-  validates :starts_at, date: true
+  validate :validate_name_does_not_contain_separator_character
+  validates :starts_at, date: true, presence: {if: :account?}
   validates :expires_at, date: true
+  validates :currency_iso_code, presence: true
   validates :initial_balance, presence: true, numericality: {only_integer: true}
   validates :iban, iban: true
   validates :annual_interest_rate, numericality: {allow_nil: true}
@@ -72,11 +72,6 @@ class Register < ApplicationRecord
   scope :categories, -> { where(type: CATEGORY_TYPES) }
   scope :active, -> { where(active: true) }
 
-  before_create do
-    self.starts_at ||= Time.zone.today if account?
-    self.currency_iso_code ||= book&.default_currency_iso_code
-  end
-
   def account?
     ACCOUNT_TYPES.include?(type)
   end
@@ -85,8 +80,16 @@ class Register < ApplicationRecord
     CATEGORY_TYPES.include?(type)
   end
 
+  HIERARCHICAL_NAME_SEPARATOR = ":"
+
   def hierarchical_name
     until_self = parent_id ? self_and_ancestors : [self]
-    until_self.pluck(:name).reverse.join(" > ")
+    until_self.pluck(:name).reverse.join(HIERARCHICAL_NAME_SEPARATOR)
+  end
+
+  private
+
+  def validate_name_does_not_contain_separator_character
+    errors.add(:name, :contains_separator_character) if name.to_s.include?(HIERARCHICAL_NAME_SEPARATOR)
   end
 end

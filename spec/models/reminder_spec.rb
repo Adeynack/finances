@@ -206,10 +206,10 @@ RSpec.describe Reminder do
             next occurence: 2024-09-15 (calculated: 2024-09-15 00:00:00 +0000)
             register:       First Bank
             splits:         2
-              - register: Food > Fruits
+              - register: Food:Fruits
                 amount:   100
                 memo:
-              - register: Food > Meat
+              - register: Food:Meat
                 amount:   100
                 memo:
         VALUE

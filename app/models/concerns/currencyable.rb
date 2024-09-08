@@ -22,7 +22,7 @@ module Currencyable
 
       # ISO Code Setter
       define_method :"#{model_attribute}=" do |new_value|
-        super(new_value.upcase)
+        super(new_value&.upcase)
       end
 
       # Money Object Getter

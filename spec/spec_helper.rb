@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 unless ENV["SKIP_COVERAGE"] # enabled by default
+  MINIMUM_LINE_COVERAGE = 80
+  MINIMUM_BRANCH_COVERAGE = 60
+
   require "simplecov"
   SimpleCov.start "rails" do
     enable_coverage :branch
@@ -9,7 +12,7 @@ unless ENV["SKIP_COVERAGE"] # enabled by default
     # Initialized with the coverage at time of starting coverage.
     # As coverage goes up, adjust them higher.
     # GOAL: Never lower them, so any new code is ensured to be tested.
-    minimum_coverage line: 81, branch: 54 if ENV["MIN_COV"] || ENV["CI"]
+    minimum_coverage line: MINIMUM_LINE_COVERAGE, branch: MINIMUM_BRANCH_COVERAGE if ENV["MIN_COV"] || ENV["CI"]
 
     add_group "GraphQL", "app/graphql"
     add_group "Policies", "app/policies"

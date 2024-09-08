@@ -3,7 +3,7 @@
 module Types
   class AccountTypeType < Types::BaseEnum
     Register::ACCOUNT_TYPES.each do |t|
-      value t, value: t.underscore
+      value t
     end
   end
 end

@@ -25,11 +25,11 @@ RSpec.describe Book do
     it "returns the expected" do
       should eq <<~VALUE.chomp
         Book 'Joe's Book'
-        |- bank 'First Bank' (EUR) // 1 exchanges (1 + 0)
-        |- expense 'Food' (EUR) // 0 exchanges (0 + 0)
-        |   |- expense 'Fruits' (EUR) // 1 exchanges (0 + 1)
-        |   |- expense 'Meat' (EUR) // 0 exchanges (0 + 0)
-        |- expense 'Old Stuff' (EUR) ⛔️ // 0 exchanges (0 + 0)
+        |- Bank 'First Bank' (EUR) // 1 exchanges (1 + 0)
+        |- Expense 'Food' (EUR) // 0 exchanges (0 + 0)
+        |   |- Expense 'Fruits' (EUR) // 1 exchanges (0 + 1)
+        |   |- Expense 'Meat' (EUR) // 0 exchanges (0 + 0)
+        |- Expense 'Old Stuff' (EUR) ⛔️ // 0 exchanges (0 + 0)
       VALUE
     end
   end
@@ -49,7 +49,7 @@ RSpec.describe Book do
           next occurence:  (calculated: 2020-01-01 00:00:00 +0000)
           register:       First Bank
           splits:         1
-            - register: Food > Fruits
+            - register: Food:Fruits
               amount:   1000
               memo:
       VALUE
