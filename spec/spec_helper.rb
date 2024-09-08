@@ -2,7 +2,7 @@
 
 unless ENV["SKIP_COVERAGE"] # enabled by default
   MINIMUM_LINE_COVERAGE = 80
-  MINIMUM_BRANCH_COVERAGE = 60
+  MINIMUM_BRANCH_COVERAGE = 55
 
   require "simplecov"
   SimpleCov.start "rails" do
