@@ -20,7 +20,7 @@ export function defaultOptions(): Options {
 export const OptionsContext = createContext(defaultOptions());
 
 export const OptionsSetterContext = createContext({
-  changeOptions: (_: Partial<Options>) => {},
+  changeOptions: (_options: Partial<Options>) => {}, // eslint-disable-line @typescript-eslint/no-unused-vars
 });
 
 export function themeFromOptions(optionTheme: Options["theme"]): ThemeConfig {

@@ -9,8 +9,8 @@
     "test": "echo TODO",
     "lint": "yarn lint:types && yarn lint:style && yarn lint:format",
     "lint:types": "tsc --noEmit",
-    "lint:style": "eslint client/**/*.ts --max-warnings 0 --report-unused-disable-directives",
-    "lint:format": "prettier --list-different \"client/**/*.ts\"",
+    "lint:style": "eslint client/**/*.{ts,tsx} --max-warnings 0 --report-unused-disable-directives",
+    "lint:format": "prettier --list-different \"client/**/*.{ts,tsx}\"",
     "preview": "vite preview",
     "gql:gen": "graphql-codegen --config client/codegen.ts"
   },
