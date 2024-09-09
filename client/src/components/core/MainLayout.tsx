@@ -1,6 +1,6 @@
 import { Layout, Menu } from "antd";
 import { Content, Header } from "antd/es/layout/layout";
-import React from "react";
+import React, { useContext } from "react";
 import {
   AccountBookOutlined,
   BookOutlined,
@@ -8,6 +8,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { Outlet, useNavigate } from "react-router-dom";
+import { SessionContext } from "../../models/session";
 
 const layoutStyle: React.CSSProperties = {
   margin: -8,
@@ -31,6 +32,7 @@ const menuStyle: React.CSSProperties = {
 
 export default function MainLayout() {
   const navigate = useNavigate();
+  const session = useContext(SessionContext);
 
   // todo: https://reactrouter.com/en/main/start/tutorial#adding-a-router
   return (
@@ -46,27 +48,31 @@ export default function MainLayout() {
               title: "Finances",
               onClick: () => navigate("/"),
             },
-            {
-              key: "books",
-              label: "Book",
-              icon: <BookOutlined />,
-              title: "Book's root & other books",
-              onClick: () => navigate("/books"),
-            },
-            {
-              key: "accounts",
-              label: "Accounts",
-              icon: <AccountBookOutlined />,
-              title: "Current book's accounts",
-              onClick: () => navigate("/accounts"),
-            },
-            {
-              key: "categories",
-              label: "Categories",
-              icon: <FolderOutlined />,
-              title: "Current book's categories",
-              onClick: () => navigate("/categories"),
-            },
+            ...(!session.isLoggedIn()
+              ? []
+              : [
+                  {
+                    key: "books",
+                    label: "Book",
+                    icon: <BookOutlined />,
+                    title: "Book's root & other books",
+                    onClick: () => navigate("/books"),
+                  },
+                  {
+                    key: "accounts",
+                    label: "Accounts",
+                    icon: <AccountBookOutlined />,
+                    title: "Current book's accounts",
+                    onClick: () => navigate("/accounts"),
+                  },
+                  {
+                    key: "categories",
+                    label: "Categories",
+                    icon: <FolderOutlined />,
+                    title: "Current book's categories",
+                    onClick: () => navigate("/categories"),
+                  },
+                ]),
             {
               key: "user",
               label: "User",

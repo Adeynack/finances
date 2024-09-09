@@ -1,9 +1,8 @@
 import { theme, ThemeConfig } from "antd";
-import { createContext } from "react";
 
-export interface Options {
+export type Options = {
   theme: "light" | "dark";
-}
+};
 
 function determineDefaultTheme(): Options["theme"] {
   return window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -16,12 +15,6 @@ export function defaultOptions(): Options {
     theme: determineDefaultTheme(),
   };
 }
-
-export const OptionsContext = createContext(defaultOptions());
-
-export const OptionsSetterContext = createContext({
-  changeOptions: (_options: Partial<Options>) => {}, // eslint-disable-line @typescript-eslint/no-unused-vars
-});
 
 export function themeFromOptions(optionTheme: Options["theme"]): ThemeConfig {
   return {

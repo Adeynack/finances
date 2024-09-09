@@ -1,21 +1,21 @@
 import { useContext } from "react";
-import { OptionsContext, OptionsSetterContext } from "./options";
 import { Switch } from "antd";
+import { SessionContext, SessionSetterContext } from "../../models/session";
 
 export function ThemeSwitch() {
-  const options = useContext(OptionsContext);
-  const { changeOptions } = useContext(OptionsSetterContext);
+  const session = useContext(SessionContext);
+  const { changeSession } = useContext(SessionSetterContext);
 
   return (
     <Switch
       title="Dark mode?"
-      value={options.theme === "dark"}
+      value={session.options.theme === "dark"}
       unCheckedChildren="Light"
       checkedChildren="Dark"
       onChange={(checked) =>
-        changeOptions({
-          ...options,
-          theme: checked ? "dark" : "light",
+        changeSession({
+          ...session,
+          options: { ...session.options, theme: checked ? "dark" : "light" },
         })
       }
     />
