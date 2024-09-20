@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
-import { gql } from "./__generated__/gql";
+import { gql } from "../__generated__/gql";
 import { Button } from "antd";
-import NetworkStatusIndicator from "./components/apollo/NetworkStatusIndicator";
+import NetworkStatusIndicator from "../components/apollo/NetworkStatusIndicator";
 
 const GET_BOOK_LIST = gql(`
   query GetBookList {
@@ -23,7 +23,7 @@ const GET_BOOK_LIST = gql(`
   }
 `);
 
-export function BookList() {
+export function BooksIndex() {
   const { loading, data, error, refetch, networkStatus } = useQuery(
     GET_BOOK_LIST,
     {
