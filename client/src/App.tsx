@@ -55,6 +55,11 @@ function createApolloClient(apiToken: string) {
     headers: {
       Authorization: apiToken,
     },
+    defaultOptions: {
+      mutate: {
+        errorPolicy: "all",
+      },
+    },
   });
 }
 

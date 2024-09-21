@@ -29,6 +29,15 @@ class FinancesSchema < GraphQL::Schema
   # Stop validating when it encounters this many errors:
   validate_max_errors(100)
 
+  # Limit the depth of queries (https://graphql-ruby.org/queries/complexity_and_depth#prevent-deeply-nested-queries)
+  max_depth 15
+
+  # Limit the complexity of queries (https://graphql-ruby.org/queries/complexity_and_depth#prevent-complex-queries)
+  max_complexity 300
+
+  # Default maximum page size (https://graphql-ruby.org/schema/definition.html#default-limits)
+  default_max_page_size 20
+
   # Relay-style Object Identification:
 
   # Return a string UUID for `object`

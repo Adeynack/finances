@@ -4,11 +4,10 @@ import { LogIn } from "./LogIn";
 
 export function UserPage() {
   const session = useSession();
-  console.log("[UserPage] Session", session);
 
   return (
     <div>
-      <div>TODO: User</div>
+      <div>User</div>
       <ThemeSwitch />
       {!session.isLoggedIn() && <LogIn />}
     </div>
