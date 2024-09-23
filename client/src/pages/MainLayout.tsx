@@ -1,12 +1,7 @@
-import { Layout, Menu, MenuItemProps } from "antd";
+import { Layout, Menu } from "antd";
 import { Content, Header } from "antd/es/layout/layout";
 import React, { useContext } from "react";
-import {
-  AccountBookOutlined,
-  BookOutlined,
-  FolderOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { BookOutlined, UserOutlined } from "@ant-design/icons";
 import { NavigateFunction, Outlet, useNavigate } from "react-router-dom";
 import { SessionContext } from "../models/session";
 import { ItemType, MenuItemType } from "antd/es/menu/interface";

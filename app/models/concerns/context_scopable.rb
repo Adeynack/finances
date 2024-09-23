@@ -20,7 +20,8 @@ module ContextScopable
       {session:, current_api_session:}
     end
 
-    def authorize(resource, permission = "#{field.name.underscore}?")
+    def authorize(resource, permission)
+      permission = :"#{permission}?" unless permission.ends_with?("?")
       Pundit.authorize(pundit_scope, resource, permission)
     end
 

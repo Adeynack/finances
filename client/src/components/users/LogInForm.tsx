@@ -2,7 +2,13 @@ import { Button, Form, Input } from "antd";
 import { gql, useMutation } from "@apollo/client";
 import { LoadingOutlined } from "@ant-design/icons";
 import { LogInMutation } from "../../__generated__/graphql";
-import { useNavigate } from "react-router-dom";
+import { NavigateFunction, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import {
+  Session,
+  SessionSetterContext,
+  useSession,
+} from "../../models/session";
 
 const LOG_IN_MUTATION = gql(`
   mutation LogIn($email: String!, $password: String!) {
@@ -10,29 +16,28 @@ const LOG_IN_MUTATION = gql(`
       user {
         email
         displayName
+        defaultBookId
       }
       token
     }
   }
 `);
 
-type LogInFormFields = {
+interface LogInFormFields {
   email: string;
   password: string;
-};
+}
 
-export function LogIn() {
+export function LogInForm() {
   const navigate = useNavigate();
-
-  function onLogInCompleted(data: LogInMutation): void {
-    if (data?.logIn?.token) {
-      navigate("/");
-    }
-  }
+  const session = useSession();
+  const { changeSession } = useContext(SessionSetterContext);
 
   const [logInToServer, { data, loading, error }] = useMutation<LogInMutation>(
     LOG_IN_MUTATION,
-    { onCompleted: onLogInCompleted },
+    {
+      onCompleted: (d) => onLogInCompleted(d, navigate, session, changeSession),
+    },
   );
 
   function createSession({ email, password }: LogInFormFields): void {
@@ -50,7 +55,6 @@ export function LogIn() {
 
   return (
     <div>
-      {loading ? <div>Logging in ...</div> : <div>Log In</div>}
       {error && <div>Errors (see console)</div>}
       <Form<LogInFormFields>
         name="login"
@@ -84,7 +88,7 @@ export function LogIn() {
         {loading ? (
           <LoadingOutlined label="Logging in..." />
         ) : (
-          <Form.Item>
+          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <Button type="primary" htmlType="submit">
               Log in
             </Button>
@@ -93,4 +97,25 @@ export function LogIn() {
       </Form>
     </div>
   );
+}
+
+function onLogInCompleted(
+  data: LogInMutation,
+  navigate: NavigateFunction,
+  session: Session,
+  changeSession: (_session: Partial<Session>) => void,
+): void {
+  if (!data?.logIn) return;
+
+  changeSession({
+    ...session,
+    apiToken: data.logIn.token,
+    user: data.logIn.user,
+  });
+
+  if (data.logIn.user?.defaultBookId) {
+    navigate(`/books/${data.logIn.user.defaultBookId}`);
+  } else {
+    navigate("/");
+  }
 }

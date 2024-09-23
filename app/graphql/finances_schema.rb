@@ -51,4 +51,13 @@ class FinancesSchema < GraphQL::Schema
     # For example, use Rails' GlobalID library (https://github.com/rails/globalid):
     GlobalID.find(global_id)
   end
+
+  # Error Handling
+  # https://graphql-ruby.org/errors/error_handling.html
+
+  NOT_FOUND_OR_NOT_AUTHORIZED_ERROR_MESSAGE = "Trying to access something that either does not exist, or to which you do not have access"
+
+  rescue_from(Pundit::NotAuthorizedError) do |err, obj, args, ctx, field|
+    raise GraphQL::ExecutionError, NOT_FOUND_OR_NOT_AUTHORIZED_ERROR_MESSAGE
+  end
 end

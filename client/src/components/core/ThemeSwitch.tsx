@@ -14,7 +14,6 @@ export function ThemeSwitch() {
       checkedChildren="Dark"
       onChange={(checked) =>
         changeSession({
-          ...session,
           options: { ...session.options, theme: checked ? "dark" : "light" },
         })
       }

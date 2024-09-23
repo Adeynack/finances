@@ -27,7 +27,7 @@ class ApplicationPolicy
   end
 
   def admin?
-    user&.admin?
+    current_user&.admin?
   end
 
   def index?

@@ -4,7 +4,7 @@ class BookPolicy < ApplicationPolicy
   allow_association_actions [:accounts, :categories], except: [:attach, :detach], if: :update?
 
   def index?
-    user
+    current_user
   end
 
   def show?
@@ -12,7 +12,7 @@ class BookPolicy < ApplicationPolicy
   end
 
   def create?
-    user
+    current_user
   end
 
   def create_book?

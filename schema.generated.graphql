@@ -425,6 +425,7 @@ input SplitForCreateInput {
 }
 
 type User {
+  defaultBookId: ID
   displayName: String!
   email: String!
 }

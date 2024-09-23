@@ -6,14 +6,15 @@ import { BodyStyler } from "./components/core/BodyStyler";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { AppRouter } from "./AppRouter";
 import {
-  defaultSession,
+  loadSessionOrDefault,
+  performSessionChange,
   Session,
   SessionContext,
   SessionSetterContext,
 } from "./models/session";
 
 function App() {
-  const [session, setSession] = useState<Session>(() => defaultSession());
+  const [session, setSession] = useState<Session>(() => loadSessionOrDefault());
 
   const [themeConfig, setThemeConfig] = useState(() =>
     themeFromOptions(session.options.theme),
@@ -23,14 +24,16 @@ function App() {
     [session.options.theme],
   );
 
-  const changeSession = (o: Partial<Session>) =>
-    setSession({ ...session, ...o });
+  const [apiToken, setApiToken] = useState("");
 
   const [client, setClient] = useState(() => createApolloClient(""));
-  useEffect(
-    () => setClient(createApolloClient(session?.apiToken || "")),
-    [session?.apiToken],
-  );
+  useEffect(() => {
+    console.trace("setClient", { apiToken });
+    setClient(createApolloClient(apiToken));
+  }, [apiToken]);
+
+  const changeSession = (changes: Partial<Session>) =>
+    performSessionChange(changes, session, setApiToken, setSession);
 
   return (
     <AntApp>

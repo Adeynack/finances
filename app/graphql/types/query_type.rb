@@ -9,7 +9,7 @@ module Types
 
     field :books, Types::BookType.connection_type, null: false
     def books
-      policy_scope(Book)
+      policy_scope(authorize(Book, :index))
     end
   end
 end
