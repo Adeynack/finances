@@ -1,16 +1,20 @@
 import { Button } from "antd";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { SessionSetterContext } from "../../models/session";
-import { useNavigate } from "react-router-dom";
+import { redirect } from "react-router-dom";
 
 export default function LogOutButton() {
-  const { changeSession } = useContext(SessionSetterContext);
-  const navigate = useNavigate();
+  const { updateSession } = useContext(SessionSetterContext);
+  const [redirectUrl, setRedirectUrl] = useState<string | null>(null);
 
   const onLogOutClick = () => {
-    changeSession({ apiToken: null, user: null });
-    navigate("/");
+    updateSession({ apiToken: null, user: null });
+    setRedirectUrl("/");
   };
+
+  if (redirectUrl) {
+    return redirect(redirectUrl);
+  }
 
   return (
     <Button color="danger" onClick={onLogOutClick}>

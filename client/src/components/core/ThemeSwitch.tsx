@@ -4,7 +4,7 @@ import { SessionContext, SessionSetterContext } from "../../models/session";
 
 export function ThemeSwitch() {
   const session = useContext(SessionContext);
-  const { changeSession } = useContext(SessionSetterContext);
+  const { updateSession } = useContext(SessionSetterContext);
 
   return (
     <Switch
@@ -13,8 +13,8 @@ export function ThemeSwitch() {
       unCheckedChildren="Light"
       checkedChildren="Dark"
       onChange={(checked) =>
-        changeSession({
-          options: { ...session.options, theme: checked ? "dark" : "light" },
+        updateSession({
+          options: { theme: checked ? "dark" : "light" },
         })
       }
     />

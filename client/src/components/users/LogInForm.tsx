@@ -31,12 +31,12 @@ interface LogInFormFields {
 export function LogInForm() {
   const navigate = useNavigate();
   const session = useSession();
-  const { changeSession } = useContext(SessionSetterContext);
+  const { updateSession } = useContext(SessionSetterContext);
 
   const [logInToServer, { data, loading, error }] = useMutation<LogInMutation>(
     LOG_IN_MUTATION,
     {
-      onCompleted: (d) => onLogInCompleted(d, navigate, session, changeSession),
+      onCompleted: (d) => onLogInCompleted(d, navigate, session, updateSession),
     },
   );
 
@@ -103,11 +103,11 @@ function onLogInCompleted(
   data: LogInMutation,
   navigate: NavigateFunction,
   session: Session,
-  changeSession: (_session: Partial<Session>) => void,
+  updateSession: (_session: Partial<Session>) => void,
 ): void {
   if (!data?.logIn) return;
 
-  changeSession({
+  updateSession({
     ...session,
     apiToken: data.logIn.token,
     user: data.logIn.user,

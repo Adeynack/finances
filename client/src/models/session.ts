@@ -31,7 +31,7 @@ function generateDefaultSession(): Session {
 export const SessionContext = createContext(generateDefaultSession());
 
 export const SessionSetterContext = createContext({
-  changeSession: (_session: Partial<Session>): void => {}, // eslint-disable-line @typescript-eslint/no-unused-vars
+  updateSession: (_session: Partial<Session>): void => {}, // eslint-disable-line @typescript-eslint/no-unused-vars
 });
 
 export function useSession(): Session {
@@ -47,24 +47,30 @@ export function loadSessionOrDefault(): Session {
   console.log("loadSessionOrDefault", { rawSessionFromStorage });
   if (rawSessionFromStorage) {
     // Merging default and whatever is stored, to ensure some requirements.
-    return { ...defaultSession, ...JSON.parse(rawSessionFromStorage) };
+    return merge.withOptions(
+      { mergeArrays: false },
+      defaultSession,
+      JSON.parse(rawSessionFromStorage) as Session,
+    );
   }
 
   // No stored session. Using the default.
   return defaultSession;
 }
 
-export function performSessionChange(
+export function performSessionUpdate(
   changes: Partial<Session>,
   session: Session,
-  setApiToken: (_: string) => void,
+  setApiToken: (_: string | null) => void,
   setSession: (_: Session) => void,
 ) {
-  // If the token changes, we need to set it
-  // using its prop, so the Apollo client prop
-  // get updated.
-  if (changes.apiToken != session.apiToken) {
-    setApiToken(changes.apiToken ? `Bearer ${changes.apiToken}` : "");
+  console.log("[performSessionUpdate]", { changes, session });
+
+  // If the token changes, we need to set it using its prop, so the
+  // Apollo client prop get updated.
+  if (changes.apiToken !== undefined && changes.apiToken !== session.apiToken) {
+    console.log("[performSessionUpdate] calling setApiToken", changes.apiToken);
+    setApiToken(changes.apiToken || null);
   }
 
   // Set the new session's prop.
@@ -73,6 +79,7 @@ export function performSessionChange(
     session,
     changes as Session,
   );
+  console.log("[performSessionUpdate] setSession", { updatedSession });
   setSession(updatedSession);
 
   // Save the session to the browser's storage.

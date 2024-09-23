@@ -7,7 +7,7 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { AppRouter } from "./AppRouter";
 import {
   loadSessionOrDefault,
-  performSessionChange,
+  performSessionUpdate,
   Session,
   SessionContext,
   SessionSetterContext,
@@ -24,16 +24,23 @@ function App() {
     [session.options.theme],
   );
 
-  const [apiToken, setApiToken] = useState("");
+  const [apiToken, setApiToken] = useState(session.apiToken);
+  console.log("[App] apiToken", apiToken);
 
   const [client, setClient] = useState(() => createApolloClient(""));
   useEffect(() => {
-    console.trace("setClient", { apiToken });
-    setClient(createApolloClient(apiToken));
+    console.log("[App][setClient]", { apiToken });
+    const auth = apiToken && apiToken.length > 0 ? `Bearer ${apiToken}` : "";
+    const newClient = createApolloClient(auth);
+    setClient(newClient);
+    return () => {
+      console.log("[App][setClient] stopping existing client");
+      newClient.stop();
+    };
   }, [apiToken]);
 
-  const changeSession = (changes: Partial<Session>) =>
-    performSessionChange(changes, session, setApiToken, setSession);
+  const updateSession = (changes: Partial<Session>) =>
+    performSessionUpdate(changes, session, setApiToken, setSession);
 
   return (
     <AntApp>
@@ -41,7 +48,7 @@ function App() {
         <BodyStyler />
         <ApolloProvider client={client}>
           <SessionContext.Provider value={session}>
-            <SessionSetterContext.Provider value={{ changeSession }}>
+            <SessionSetterContext.Provider value={{ updateSession }}>
               <AppRouter />
             </SessionSetterContext.Provider>
           </SessionContext.Provider>
