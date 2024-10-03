@@ -10,10 +10,11 @@ export function AppRouter() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainLayout />}>
-          <Route index path="/" element={<RootIndex />} />
+          <Route index element={<RootIndex />} />
           <Route path="books">
-            <Route path="" element={<BooksIndex />} />
-            <Route path=":bookId" element={<BooksShow />}>
+            <Route index element={<BooksIndex />} />
+            <Route path=":bookId">
+              <Route index element={<BooksShow />} />
               <Route path="books" element={<BooksIndex />} />
               <Route path="accounts" element={<div>TODO: Accounts</div>} />
               <Route path="categories" element={<div>TODO: Categories</div>} />
