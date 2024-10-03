@@ -44,7 +44,6 @@ export function loadSessionOrDefault(): Session {
   // Attempt to load the last locally stored session.
   const rawSessionFromStorage =
     window.localStorage.getItem(STORAGE_SESSION_KEY);
-  console.log("loadSessionOrDefault", { rawSessionFromStorage });
   if (rawSessionFromStorage) {
     // Merging default and whatever is stored, to ensure some requirements.
     return merge.withOptions(
@@ -64,12 +63,9 @@ export function performSessionUpdate(
   setApiToken: (_: string | null) => void,
   setSession: (_: Session) => void,
 ) {
-  console.log("[performSessionUpdate]", { changes, session });
-
   // If the token changes, we need to set it using its prop, so the
   // Apollo client prop get updated.
   if (changes.apiToken !== undefined && changes.apiToken !== session.apiToken) {
-    console.log("[performSessionUpdate] calling setApiToken", changes.apiToken);
     setApiToken(changes.apiToken || null);
   }
 
@@ -79,7 +75,6 @@ export function performSessionUpdate(
     session,
     changes as Session,
   );
-  console.log("[performSessionUpdate] setSession", { updatedSession });
   setSession(updatedSession);
 
   // Save the session to the browser's storage.

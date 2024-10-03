@@ -41,7 +41,6 @@ export function LogInForm() {
   );
 
   function createSession({ email, password }: LogInFormFields): void {
-    console.log("Log In Form Submit", { email, password });
     logInToServer({ variables: { email, password } });
   }
 
