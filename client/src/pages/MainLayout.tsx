@@ -2,9 +2,10 @@ import { Layout, Menu } from "antd";
 import { Content, Header } from "antd/es/layout/layout";
 import React, { useContext } from "react";
 import { BookOutlined, UserOutlined } from "@ant-design/icons";
-import { NavigateFunction, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import { SessionContext } from "../models/session";
 import { ItemType, MenuItemType } from "antd/es/menu/interface";
+import { MenuContext } from "../models/menu";
 
 const layoutStyle: React.CSSProperties = {
   margin: -8,
@@ -27,17 +28,24 @@ const menuStyle: React.CSSProperties = {
 };
 
 export default function MainLayout() {
-  const navigate = useNavigate();
   const session = useContext(SessionContext);
+  const { menuSelectedKeys } = useContext(MenuContext);
 
   const items: ItemType<MenuItemType>[] = session.isLoggedIn()
-    ? loggedInMenuItems(navigate)
-    : unloggedInMenuItems(navigate);
+    ? loggedInMenuItems()
+    : unloggedInMenuItems();
 
   return (
     <Layout style={layoutStyle}>
       <Header style={headerStyle}>
-        <Menu style={menuStyle} mode="horizontal" items={items} />
+        <Menu
+          style={menuStyle}
+          mode="horizontal"
+          items={items}
+          defaultSelectedKeys={["root"]}
+          selectedKeys={menuSelectedKeys}
+          selectable={false}
+        />
       </Header>
       <Content style={contentStyle}>
         <Outlet />
@@ -46,39 +54,33 @@ export default function MainLayout() {
   );
 }
 
-function rootMenuItem(navigate: NavigateFunction): ItemType<MenuItemType> {
+function rootMenuItem(): ItemType<MenuItemType> {
   return {
     key: "root",
     icon: "💰",
+    label: <NavLink to="/" />,
     title: "Finances",
-    onClick: () => navigate("/"),
   };
 }
 
-function loggedInMenuItems(
-  navigate: NavigateFunction,
-): ItemType<MenuItemType>[] {
+function loggedInMenuItems(): ItemType<MenuItemType>[] {
   return [
-    rootMenuItem(navigate),
+    rootMenuItem(),
     {
       key: "books",
-      label: "Book",
+      label: <NavLink to="/books">Book</NavLink>,
       icon: <BookOutlined />,
       title: "Book's root & other books",
-      onClick: () => navigate("/books"),
     },
     {
       key: "user",
-      label: "User",
+      label: <NavLink to="/user">User</NavLink>,
       icon: <UserOutlined />,
       title: "User settings",
-      onClick: () => navigate("/user"),
     },
   ];
 }
 
-function unloggedInMenuItems(
-  navigate: NavigateFunction,
-): ItemType<MenuItemType>[] {
-  return [rootMenuItem(navigate)];
+function unloggedInMenuItems(): ItemType<MenuItemType>[] {
+  return [rootMenuItem()];
 }

@@ -11,7 +11,8 @@ export function AppRouter() {
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index path="/" element={<RootIndex />} />
-          <Route path="books" element={<BooksIndex />}>
+          <Route path="books">
+            <Route path="" element={<BooksIndex />} />
             <Route path=":bookId" element={<BooksShow />}>
               <Route path="books" element={<BooksIndex />} />
               <Route path="accounts" element={<div>TODO: Accounts</div>} />

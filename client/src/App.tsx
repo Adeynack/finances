@@ -12,6 +12,7 @@ import {
   SessionContext,
   SessionSetterContext,
 } from "./models/session";
+import { MenuContext } from "./models/menu";
 
 function App() {
   const [session, setSession] = useState<Session>(() => loadSessionOrDefault());
@@ -25,22 +26,21 @@ function App() {
   );
 
   const [apiToken, setApiToken] = useState(session.apiToken);
-  console.log("[App] apiToken", apiToken);
 
   const [client, setClient] = useState(() => createApolloClient(""));
   useEffect(() => {
-    console.log("[App][setClient]", { apiToken });
     const auth = apiToken && apiToken.length > 0 ? `Bearer ${apiToken}` : "";
     const newClient = createApolloClient(auth);
     setClient(newClient);
     return () => {
-      console.log("[App][setClient] stopping existing client");
       newClient.stop();
     };
   }, [apiToken]);
 
   const updateSession = (changes: Partial<Session>) =>
     performSessionUpdate(changes, session, setApiToken, setSession);
+
+  const [menuSelectedKeys, setMenuSelectedKeys] = useState([] as string[]);
 
   return (
     <AntApp>
@@ -49,7 +49,11 @@ function App() {
         <ApolloProvider client={client}>
           <SessionContext.Provider value={session}>
             <SessionSetterContext.Provider value={{ updateSession }}>
-              <AppRouter />
+              <MenuContext.Provider
+                value={{ menuSelectedKeys, setMenuSelectedKeys }}
+              >
+                <AppRouter />
+              </MenuContext.Provider>
             </SessionSetterContext.Provider>
           </SessionContext.Provider>
         </ApolloProvider>

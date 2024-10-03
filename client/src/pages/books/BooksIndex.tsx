@@ -3,6 +3,7 @@ import { gql } from "../../__generated__/gql";
 import { Button } from "antd";
 import NetworkStatusIndicator from "../../components/apollo/NetworkStatusIndicator";
 import { Link } from "react-router-dom";
+import { useMenuSection } from "../../models/menu";
 
 const GET_BOOK_LIST_QUERY = gql(`
   query GetBookList {
@@ -25,6 +26,7 @@ const GET_BOOK_LIST_QUERY = gql(`
 `);
 
 export function BooksIndex() {
+  useMenuSection("books");
   const { loading, data, error, refetch, networkStatus } = useQuery(
     GET_BOOK_LIST_QUERY,
     {

@@ -43,7 +43,7 @@ export function loadSessionOrDefault(): Session {
 
   // Attempt to load the last locally stored session.
   const rawSessionFromStorage =
-    window.sessionStorage.getItem(STORAGE_SESSION_KEY);
+    window.localStorage.getItem(STORAGE_SESSION_KEY);
   console.log("loadSessionOrDefault", { rawSessionFromStorage });
   if (rawSessionFromStorage) {
     // Merging default and whatever is stored, to ensure some requirements.
@@ -83,7 +83,7 @@ export function performSessionUpdate(
   setSession(updatedSession);
 
   // Save the session to the browser's storage.
-  window.sessionStorage.setItem(
+  window.localStorage.setItem(
     STORAGE_SESSION_KEY,
     JSON.stringify(updatedSession),
   );
