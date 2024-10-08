@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-(which overmind > /dev/null) || bin/install_overmind
+(which overmind > /dev/null) || bundle install # `overmind` is part of the `Gemfile`.
 
 echo "---[ Starting development environment ]---"
 overmind status > /dev/null 2>&1 || overmind quit || rm -rf .overmind.sock
