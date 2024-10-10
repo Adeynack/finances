@@ -20,7 +20,7 @@
     {
       "label": "Wait for API server",
       "type": "shell",
-      "command": "yarn wait-on http://localhost:30001 -delay 1000 -t 20s",
+      "command": "yarn wait-on-server",
       "group": "none",
       "presentation": {
         "reveal": "silent",

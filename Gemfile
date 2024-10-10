@@ -49,6 +49,7 @@ group :test do
 end
 
 group :development do
+  gem "overmind"
   gem "faraday"
   gem "ruby-progressbar"
   gem "web-console"

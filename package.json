@@ -12,7 +12,8 @@
     "lint:style": "eslint client/**/*.{ts,tsx} --max-warnings 0 --report-unused-disable-directives",
     "lint:format": "prettier --list-different \"client/**/*.{ts,tsx}\"",
     "preview": "vite preview",
-    "gql:gen": "graphql-codegen --config client/codegen.ts"
+    "gql:gen": "graphql-codegen --config client/codegen.ts",
+    "wait-on-server": "wait-on http://localhost:30001 -t 1m"
   },
   "dependencies": {
     "@ant-design/icons": "^5.5.1",

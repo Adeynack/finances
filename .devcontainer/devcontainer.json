@@ -48,7 +48,9 @@
         "wmaurer.change-case",
         "yzhang.markdown-all-in-one",
         "zombocom.dead-end-vscode",
-        "anykeyh.simplecov-vscode"
+        "anykeyh.simplecov-vscode",
+        "cweijan.vscode-database-client2",
+        "DrMerfy.overtype"
       ],
       "settings": {
         "typescript.tsdk": "node_modules/typescript/lib",
