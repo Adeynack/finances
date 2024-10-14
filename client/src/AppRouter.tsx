@@ -6,10 +6,12 @@ import { BooksShow } from "./pages/books/BooksShow";
 import RootIndex from "./pages/RootIndex";
 import {
   accountsSubPath,
+  bookIdPathParam,
   booksSubPath,
   categoriesSubPath,
   currentUserSubPath,
 } from "./models/paths";
+import { BooksLayout } from "./pages/books/BooksLayout";
 
 export function AppRouter() {
   return (
@@ -18,9 +20,9 @@ export function AppRouter() {
         {/* The `key` attribute maps to the paths.ts constant names. */}
         <Route path="/" element={<MainLayout />}>
           <Route index key="root" element={<RootIndex />} />
-          <Route path={booksSubPath}>
+          <Route path={booksSubPath} element={<BooksLayout />}>
             <Route index key="books" element={<BooksIndex />} />
-            <Route path=":bookId">
+            <Route path={`:${bookIdPathParam}`}>
               <Route index key="book" element={<BooksShow />} />
               <Route
                 path={booksSubPath}

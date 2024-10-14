@@ -4,9 +4,10 @@ import { LogInForm } from "../../components/users/LogInForm";
 import LogOutButton from "../../components/users/LogOutButton";
 import { Flex } from "antd";
 import { useMenuSection } from "../../models/menu";
+import { currentUserPath } from "../../models/paths";
 
 export function CurrentUserShow() {
-  useMenuSection("user");
+  useMenuSection(currentUserPath);
   const session = useSession();
 
   return (

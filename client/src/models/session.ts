@@ -23,6 +23,7 @@ function generateDefaultSession(): Session {
     options: defaultOptions(),
 
     isLoggedIn() {
+      console.log("[generateDefaultSession#isLoggedIn]", { this: this });
       return !!this.apiToken;
     },
   };

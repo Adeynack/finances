@@ -9,6 +9,7 @@ import {
   SessionSetterContext,
   useSession,
 } from "../../models/session";
+import { bookPath, booksPath } from "../../models/paths";
 
 const LOG_IN_MUTATION = gql(`
   mutation LogIn($email: String!, $password: String!) {
@@ -113,8 +114,8 @@ function onLogInCompleted(
   });
 
   if (data.logIn.user?.defaultBookId) {
-    navigate(`/books/${data.logIn.user.defaultBookId}`);
+    navigate(bookPath(data.logIn.user.defaultBookId));
   } else {
-    navigate("/");
+    navigate(booksPath);
   }
 }

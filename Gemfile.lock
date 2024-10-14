@@ -396,6 +396,8 @@ GEM
       language_server-protocol (~> 3.17.0)
       prism (>= 0.29.0, < 0.30)
       sorbet-runtime (>= 0.5.10782)
+    ruby-lsp-rails (0.3.11)
+      ruby-lsp (>= 0.17.2, < 0.18.0)
     ruby-lsp-rspec (0.1.12)
       ruby-lsp (~> 0.17.0)
     ruby-progressbar (1.13.0)
@@ -524,6 +526,7 @@ DEPENDENCIES
   rubocop-rake
   rubocop-rspec
   rubocop-rspec_rails
+  ruby-lsp-rails
   ruby-lsp-rspec
   ruby-progressbar
   shimmer

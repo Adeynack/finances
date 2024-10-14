@@ -1,11 +1,27 @@
 import { Layout, Menu } from "antd";
 import { Content, Header } from "antd/es/layout/layout";
 import React, { useContext } from "react";
-import { BookOutlined, UserOutlined } from "@ant-design/icons";
-import { NavLink, Outlet } from "react-router-dom";
+import {
+  AccountBookOutlined,
+  BookOutlined,
+  FolderOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+import { Link, Outlet, useParams } from "react-router-dom";
 import { SessionContext } from "../models/session";
 import { ItemType, MenuItemType } from "antd/es/menu/interface";
 import { MenuContext } from "../models/menu";
+import {
+  bookAccountsPath,
+  bookBooksPath,
+  bookCategoriesPath,
+  bookCurrentUserPath,
+  bookPath,
+  booksPath,
+  currentUserPath,
+  rootPath,
+} from "../models/paths";
+import { BooksIndex } from "./books/BooksIndex";
 
 const layoutStyle: React.CSSProperties = {
   margin: -8,
@@ -27,12 +43,17 @@ const menuStyle: React.CSSProperties = {
   minWidth: 0,
 };
 
+export const rootMenuKey = "root";
+export const booksMenuKey = "books";
+export const userMenuKey = "user";
+
 export default function MainLayout() {
   const session = useContext(SessionContext);
   const { menuSelectedKeys } = useContext(MenuContext);
+  const { bookId } = useParams();
 
   const items: ItemType<MenuItemType>[] = session.isLoggedIn()
-    ? loggedInMenuItems()
+    ? loggedInMenuItems(bookId)
     : unloggedInMenuItems();
 
   return (
@@ -42,7 +63,7 @@ export default function MainLayout() {
           style={menuStyle}
           mode="horizontal"
           items={items}
-          defaultSelectedKeys={["root"]}
+          defaultSelectedKeys={[rootMenuKey]}
           selectedKeys={menuSelectedKeys}
           selectable={false}
         />
@@ -56,28 +77,57 @@ export default function MainLayout() {
 
 function rootMenuItem(): ItemType<MenuItemType> {
   return {
-    key: "root",
+    key: rootMenuKey,
     icon: "💰",
-    label: <NavLink to="/" />,
+    label: <Link to={rootPath} />,
     title: "Finances",
   };
 }
 
-function loggedInMenuItems(): ItemType<MenuItemType>[] {
+function loggedInMenuItems(bookId?: string): ItemType<MenuItemType>[] {
   return [
     rootMenuItem(),
-    {
-      key: "books",
-      label: <NavLink to="/books">Book</NavLink>,
-      icon: <BookOutlined />,
-      title: "Book's root & other books",
-    },
-    {
-      key: "user",
-      label: <NavLink to="/user">User</NavLink>,
-      icon: <UserOutlined />,
-      title: "User settings",
-    },
+    ...(!bookId
+      ? [
+          {
+            key: booksMenuKey,
+            label: <Link to={booksPath}>Book</Link>,
+            icon: <BookOutlined />,
+            title: "Book's root & other books",
+          },
+          {
+            key: userMenuKey,
+            label: <Link to={currentUserPath}>User</Link>,
+            icon: <UserOutlined />,
+            title: "User settings",
+          },
+        ]
+      : [
+          {
+            key: booksMenuKey,
+            label: <Link to={bookPath(bookId)}>Book</Link>,
+            icon: <BookOutlined />,
+            title: "Book's home",
+          },
+          {
+            key: "accounts",
+            label: <Link to={bookAccountsPath(bookId)}>Accounts</Link>,
+            icon: <AccountBookOutlined />,
+            title: "Current book's accounts",
+          },
+          {
+            key: "categories",
+            label: <Link to={bookCategoriesPath(bookId)}>Categories</Link>,
+            icon: <FolderOutlined />,
+            title: "Current book's categories",
+          },
+          {
+            key: userMenuKey,
+            label: <Link to={bookCurrentUserPath(bookId)}>User</Link>,
+            icon: <UserOutlined />,
+            title: "User settings",
+          },
+        ]),
   ];
 }
 
