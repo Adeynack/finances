@@ -12,6 +12,7 @@ import {
   currentUserSubPath,
 } from "./models/paths";
 import { BooksLayout } from "./pages/books/BooksLayout";
+import { NotFound } from "./pages/NotFound";
 
 export function AppRouter() {
   return (
@@ -51,6 +52,7 @@ export function AppRouter() {
             key="user"
             element={<CurrentUserShow />}
           />
+          <Route path="*" key="notFound" element={<NotFound />} />
         </Route>
       </Routes>
     </BrowserRouter>
