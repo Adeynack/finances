@@ -1,0 +1,21 @@
+# == Schema Information
+#
+# Table name: reminder_splits
+#
+#  id                 :uuid             not null, primary key
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  reminder_id        :uuid             not null, indexed, indexed => [position]
+#  register_id        :uuid             not null, indexed                          To which register is the money going to for this split.
+#  position           :integer          not null, indexed => [reminder_id]
+#  amount             :integer          not null
+#  counterpart_amount :integer                                                     Amount in the destination register, if it differs from 'amount' (eg: an exchange rate applies).
+#  memo               :text                                                        Detail about the exchange, to show in the destination register.
+#  status             :enum             default("uncleared"), not null
+#
+joe_monthly_fruits_fruits:
+  reminder: joe_monthly_fruits
+  register: joe_fruits
+  position: 0
+  amount: 1000
+  counterpart_amount: -1000

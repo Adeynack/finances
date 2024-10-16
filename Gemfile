@@ -1,65 +1,72 @@
+# frozen_string_literal: true
+
 source "https://rubygems.org"
+
 ruby File.read(".ruby-version").strip
 
-# Core
-gem "rails", "7.0.0"
-gem "puma"
-
-# Database
-gem "pg"
-gem "redis"
-
-# Performance
-gem "oj"
+gem "rails", "~> 7.1.3", ">= 7.1.3.4"
+gem "rack-cors"
+gem "sprockets-rails"
+gem "pg", "~> 1.1"
+gem "puma", ">= 5.0"
+gem "importmap-rails" # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
+gem "bcrypt", "~> 3.1.7" # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
+gem "tzinfo-data", platforms: [:windows, :jruby]
 gem "bootsnap", require: false
+# gem "image_processing", "~> 1.2" # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
+
+# GraphQL
+gem "graphql", "~> 2.3"
+gem "graphiql-rails"
 
 # Extensions
 gem "shimmer"
-gem "mini_magick"
 gem "dotenv-rails"
-gem "rails-i18n"
-gem "sidekiq"
-gem "sidekiq-scheduler"
+gem "oj"
 gem "kaminari"
-gem "groupdate"
-gem "bcrypt"
-gem "friendly_id"
 gem "countries", require: "countries/global"
-gem "document_serializable"
-gem "sitemap_generator"
-gem "image_processing"
-gem "slim-rails"
 gem "pundit"
-gem "yael"
-gem "translate_client"
 
-# Assets
-gem "jsbundling-rails"
-gem "stimulus-rails"
-gem "sassc-rails"
-gem "autoprefixer-rails"
-gem "turbo-rails"
-gem "serviceworker-rails"
-
+# Data
+gem "acts_as_list"
+gem "closure_tree", github: "ClosureTree/closure_tree", branch: "master"
+gem "awesome_print"
+gem "table_print"
+gem "money-rails"
+gem "iban-tools"
+gem "montrose"
 
 group :development, :test do
+  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  gem "debug", platforms: [:mri, :windows]
   gem "rspec-rails"
-  gem "standard"
-  gem "capybara"
-  gem "cuprite"
-  gem "i18n-tasks", "0.9.35"
+end
+
+group :test do
+  gem "fuubar"
   gem "rack_session_access"
+  gem "simplecov", require: false
 end
 
 group :development do
-  gem "listen"
+  gem "overmind"
+  gem "faraday"
+  gem "ruby-progressbar"
   gem "web-console"
-  gem "annotate"
-  gem "rb-fsevent"
-  gem "letter_opener"
-  gem "debug"
-  gem "pry-rails"
   gem "guard"
   gem "guard-rspec"
+  gem "standard", ">= 1.35.1"
+  gem "solargraph"
   gem "solargraph-standardrb"
+  gem "rubocop"
+  gem "rubocop-rails"
+  gem "rubocop-performance"
+  gem "rubocop-rspec"
+  gem "rubocop-rspec_rails"
+  gem "rubocop-rake"
+  gem "rubocop-graphql"
+  gem "annotate", github: "ctran/annotate_models", branch: "develop"
+  gem "chusaku", require: false
+  gem "ruby-lsp-rspec", require: false
+  gem "ruby-lsp-rails", require: false
 end
