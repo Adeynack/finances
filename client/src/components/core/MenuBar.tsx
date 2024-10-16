@@ -34,14 +34,12 @@ export function MenuBar() {
   const session = useContext(SessionContext);
   const isLoggedIn = session.isLoggedIn();
 
-  const location = useLocation();
-  const { pathname } = location;
+  const { pathname } = useLocation();
 
   const params = useParams();
   const bookId = params[bookIdPathParam];
 
   const items = generateItems(isLoggedIn, bookId);
-
   const selectedKeys = determineDefaultSelectedKeys(pathname, bookId);
 
   return (
@@ -49,8 +47,8 @@ export function MenuBar() {
       style={menuStyle}
       mode="horizontal"
       items={items}
-      defaultSelectedKeys={[rootPath]}
       selectedKeys={selectedKeys}
+      selectable={false}
     />
   );
 }
@@ -91,6 +89,7 @@ function generateItems(
   isLoggedIn: boolean,
   bookId?: string,
 ): ItemType<MenuItemType>[] {
+  console.log("[MenuBar][generateItems]");
   return isLoggedIn ? loggedInMenuItems(bookId) : unloggedInMenuItems();
 }
 
