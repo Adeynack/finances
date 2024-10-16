@@ -12,7 +12,6 @@ import {
   SessionContext,
   SessionSetterContext,
 } from "./models/session";
-import { MenuContext } from "./models/menu";
 
 function App() {
   const [session, setSession] = useState<Session>(() => loadSessionOrDefault());
@@ -40,8 +39,6 @@ function App() {
   const updateSession = (changes: Partial<Session>) =>
     performSessionUpdate(changes, session, setApiToken, setSession);
 
-  const [menuSelectedKeys, setMenuSelectedKeys] = useState([] as string[]);
-
   return (
     <AntApp>
       <ConfigProvider theme={themeConfig}>
@@ -49,11 +46,7 @@ function App() {
         <ApolloProvider client={client}>
           <SessionContext.Provider value={session}>
             <SessionSetterContext.Provider value={{ updateSession }}>
-              <MenuContext.Provider
-                value={{ menuSelectedKeys, setMenuSelectedKeys }}
-              >
-                <AppRouter />
-              </MenuContext.Provider>
+              <AppRouter />
             </SessionSetterContext.Provider>
           </SessionContext.Provider>
         </ApolloProvider>

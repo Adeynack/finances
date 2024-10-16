@@ -1,14 +1,13 @@
-import { useParams } from "react-router-dom";
-import { useMenuSection } from "../../models/menu";
-import { bookIdPathParam } from "../../models/paths";
+import { Link, useParams } from "react-router-dom";
+import { bookBooksPath, bookIdPathParam } from "../../models/paths";
 
 export function BooksShow() {
-  useMenuSection("books");
-  const routeParam = useParams();
-  const bookId = routeParam[bookIdPathParam];
+  const params = useParams();
+  const bookId = params[bookIdPathParam]!;
 
   return (
     <div>
+      <Link to={bookBooksPath(bookId)}>Change book</Link>
       <h1>BooksShow</h1>
       <h2>{bookId}</h2>
     </div>
