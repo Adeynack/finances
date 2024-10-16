@@ -8,7 +8,7 @@ class BookPolicy < ApplicationPolicy
   end
 
   def show?
-    admin? || record.owner == user
+    admin? || record.owner == current_user
   end
 
   def create?

@@ -50,7 +50,8 @@
         "zombocom.dead-end-vscode",
         "anykeyh.simplecov-vscode",
         "cweijan.vscode-database-client2",
-        "DrMerfy.overtype"
+        "DrMerfy.overtype",
+        "apollographql.vscode-apollo"
       ],
       "settings": {
         "typescript.tsdk": "node_modules/typescript/lib",

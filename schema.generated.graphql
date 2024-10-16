@@ -319,6 +319,7 @@ type PageInfo {
 }
 
 type Query {
+  book(id: ID!): Book!
   books(
     """Returns the elements in the list that come after the specified cursor."""
     after: String

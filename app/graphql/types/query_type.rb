@@ -11,5 +11,12 @@ module Types
     def books
       policy_scope(authorize(Book, :index))
     end
+
+    field :book, Types::BookType, null: false do
+      argument :id, ID, required: true
+    end
+    def book(id:)
+      authorize Book.find(id), :show
+    end
   end
 end
