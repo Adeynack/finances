@@ -2,9 +2,9 @@ import { LogInForm } from "../components/users/LogInForm";
 import { useSession } from "../models/session";
 
 export default function RootIndex() {
-  const session = useSession();
+  const { isLoggedIn } = useSession();
 
-  if (!session.isLoggedIn()) {
+  if (!isLoggedIn) {
     return (
       <div>
         <p>Please log in to continue</p>

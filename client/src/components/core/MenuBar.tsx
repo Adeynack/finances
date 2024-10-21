@@ -7,7 +7,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { SessionContext } from "../../models/session";
+import { SessionContext, useSession } from "../../models/session";
 import { ItemType, MenuItemType } from "antd/es/menu/interface";
 import {
   bookAccountsPath,
@@ -18,7 +18,6 @@ import {
   bookPath,
   booksPath,
   currentUserPath,
-  rootPath,
 } from "../../models/paths";
 
 export const rootMenuKey = "root";
@@ -31,8 +30,7 @@ const menuStyle: React.CSSProperties = {
 };
 
 export function MenuBar() {
-  const session = useContext(SessionContext);
-  const isLoggedIn = session.isLoggedIn();
+  const { isLoggedIn } = useSession();
 
   const { pathname } = useLocation();
 
@@ -89,22 +87,11 @@ function generateItems(
   isLoggedIn: boolean,
   bookId?: string,
 ): ItemType<MenuItemType>[] {
-  console.log("[MenuBar][generateItems]");
-  return isLoggedIn ? loggedInMenuItems(bookId) : unloggedInMenuItems();
-}
-
-function rootMenuItem(): ItemType<MenuItemType> {
-  return {
-    key: rootPath,
-    icon: "💰",
-    label: <Link to={rootPath} />,
-    title: "Finances",
-  };
+  return isLoggedIn ? loggedInMenuItems(bookId) : [];
 }
 
 function loggedInMenuItems(bookId?: string): ItemType<MenuItemType>[] {
   return [
-    rootMenuItem(),
     ...(!bookId
       ? [
           {
@@ -147,8 +134,4 @@ function loggedInMenuItems(bookId?: string): ItemType<MenuItemType>[] {
           },
         ]),
   ];
-}
-
-function unloggedInMenuItems(): ItemType<MenuItemType>[] {
-  return [rootMenuItem()];
 }

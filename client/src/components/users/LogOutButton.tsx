@@ -6,7 +6,7 @@ export default function LogOutButton() {
   const { updateSession } = useContext(SessionSetterContext);
 
   const onLogOutClick = () => {
-    updateSession({ apiToken: null, user: null });
+    updateSession({ isLoggedIn: false, apiToken: null, user: null });
   };
 
   return (

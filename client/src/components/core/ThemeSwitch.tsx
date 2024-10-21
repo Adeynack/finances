@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import { Switch } from "antd";
-import { SessionContext, SessionSetterContext } from "../../models/session";
+import { SessionSetterContext, useSession } from "../../models/session";
 
 export function ThemeSwitch() {
-  const session = useContext(SessionContext);
+  const session = useSession();
   const { updateSession } = useContext(SessionSetterContext);
 
   return (

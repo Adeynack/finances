@@ -13,7 +13,7 @@ export interface Session {
   apiToken: string | null;
   user: LoggedInUser | null;
   options: Options;
-  isLoggedIn(): boolean;
+  isLoggedIn: boolean;
 }
 
 function generateDefaultSession(): Session {
@@ -21,11 +21,7 @@ function generateDefaultSession(): Session {
     apiToken: null,
     user: null,
     options: defaultOptions(),
-
-    isLoggedIn() {
-      console.log("[generateDefaultSession#isLoggedIn]", { this: this });
-      return !!this.apiToken;
-    },
+    isLoggedIn: false,
   };
 }
 

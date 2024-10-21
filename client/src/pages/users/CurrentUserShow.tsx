@@ -5,7 +5,7 @@ import LogOutButton from "../../components/users/LogOutButton";
 import { Flex } from "antd";
 
 export function CurrentUserShow() {
-  const session = useSession();
+  const { isLoggedIn } = useSession();
 
   return (
     <Flex vertical>
@@ -13,7 +13,7 @@ export function CurrentUserShow() {
       <div>
         <ThemeSwitch />
       </div>
-      {session.isLoggedIn() ? <LogOutButton /> : <LogInForm />}
+      {isLoggedIn ? <LogOutButton /> : <LogInForm />}
     </Flex>
   );
 }

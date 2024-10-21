@@ -4,11 +4,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { LogInMutation } from "../../__generated__/graphql";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import {
-  Session,
-  SessionSetterContext,
-  useSession,
-} from "../../models/session";
+import { Session, SessionSetterContext } from "../../models/session";
 import { bookPath, booksPath } from "../../models/paths";
 
 const LOG_IN_MUTATION = gql(`
@@ -31,13 +27,12 @@ interface LogInFormFields {
 
 export function LogInForm() {
   const navigate = useNavigate();
-  const session = useSession();
   const { updateSession } = useContext(SessionSetterContext);
 
   const [logInToServer, { data, loading, error }] = useMutation<LogInMutation>(
     LOG_IN_MUTATION,
     {
-      onCompleted: (d) => onLogInCompleted(d, navigate, session, updateSession),
+      onCompleted: (d) => onLogInCompleted(d, navigate, updateSession),
     },
   );
 
@@ -102,13 +97,12 @@ export function LogInForm() {
 function onLogInCompleted(
   data: LogInMutation,
   navigate: NavigateFunction,
-  session: Session,
   updateSession: (_session: Partial<Session>) => void,
 ): void {
   if (!data?.logIn) return;
 
   updateSession({
-    ...session,
+    isLoggedIn: true,
     apiToken: data.logIn.token,
     user: data.logIn.user,
   });
