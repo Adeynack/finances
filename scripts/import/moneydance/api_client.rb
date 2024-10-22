@@ -132,6 +132,26 @@ module MoneydanceImport
       query(query:, variables:, expect_success: true).fetch(:data)
     end
 
+    def query_all_pages!(query:, variables: {})
+      result = []
+      after = nil
+      has_next_page = true
+      while has_next_page
+        r = query! query:, variables: variables.merge(after:)
+        page_info = r.dig(r.keys.sole, :page_info)
+        raise GraphQLError, "could not find page info" unless page_info
+        raise GraphQLError, "query must include page info's hasNextPage" unless page_info.key?(:has_next_page)
+        raise GraphQLError, "query must include page info's endCursor" unless page_info.key?(:end_cursor)
+
+        has_next_page = page_info[:has_next_page]
+        after = page_info[:end_cursor]
+
+        result.push r
+      end
+
+      result
+    end
+
     def login(email:, password:)
       result = query! variables: {email:, password:}, query: <<~GQL
         mutation LogIn($email: String!, $password: String!) {
@@ -154,15 +174,22 @@ module MoneydanceImport
     end
 
     def list_books
-      r = query! query: <<~GQL
-        query ListBooks {
-          books {
-            id
-            name
+      r = query_all_pages! query: <<~GQL
+        query ListBooks($after: String) {
+          books(after: $after) {
+            pageInfo {
+              hasNextPage
+              endCursor
+            }
+            nodes {
+              id
+              name
+            }
           }
         }
       GQL
-      r[:books].map { Book.new(**_1) }
+
+      r.flat_map { _1.dig(:books, :nodes) }.map { Book.new(**_1) }
     end
 
     def create_book(name:, default_currency_iso_code:)

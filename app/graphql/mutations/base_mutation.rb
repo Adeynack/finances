@@ -15,6 +15,9 @@ module Mutations
       true
     end
 
-    def authorize(resource, permission = "#{field.name.underscore}?") = super
+    alias_method :original_authorize, :authorize
+    def authorize(resource, permission = "#{field.name.underscore}?")
+      original_authorize(resource, permission)
+    end
   end
 end
