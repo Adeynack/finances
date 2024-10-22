@@ -7,4 +7,9 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "[ruby]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "Shopify.ruby-lsp"
+  }
 }

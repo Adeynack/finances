@@ -14,6 +14,12 @@ module GraphQLHelper
     raise "GraphQL Errors: #{JSON.pretty_generate(result["errors"])}" if result["errors"].present?
     result.fetch("data")
   end
+
+  def gql_errors(query:, variables: nil)
+    errors = gql(query:, variables:)["errors"]
+    raise "GraphQL did not return errors as expected" unless errors.present?
+    errors
+  end
 end
 
 RSpec.configure do |config|

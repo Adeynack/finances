@@ -16,9 +16,7 @@ RSpec.describe "Query Books", type: :graphql do
       }
     GQL
   end
-  let(:queried_books) do
-    gql_data(query:).dig("books", "nodes")
-  end
+  let(:queried_books) { gql_data(query:).dig("books", "nodes") }
 
   before do
     login!(user:) if user
@@ -28,7 +26,7 @@ RSpec.describe "Query Books", type: :graphql do
     let(:user) { nil }
 
     it "returns no book" do
-      expect(queried_books).to be_empty
+      expect(gql_errors(query:).sole["message"]).to eq FinancesSchema::NOT_FOUND_OR_NOT_AUTHORIZED_ERROR_MESSAGE
     end
   end
 

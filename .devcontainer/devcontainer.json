@@ -52,15 +52,7 @@
         "cweijan.vscode-database-client2",
         "DrMerfy.overtype",
         "apollographql.vscode-apollo"
-      ],
-      "settings": {
-        "typescript.tsdk": "node_modules/typescript/lib",
-        "rubyLsp.rubyVersionManager": "none",
-        "[ruby]": {
-          "editor.formatOnSave": true,
-          "editor.defaultFormatter": "Shopify.ruby-lsp"
-        }
-      }
+      ]
     }
   }
 }

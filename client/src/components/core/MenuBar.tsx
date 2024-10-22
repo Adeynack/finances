@@ -1,5 +1,5 @@
 import { Menu } from "antd";
-import React, { useContext } from "react";
+import React from "react";
 import {
   AccountBookOutlined,
   BookOutlined,
@@ -7,7 +7,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { SessionContext, useSession } from "../../models/session";
+import { useSession } from "../../models/session";
 import { ItemType, MenuItemType } from "antd/es/menu/interface";
 import {
   bookAccountsPath,
