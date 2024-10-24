@@ -32,7 +32,9 @@ export function LogInForm() {
   const [logInToServer, { data, loading, error }] = useMutation<LogInMutation>(
     LOG_IN_MUTATION,
     {
-      onCompleted: (d) => onLogInCompleted(d, navigate, updateSession),
+      onCompleted: (d) => {
+        onLogInCompleted(d, navigate, updateSession);
+      },
     },
   );
 

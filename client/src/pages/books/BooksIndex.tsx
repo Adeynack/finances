@@ -3,6 +3,8 @@ import { gql } from "../../__generated__";
 import { Button } from "antd";
 import NetworkStatusIndicator from "../../components/apollo/NetworkStatusIndicator";
 import { Link } from "react-router-dom";
+import { ApolloErrorCard } from "../../components/errors/ApolloErrorCard";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const GET_BOOK_LIST_QUERY = gql(`
   query GetBookList {
@@ -25,19 +27,14 @@ const GET_BOOK_LIST_QUERY = gql(`
 `);
 
 export function BooksIndex() {
-  const { loading, data, error, refetch, networkStatus } = useQuery(
-    GET_BOOK_LIST_QUERY,
-    {
-      notifyOnNetworkStatusChange: true,
-    },
-  );
+  const { loading, data, error, refetch } = useQuery(GET_BOOK_LIST_QUERY);
+
+  if (error) return <ApolloErrorCard error={error} />;
+  if (loading) return <LoadingOutlined />;
 
   return (
     <div>
-      <p>
-        <NetworkStatusIndicator error={error} networkStatus={networkStatus} />
-      </p>
-      {data && !loading && (
+      {data && (
         <>
           {data.books.edges && (
             <>
@@ -63,9 +60,9 @@ export function BooksIndex() {
               )}
             </>
           )}
-          <Button onClick={() => refetch()}>Refetch book list</Button>
         </>
       )}
+      <Button onClick={() => refetch()}>Refetch book list</Button>
     </div>
   );
 }

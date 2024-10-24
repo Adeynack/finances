@@ -1,10 +1,11 @@
-import { SessionSetterContext, useSession } from "../../models/session";
+import { useSession } from "../../models/session";
 import { ThemeSwitch } from "../../components/core/ThemeSwitch";
 import { LogInForm } from "../../components/users/LogInForm";
 import LogOutButton from "../../components/users/LogOutButton";
 import { useQuery } from "@apollo/client";
 import { gql } from "../../__generated__";
-import { useContext } from "react";
+import { LoadingOutlined } from "@ant-design/icons";
+import { ApolloErrorCard } from "../../components/errors/ApolloErrorCard";
 
 const GET_CURRENT_USER_QUERY = gql(`
   query GetCurrentUser {
@@ -16,19 +17,18 @@ const GET_CURRENT_USER_QUERY = gql(`
 `);
 
 export function CurrentUserShow() {
-  const { isLoggedIn, user } = useSession();
-  const { updateSession } = useContext(SessionSetterContext);
-  const { loading, data } = useQuery(GET_CURRENT_USER_QUERY);
+  const { isLoggedIn } = useSession();
+  const { loading, data, error } = useQuery(GET_CURRENT_USER_QUERY);
 
-  if (!loading && data) {
-    updateSession({ user: data.me });
-  }
+  const user = data?.me;
 
   return (
     <div>
-      {isLoggedIn && (
+      {loading && <LoadingOutlined />}
+      {error && <ApolloErrorCard error={error} />}
+      {user && (
         <p>
-          Logged in as {user?.displayName} ({user?.email})
+          Logged in as {user.displayName} ({user.email})
         </p>
       )}
       <p>

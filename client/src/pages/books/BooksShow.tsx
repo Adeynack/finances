@@ -20,23 +20,34 @@ export function BooksShow() {
   const params = useParams();
   const bookId = params[bookIdPathParam]!;
 
-  const { loading, data } = useQuery(GET_BOOK_SHOW_QUERY, {
+  const { loading, data, error } = useQuery(GET_BOOK_SHOW_QUERY, {
     variables: { bookId },
   });
 
-  if (loading || !data?.book) return <LoadingOutlined />;
+  if (loading) return <LoadingOutlined />;
 
-  const book = data.book;
+  const book = data?.book;
 
   return (
     <div>
       <Link to={bookBooksPath(bookId)}>Change book</Link>
-      <h1>
-        Book{" "}
-        <em title={`Owned by ${book.owner.displayName} (${book.owner.email})`}>
-          {book.name}
-        </em>
-      </h1>
+      {error ? (
+        <div>
+          <h1>Error</h1>
+          <p>{error.message}</p>
+        </div>
+      ) : (
+        book && (
+          <h1>
+            Book{" "}
+            <em
+              title={`Owned by ${book.owner.displayName} (${book.owner.email})`}
+            >
+              {book.name}
+            </em>
+          </h1>
+        )
+      )}
     </div>
   );
 }

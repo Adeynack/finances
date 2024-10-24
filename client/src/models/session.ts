@@ -16,16 +16,14 @@ export interface Session {
   isLoggedIn: boolean;
 }
 
-function generateDefaultSession(): Session {
-  return {
-    apiToken: null,
-    user: null,
-    options: defaultOptions(),
-    isLoggedIn: false,
-  };
-}
+const defaultSession: Session = {
+  apiToken: null,
+  user: null,
+  options: defaultOptions(),
+  isLoggedIn: false,
+};
 
-export const SessionContext = createContext(generateDefaultSession());
+export const SessionContext = createContext(defaultSession);
 
 export const SessionSetterContext = createContext({
   updateSession: (_session: Partial<Session>): void => {}, // eslint-disable-line @typescript-eslint/no-unused-vars
@@ -36,8 +34,6 @@ export function useSession(): Session {
 }
 
 export function loadSessionOrDefault(): Session {
-  const defaultSession = generateDefaultSession();
-
   // Attempt to load the last locally stored session.
   const rawSessionFromStorage =
     window.localStorage.getItem(STORAGE_SESSION_KEY);
@@ -57,15 +53,8 @@ export function loadSessionOrDefault(): Session {
 export function performSessionUpdate(
   changes: Partial<Session>,
   session: Session,
-  setApiToken: (_: string | null) => void,
   setSession: (_: Session) => void,
 ) {
-  // If the token changes, we need to set it using its prop, so the
-  // Apollo client prop get updated.
-  if (changes.apiToken !== undefined && changes.apiToken !== session.apiToken) {
-    setApiToken(changes.apiToken || null);
-  }
-
   // Set the new session's prop.
   const updatedSession = merge.withOptions(
     { mergeArrays: false },
