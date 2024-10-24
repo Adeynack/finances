@@ -1,55 +1,112 @@
-name: CI
+name: Pull-Request
 
 on: [push]
 
 jobs:
-  ruby:
+  rails-basics:
     runs-on: ubuntu-20.04
-
-    services:
-      postgres:
-        image: postgres:12
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: app
-        ports:
-          - 5432:5432
-        # needed because the postgres container does not provide a healthcheck
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-      redis:
-        image: redis:latest
-        ports:
-          - 6379:6379
-
+    env:
+      RAILS_ENV: test
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '16.x'
-          cache: yarn
-      - name: Install yarn
-        run: yarn install
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-      - name: Lint
-        run: bundle exec standardrb
-      - name: Translations Lint
-        run: bundle exec i18n-tasks health
-      - name: JS Lint
-        run: yarn lint
-      - name: Build Assets
-        run: yarn build
+      - name: Controllers Annotation
+        run: >- # To fix: bin/chusaku
+          bundle exec chusaku &&
+          bin/git_tracked_are_unmodified
+      - name: Lint with Rubocop
+        run: bundle exec rubocop -c .rubocop.yml
+
+  rails-with-db:
+    runs-on: ubuntu-20.04
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: finances
+        ports:
+          - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/finances
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
       - name: Create PG Database
-        run: bundle exec rake db:create db:migrate
-        env:
-          DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/app
-          RAILS_ENV: test
-      - name: Build and test with Rake
+        run: bundle exec rake db:create
+      - name: Migrate DB
+        run: >- # To fix: bin/rails db:migrate
+          bundle exec rake db:migrate &&
+          bin/git_tracked_are_unmodified
+      - name: Model and Routes Annotation
+        run: >- # To fix: bin/annotate
+          bundle exec annotate &&
+          bin/git_tracked_are_unmodified
+      - name: Ruby Tests & Coverage
         run: bundle exec rspec --format documentation
+
+  graphql-code-gen:
+    runs-on: ubuntu-20.04
+    services:
+      postgres:
+        image: postgres:16
         env:
-          DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/app
-          REDIS_URL: redis://127.0.0.1:6379
-          RAILS_ENV: test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: finances
+        ports:
+          - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/finances
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - name: Create PG Database
+        run: bundle exec rake db:create db:schema:load
+      - name: Starting Rails server
+        run: bin/rails server --port 30001 --binding 127.0.0.1 &
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+      - name: Install JavaScript Dependencies
+        run: yarn install
+      - name: Generate GraphQL schema file & ensure it is up to date
+        run: >- # To fix, while Rails server is running: yarn gql:gen
+          yarn gql:gen &&
+          bin/git_tracked_are_unmodified
+
+  client:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+      - name: Install JavaScript Dependencies
+        run: yarn install
+      - name: Generate GraphQL Client Code from local schema file
+        run: yarn gql:gen
+        env:
+          SCHEMA_PATH: ./schema.generated.graphql
+      - name: Lint JS/TS
+        run: yarn lint
+      - name: Tests
+        run: yarn test

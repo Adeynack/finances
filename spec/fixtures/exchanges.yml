@@ -1,0 +1,19 @@
+# == Schema Information
+#
+# Table name: exchanges
+#
+#  id          :uuid             not null, primary key
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  date        :date             not null, indexed                Date the exchange appears in the book.
+#  register_id :uuid             not null, indexed                From which register does the money come from.
+#  cheque      :string                                            Cheque information.
+#  description :string           not null                         Label of the exchange.
+#  memo        :text                                              Detail about the exchange.
+#  status      :enum             default("uncleared"), not null
+#
+joe_fruits_1:
+  date: "2020-01-01"
+  register: joe_first_bank
+  description: Fruits
+  status: cleared

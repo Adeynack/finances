@@ -1,0 +1,37 @@
+version: "3"
+
+name: finances
+
+services:
+  devcontainer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 30001:30001
+      - 30002:30002
+    volumes:
+      - ../..:/workspaces:cached
+      - gem_home:/usr/local/bundle
+    environment:
+      PGHOST: 127.0.0.1
+      PGPORT: 30099
+      PGUSER: postgres
+      PGDATABASE: finances_development
+    command: sleep infinity
+    network_mode: host
+
+  postgres:
+    image: postgres:16.2
+    restart: unless-stopped
+    ports:
+      - 30099:5432
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_HOST_AUTH_METHOD: trust
+
+volumes:
+  gem_home:
+  postgres-data:

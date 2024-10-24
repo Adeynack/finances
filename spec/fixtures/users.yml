@@ -1,0 +1,31 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id              :uuid             not null, primary key
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  email           :string           not null, indexed
+#  password_digest :string           not null
+#  admin           :boolean          default(FALSE), not null
+#  display_name    :string           not null
+#  default_book_id :uuid             indexed                    Last opened book.
+#
+cthulhu:
+  email: cthulhu@example.com
+  display_name: Cthulhu
+  password_digest: <%= BCrypt::Password.create("cthulhu") %>
+  admin: true
+joe:
+  email: joe@example.com
+  display_name: Joe
+  password_digest: <%= BCrypt::Password.create("joe") %>
+  default_book: joe
+mary:
+  email: mary@example.com
+  display_name: Proud Mary
+  password_digest: <%= BCrypt::Password.create("mary") %>
+vlad:
+  email: vlad@example.com
+  display_name: Vlad the Impaler
+  password_digest: <%= BCrypt::Password.create("vlad") %>

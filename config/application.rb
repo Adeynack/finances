@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "boot"
 
 require "rails"
@@ -18,17 +20,32 @@ require "action_cable/engine"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module TestApp
+module Finances
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
-    config.time_zone = "Berlin"
+    config.load_defaults 7.1
 
-    config.middleware.use Shimmer::CloudflareProxy
+    config.autoload_paths += Dir["#{root}/app/models/accounts/**/"]
+    config.autoload_paths += Dir["#{root}/app/models/categories/**/"]
+    config.autoload_paths += Dir["#{root}/app/models/refinements/**/"]
+    config.autoload_paths += Dir["#{root}/app/validators/**/"]
+
+    # Please, add to the `ignore` list any other `lib` subdirectories that do
+    # not contain `.rb` files, or that should not be reloaded or eager loaded.
+    # Common ones are `templates`, `generators`, or `middleware`, for example.
+    config.autoload_lib(ignore: ["assets", "tasks"])
+
+    # Configuration for the application, engines, and railties goes here.
+    #
+    # These settings can be overridden in specific environments using the files
+    # in config/environments, which are processed later.
+    #
+    config.time_zone = "Berlin"
+    # config.eager_load_paths << Rails.root.join("extras")
+
+    # Don't generate system test files.
+    config.generators.system_tests = nil
 
     config.action_mailer.default_url_options = {host: ENV["HOST"]} if ENV["HOST"].present?
-    config.active_job.queue_adapter = :sidekiq
-
-    config.assets.paths << Rails.root.join("node_modules")
   end
 end

@@ -5,14 +5,38 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "rdbg",
-      "name": "Rails Server",
+      "name": "Rails",
+      "type": "ruby_lsp",
       "request": "launch",
-      "command": "bin/rails",
-      "script": "server",
-      "args": [],
-      "askParameters": false,
-      "useBundler": true
+      "program": "bin/rails server"
+    },
+    {
+      "name": "Vite",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "yarn dev"
+    },
+    {
+      "name": "gql-watch",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "yarn gql:gen --watch",
+      "preLaunchTask": "Wait for API server"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Run App",
+      "configurations": [
+        "Rails",
+        "Vite",
+        "gql-watch"
+      ],
+      "stopAll": true,
+      "presentation": {
+        "group": "1_dev",
+        "order": 1
+      }
     }
   ]
 }

@@ -1,0 +1,3 @@
+rails: bin/rails server -p ${PORT:-30001}
+vite: yarn dev
+gql-gen: yarn wait-on-server && yarn run gql:gen --watch | cat

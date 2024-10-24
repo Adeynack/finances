@@ -1,0 +1,28 @@
+# == Schema Information
+#
+# Table name: reminders
+#
+#  id                   :uuid             not null, primary key
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  book_id              :uuid             not null, indexed
+#  title                :string           not null
+#  description          :text
+#  mode                 :enum             default("manual"), not null
+#  first_date           :date             not null                         From when to apply the reminder.
+#  last_date            :date                                              Until when to apply the reminder (optional).
+#  recurrence           :jsonb                                             Expressed as a 'Montrose::Recurrence' JSON. For one-shot reminders, `nil`, happening only on `first_date`.
+#  last_commit_at       :date                                              Last time for which this reminder was committed. `nil` means it never was.
+#  next_occurence_at    :date                                              Next time this reminder is scheduled for. Serves as a cache to quickly obtain all reminders that are due.
+#  exchange_register_id :uuid             not null, indexed                From which register does the money come from.
+#  exchange_description :string           not null                         Label of the exchange.
+#  exchange_memo        :text                                              Detail about the exchange.
+#  exchange_status      :enum             default("uncleared"), not null
+#
+joe_monthly_fruits:
+  book: joe
+  title: Monthly Fruits
+  first_date: "2020-01-01"
+  recurrence: { "every": "month", "mday": [1] }
+  exchange_register: joe_first_bank
+  exchange_description: Monthly Fruits
