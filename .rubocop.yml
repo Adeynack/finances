@@ -1,5 +1,5 @@
 AllCops:
-  TargetRubyVersion: 3.3.5
+  TargetRubyVersion: 3.3.6
   DisplayCopNames: true
   DisplayStyleGuide: true
   NewCops: disable

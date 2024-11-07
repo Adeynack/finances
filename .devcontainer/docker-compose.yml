@@ -22,7 +22,7 @@ services:
     network_mode: host
 
   postgres:
-    image: postgres:16.2
+    image: postgres:17.0
     restart: unless-stopped
     ports:
       - 30099:5432
