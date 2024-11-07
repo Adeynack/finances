@@ -1,7 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { gql } from "../../__generated__";
 import { Button } from "antd";
-import NetworkStatusIndicator from "../../components/apollo/NetworkStatusIndicator";
 import { Link } from "react-router-dom";
 import { ApolloErrorCard } from "../../components/errors/ApolloErrorCard";
 import { LoadingOutlined } from "@ant-design/icons";

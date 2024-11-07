@@ -34,7 +34,7 @@ export function CurrentUserShow() {
       <p>
         Change visual theme: <ThemeSwitch />
       </p>
-      <p>{isLoggedIn ? <LogOutButton /> : <LogInForm />}</p>
+      <div>{isLoggedIn ? <LogOutButton /> : <LogInForm />}</div>
     </div>
   );
 }

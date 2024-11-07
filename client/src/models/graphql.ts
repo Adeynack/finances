@@ -1,4 +1,9 @@
-import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
+import {
+  ApolloClient,
+  ApolloLink,
+  InMemoryCache,
+  createHttpLink,
+} from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { loadSessionOrDefault } from "./session";
 
@@ -6,18 +11,8 @@ const httpLink = createHttpLink({
   uri: "http://localhost:30001/graphql",
 });
 
-const authLink = setContext((_operation, { headers }) => {
-  const { apiToken } = loadSessionOrDefault();
-  return {
-    headers: {
-      ...headers,
-      Authorization: apiToken ? `Bearer ${apiToken}` : "",
-    },
-  };
-});
-
 export const apolloClient = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: generateApolloClientLink(loadSessionOrDefault().apiToken),
   headers: {},
   cache: new InMemoryCache({
     // possibleTypes: // TODO: Consider graphql-codegen/fragment-matcher (https://the-guild.dev/blog/graphql-codegen-and-apollo-client-3)
@@ -26,6 +21,28 @@ export const apolloClient = new ApolloClient({
     enabled: true,
   },
 });
+
+function generateApolloClientLink(apiToken: string | null): ApolloLink {
+  const authLink = setContext((_operation, { headers }) => {
+    return {
+      headers: {
+        ...headers,
+        Authorization: apiToken ? `Bearer ${apiToken}` : "",
+      },
+    };
+  });
+
+  return authLink.concat(httpLink);
+}
+
+export function changeApolloClientSession(
+  apolloClient: ApolloClient<object>,
+  apiToken: string | null,
+) {
+  console.log("[changeApolloClientSession]", { apiToken, apolloClient });
+  apolloClient.clearStore();
+  apolloClient.setLink(generateApolloClientLink(apiToken));
+}
 
 // function createApolloClient(apiToken: string | null) {
 //   const auth = apiToken && apiToken.length > 0 ? `Bearer ${apiToken}` : "";

@@ -1,6 +1,15 @@
-import { createContext, useContext } from "react";
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useContext,
+  useState,
+} from "react";
 import { defaultOptions, Options } from "./options";
 import { merge } from "ts-deepmerge";
+import { ApolloClient } from "@apollo/client";
+import { changeApolloClientSession } from "./graphql";
 
 const STORAGE_SESSION_KEY = "app-session";
 
@@ -50,22 +59,44 @@ export function loadSessionOrDefault(): Session {
   return defaultSession;
 }
 
-export function performSessionUpdate(
+function performSessionUpdate(
   changes: Partial<Session>,
-  session: Session,
-  setSession: (_: Session) => void,
+  setSession: Dispatch<SetStateAction<Session>>,
+  apolloClient: ApolloClient<object>,
 ) {
-  // Set the new session's prop.
-  const updatedSession = merge.withOptions(
-    { mergeArrays: false },
-    session,
-    changes as Session,
-  );
-  setSession(updatedSession);
+  setSession((previous) => {
+    console.log("[performSessionUpdate][setSession]", { previous, changes });
+    // Set the new session's prop.
+    const updatedSession = merge.withOptions(
+      { mergeArrays: false },
+      previous,
+      changes as Session,
+    );
 
-  // Save the session to the browser's storage.
-  window.localStorage.setItem(
-    STORAGE_SESSION_KEY,
-    JSON.stringify(updatedSession),
+    // Save the session to the browser's storage.
+    window.localStorage.setItem(
+      STORAGE_SESSION_KEY,
+      JSON.stringify(updatedSession),
+    );
+
+    // If the session changed, clear the Apollo client's cache.
+    if (Object.keys(changes).includes("apiToken")) {
+      changeApolloClientSession(apolloClient, changes.apiToken || null);
+    }
+
+    return updatedSession;
+  });
+}
+
+export function useSessionInitializer(
+  apolloClient: ApolloClient<object>,
+): [Session, (changes: Partial<Session>) => void] {
+  const [session, setSession] = useState<Session>(() => loadSessionOrDefault());
+  const updateSession = useCallback(
+    (changes: Partial<Session>) =>
+      performSessionUpdate(changes, setSession, apolloClient),
+    [setSession, apolloClient],
   );
+
+  return [session, updateSession];
 }
