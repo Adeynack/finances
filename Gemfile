@@ -4,7 +4,7 @@ source "https://rubygems.org"
 
 ruby File.read(".ruby-version").strip
 
-gem "rails", "~> 7.1.3", ">= 7.1.3.4"
+gem "rails", "~> 8.0.1"
 gem "rack-cors"
 gem "sprockets-rails"
 gem "pg", "~> 1.1"
@@ -29,7 +29,7 @@ gem "pundit"
 
 # Data
 gem "acts_as_list"
-gem "closure_tree", github: "ClosureTree/closure_tree", branch: "master"
+gem "closure_tree" #, github: "ClosureTree/closure_tree", branch: "master"
 gem "awesome_print"
 gem "table_print"
 gem "money-rails"
@@ -65,7 +65,7 @@ group :development do
   gem "rubocop-rspec_rails"
   gem "rubocop-rake"
   gem "rubocop-graphql"
-  gem "annotate", github: "ctran/annotate_models", branch: "develop"
+  # gem "annotate", github: "ctran/annotate_models", branch: "develop" # TODO: Switch or update
   gem "chusaku", require: false
   gem "ruby-lsp-rspec", require: false
   gem "ruby-lsp-rails", require: false
