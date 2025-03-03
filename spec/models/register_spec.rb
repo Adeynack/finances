@@ -66,17 +66,23 @@ RSpec.describe Register do
   end
 
   describe "IBAN" do
+    let(:r) do
+      Register.new type: "Card", starts_at: Time.zone.now, name: "Visa", book: books(:joe), currency_iso_code: "EUR"
+    end
+
     it "cannot create a card when IBAN is not valid" do
-      r = Register.new name: "Visa", book: books(:joe), iban: "foo"
+      r.iban = "foo"
       expect(r.validate).to be_falsy
       expect(r.errors.details[:iban]).to eq [{error: :invalid}]
     end
 
     it "can create a card when IBAN is valid" do
-      r = Register.new name: "Visa", book: books(:joe), iban: "SE35 5000 0000 0549 1000 0003", currency_iso_code: "EUR"
-      expect(r.valid?).to be_truthy
+      r.iban = "SE35 5000 0000 0549 1000 0003"
+      expect { r.validate! }.not_to raise_error
     end
+  end
 
+  describe "currency_iso_code" do
     it "cannot create any register with an invalid ISO currency code" do
       r = Register.new name: "Visa", book: books(:joe), currency_iso_code: "FOO"
       expect(r.validate).to be_falsy

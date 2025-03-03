@@ -23,7 +23,7 @@ class Exchange < ApplicationRecord
 
   has_many :splits, dependent: :destroy
 
-  enum status: [:uncleared, :reconciling, :cleared].index_with(&:to_s)
+  enum :status, [:uncleared, :reconciling, :cleared].index_with(&:to_s), validate: true
 
   validates :description, presence: true
   validates :date, presence: true

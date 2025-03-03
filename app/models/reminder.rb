@@ -30,7 +30,9 @@ class Reminder < ApplicationRecord
 
   has_many :reminder_splits, dependent: :destroy
 
-  enum mode: [:manual, :auto_commit, :auto_cancel].index_with(&:to_s)
+  enum :mode, [:manual, :auto_commit, :auto_cancel].index_with(&:to_s), validate: true
+  enum :exchange_status, Exchange.statuses, validate: true
+
   serialize :recurrence, coder: MontroseJSONSerializer
 
   validates :title, presence: true

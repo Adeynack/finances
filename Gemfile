@@ -4,7 +4,7 @@ source "https://rubygems.org"
 
 ruby File.read(".ruby-version").strip
 
-gem "rails", "~> 7.1.3", ">= 7.1.3.4"
+gem "rails", "~> 8.0.1"
 gem "rack-cors"
 gem "sprockets-rails"
 gem "pg", "~> 1.1"

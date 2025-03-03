@@ -25,7 +25,7 @@ class ReminderSplit < ApplicationRecord
 
   acts_as_list scope: :reminder
 
-  enum status: Exchange.statuses
+  enum :status, Exchange.statuses, validate: true
 
   def book
     super || reminder.book

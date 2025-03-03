@@ -19,6 +19,8 @@ class Split < ApplicationRecord
   include Taggable
   include Importable
 
+  enum :status, Exchange.statuses, validate: true
+
   belongs_to :exchange
   has_one :book, through: :exchange
   belongs_to :register # destination of the exchange's split
