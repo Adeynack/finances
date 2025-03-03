@@ -17,7 +17,7 @@ end
 # == Route Map
 #
 #                                   Prefix Verb URI Pattern                                                                                       Controller#Action
-#                           graphiql_rails      /graphiql                                                                                         GraphiQL::Rails::Engine {:graphql_path=>"/graphql"}
+#                           graphiql_rails      /graphiql                                                                                         GraphiQL::Rails::Engine {graphql_path: "/graphql"}
 #                                  graphql POST /graphql(.:format)                                                                                graphql#execute
 #                       rails_health_check GET  /up(.:format)                                                                                     rails/health#show
 #            rails_postmark_inbound_emails POST /rails/action_mailbox/postmark/inbound_emails(.:format)                                           action_mailbox/ingresses/postmark/inbound_emails#create
