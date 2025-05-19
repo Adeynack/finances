@@ -30,7 +30,7 @@ gem "pundit"
 # Data
 gem "acts_as_list"
 gem "closure_tree", github: "ClosureTree/closure_tree", branch: "master"
-gem "awesome_print"
+gem "amazing_print"
 gem "table_print"
 gem "money-rails"
 gem "iban-tools"

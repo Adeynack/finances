@@ -91,8 +91,8 @@ GEM
     acts_as_list (1.2.4)
       activerecord (>= 6.1)
       activesupport (>= 6.1)
+    amazing_print (1.8.0)
     ast (2.4.2)
-    awesome_print (1.9.2)
     backport (1.2.0)
     base64 (0.2.0)
     bcrypt (3.1.20)
@@ -510,8 +510,8 @@ PLATFORMS
 
 DEPENDENCIES
   acts_as_list
+  amazing_print
   annotaterb!
-  awesome_print
   bcrypt (~> 3.1.7)
   bootsnap
   chusaku
