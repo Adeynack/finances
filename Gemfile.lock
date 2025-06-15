@@ -1,13 +1,4 @@
 GIT
-  remote: https://github.com/ClosureTree/closure_tree.git
-  revision: 509f6dfa58da18bb4bff6ded0469263216579a90
-  branch: master
-  specs:
-    closure_tree (8.0.0)
-      activerecord (>= 6.1.0)
-      with_advisory_lock (>= 5.0.0)
-
-GIT
   remote: https://github.com/adeynack/annotaterb.git
   revision: e42b9af6bcf1e4a7a6fe848de1470f2130d510fd
   branch: feature/164-place-column-comments-at-the-end-of-the-line
@@ -94,19 +85,22 @@ GEM
     amazing_print (1.8.0)
     ast (2.4.2)
     backport (1.2.0)
-    base64 (0.2.0)
+    base64 (0.3.0)
     bcrypt (3.1.20)
-    benchmark (0.4.0)
-    bigdecimal (3.1.9)
+    benchmark (0.4.1)
+    bigdecimal (3.2.2)
     bindex (0.8.1)
     bootsnap (1.18.4)
       msgpack (~> 1.2)
     builder (3.3.0)
     chusaku (1.4.1)
       railties (>= 3.0)
+    closure_tree (8.0.0)
+      activerecord (>= 7.1.0)
+      with_advisory_lock (>= 5.0.0, < 6.0.0)
     coderay (1.1.3)
     concurrent-ruby (1.3.5)
-    connection_pool (2.5.0)
+    connection_pool (2.5.3)
     countries (7.1.1)
       unaccent (~> 0.3)
     crass (1.0.6)
@@ -120,7 +114,7 @@ GEM
     dotenv-rails (3.1.7)
       dotenv (= 3.1.7)
       railties (>= 6.1)
-    drb (2.2.1)
+    drb (2.2.3)
     erubi (1.13.1)
     faraday (2.12.2)
       faraday-net_http (>= 2.0, < 3.5)
@@ -202,7 +196,7 @@ GEM
     listen (3.9.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    logger (1.6.6)
+    logger (1.7.0)
     loofah (2.24.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -216,7 +210,7 @@ GEM
     method_source (1.1.0)
     mini_mime (1.1.5)
     mini_portile2 (2.8.8)
-    minitest (5.25.4)
+    minitest (5.25.5)
     monetize (1.13.0)
       money (~> 6.12)
     money (6.19.0)
@@ -485,13 +479,13 @@ GEM
       base64
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    with_advisory_lock (5.1.0)
+    with_advisory_lock (5.3.0)
       activerecord (>= 6.1)
       zeitwerk (>= 2.6)
     yard (0.9.37)
     yard-solargraph (0.1.0)
       yard (~> 0.9)
-    zeitwerk (2.7.2)
+    zeitwerk (2.7.3)
 
 PLATFORMS
   aarch64-linux-gnu
@@ -515,7 +509,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootsnap
   chusaku
-  closure_tree!
+  closure_tree
   countries
   debug
   dotenv-rails
