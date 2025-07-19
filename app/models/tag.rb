@@ -7,7 +7,7 @@
 #  id         :uuid             not null, primary key
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  name       :string           not null, indexed
+#  name       :string           not null, uniquely indexed
 #
 class Tag < ApplicationRecord
   include Importable

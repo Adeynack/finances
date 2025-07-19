@@ -5,11 +5,11 @@
 #  id              :uuid             not null, primary key
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  email           :string           not null, indexed
+#  email           :string           not null, uniquely indexed
 #  password_digest :string           not null
 #  admin           :boolean          default(FALSE), not null
 #  display_name    :string           not null
-#  default_book_id :uuid             indexed                      Last opened book.
+#  default_book_id :uuid             indexed                        Last opened book.
 #
 cthulhu:
   email: cthulhu@example.com

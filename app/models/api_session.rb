@@ -8,7 +8,7 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  user_id    :uuid             not null, indexed
-#  token      :string           not null, indexed
+#  token      :string           not null, uniquely indexed
 #
 class ApiSession < ApplicationRecord
   belongs_to :user

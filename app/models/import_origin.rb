@@ -7,10 +7,10 @@
 #  id              :uuid             not null, primary key
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  subject_type    :string           not null, indexed => [subject_id], indexed => [subject_id], indexed => [subject_id, external_system, external_id]
-#  subject_id      :uuid             not null, indexed => [subject_type], indexed => [subject_type], indexed => [subject_type, external_system, external_id]
-#  external_system :string           not null, indexed => [subject_type, subject_id, external_id]
-#  external_id     :string           not null, indexed => [subject_type, subject_id, external_system]
+#  subject_type    :string           not null, indexed => [subject_id], indexed => [subject_id], uniquely indexed => [subject_id, external_system, external_id]
+#  subject_id      :uuid             not null, indexed => [subject_type], indexed => [subject_type], uniquely indexed => [subject_type, external_system, external_id]
+#  external_system :string           not null, uniquely indexed => [subject_type, subject_id, external_id]
+#  external_id     :string           not null, uniquely indexed => [subject_type, subject_id, external_system]
 #
 class ImportOrigin < ApplicationRecord
   belongs_to :subject, polymorphic: true
