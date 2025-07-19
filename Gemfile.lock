@@ -1,12 +1,3 @@
-GIT
-  remote: https://github.com/adeynack/annotaterb.git
-  revision: 48b3d5f8fe14fb34b08b3f411fabeab248de0d44
-  branch: feature/164-place-column-comments-at-the-end-of-the-line
-  specs:
-    annotaterb (4.15.0)
-      activerecord (>= 6.0.0)
-      activesupport (>= 6.0.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -85,6 +76,9 @@ GEM
       activerecord (>= 6.1)
       activesupport (>= 6.1)
     amazing_print (1.8.1)
+    annotaterb (4.17.0)
+      activerecord (>= 6.0.0)
+      activesupport (>= 6.0.0)
     ast (2.4.3)
     backport (1.2.0)
     base64 (0.3.0)
@@ -519,7 +513,7 @@ PLATFORMS
 DEPENDENCIES
   acts_as_list
   amazing_print
-  annotaterb!
+  annotaterb
   bcrypt (~> 3.1.7)
   bootsnap
   chusaku

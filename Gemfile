@@ -65,7 +65,7 @@ group :development do
   gem "rubocop-rspec_rails"
   gem "rubocop-rake"
   gem "rubocop-graphql"
-  gem "annotaterb", github: "adeynack/annotaterb", branch: "feature/164-place-column-comments-at-the-end-of-the-line"
+  gem "annotaterb"
   gem "chusaku", require: false
   gem "ruby-lsp-rspec", require: false
   gem "ruby-lsp-rails", require: false
