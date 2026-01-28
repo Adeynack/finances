@@ -9,7 +9,8 @@
       "Bash(bin/rspec:*)",
       "Bash(bin/check:*)",
       "Bash(bin/rubocop:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(bundle list:*)"
     ]
   }
 }

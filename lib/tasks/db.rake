@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "rainbow"
+
 namespace :db do
   namespace :reset do
     desc "Perform a full reset of the database, loads seeds & fixtures, and re-annotate the models"
@@ -13,7 +15,7 @@ namespace :db do
         ["Load Fixtures into Database", :rake, "db:fixtures:load"],
         ["Seed Database", :rake, "db:seed"]
       ].each do |title, type, command|
-        puts title + (success ? "" : " => Skipped because of previous error")
+        puts Rainbow(title).blue + (success ? "" : Rainbow(" => Skipped because of previous error").yellow)
         case type
         when :rake
           puts "bin/rake #{command}"
@@ -23,7 +25,7 @@ namespace :db do
           sh command if success
         end
       rescue => e
-        puts e.message
+        puts Rainbow(e.message).red
         success = false
       end
     end
