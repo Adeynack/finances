@@ -10,7 +10,11 @@
       "Bash(bin/check:*)",
       "Bash(bin/rubocop:*)",
       "Bash(cat:*)",
-      "Bash(bundle list:*)"
+      "Bash(bundle list:*)",
+      "Bash(grep:*)",
+      "Bash(tree:*)",
+      "Bash(ls:*)",
+      "Bash(find:*)"
     ]
   }
 }
