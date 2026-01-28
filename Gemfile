@@ -75,7 +75,7 @@ group :development do
 
   # Sorbet static type checker
   gem "sorbet", "~> 0.5"
-  gem "tapioca", require: false  # Use latest version for Ruby 3.4 compatibility
-  gem "sorbet-rails", "~> 0.7"
+  gem "tapioca", "~> 0.17", require: false
+  gem "sorbet-rails", ">= 0.7", require: false  # Updated for Rails 8 compatibility
   gem "sorbet-struct-comparable", "~> 1.3"
 end

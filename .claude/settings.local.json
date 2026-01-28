@@ -22,7 +22,11 @@
       "Bash(bundle info:*)",
       "Bash(chmod:*)",
       "Bash(bundle exec srb:*)",
-      "Bash(bundle exec sorbet:*)"
+      "Bash(bundle exec sorbet:*)",
+      "Bash(rbenv versions:*)",
+      "Bash(bin/tapioca:*)",
+      "Bash(gem list:*)",
+      "Bash(DISABLE_SORBET_RAILS=1 bin/tapioca gem:*)"
     ]
   }
 }

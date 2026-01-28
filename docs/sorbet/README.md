@@ -4,7 +4,7 @@
 
 This directory contains documentation and configuration for the Sorbet static type checking integration.
 
-## Current Status: ✅ Phase 2 Complete (Phase 1 Partially Complete)
+## Current Status: ✅ Phase 2 Complete - Awaiting Ecosystem Maturity
 
 ### ✅ What's Implemented
 
@@ -39,24 +39,25 @@ This directory contains documentation and configuration for the Sorbet static ty
 
 ### ⚠️ Known Issues
 
-**Critical Blocker: Tapioca + Ruby 3.4 Incompatibility**
+**Ecosystem Compatibility Challenges**
 
-Tapioca 0.16.11 has a compatibility issue with Ruby 3.4.8:
-```
-undefined method 'new' for module T::Module (NoMethodError)
-```
+After extensive testing (Ruby 3.4.8, 3.3.10; Rails 8.1.2, 7.2.3; Tapioca 0.16.11, 0.17.10), we've identified fundamental compatibility issues:
+
+1. **Tapioca 0.16.x**: Incompatible with Sorbet runtime 0.6.x (`Module.new` error)
+2. **Tapioca 0.17.x**: Config format changed, struggles with typed Rails apps
+3. **sorbet-rails 0.7.34**: Doesn't support Rails 8's new enum syntax
 
 **Impact:**
-- ❌ Cannot run `bin/tapioca init`
-- ❌ Cannot run `bin/tapioca gem --all` (gem RBI generation)
-- ❌ Cannot run `bin/tapioca dsl` (DSL RBI generation)
+- ❌ Cannot run `bin/tapioca gem --all` (hangs or fails)
+- ❌ Cannot run `bin/tapioca dsl` (loading errors)
+- ❌ Automatic RBI generation blocked
+- ✅ Manual RBIs work perfectly
+- ✅ Type signatures functional and valuable
 
-**Workaround:**
-- Manual RBIs created for critical gems
-- Sorbet type checking still works (with expected errors due to missing gem RBIs)
-- Waiting for Tapioca fix for Ruby 3.4
+**Decision:**
+Stay on **Ruby 3.4.8 + Rails 8.1.2** (cutting edge) and wait for ecosystem to catch up (est. Q2-Q3 2025).
 
-See [RUBY_3_4_COMPATIBILITY.md](RUBY_3_4_COMPATIBILITY.md) for details.
+See [COMPATIBILITY_SUMMARY.md](COMPATIBILITY_SUMMARY.md) for full analysis and tested combinations.
 
 ### ⏳ What's Pending
 
