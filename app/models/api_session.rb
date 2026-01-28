@@ -1,3 +1,4 @@
+# typed: true
 # frozen_string_literal: true
 
 # == Schema Information
@@ -11,6 +12,8 @@
 #  token      :string           not null, uniquely indexed
 #
 class ApiSession < ApplicationRecord
+  extend T::Sig
+
   belongs_to :user
 
   before_validation :ensure_token
@@ -18,6 +21,16 @@ class ApiSession < ApplicationRecord
   class CreateNewSessionError < StandardError; end
 
   class << self
+    extend T::Sig
+
+    sig do
+      params(
+        email: String,
+        password: String,
+        rails_session: T::Hash[Symbol, T.untyped],
+        current_api_session: T.nilable(ApiSession)
+      ).returns(ApiSession)
+    end
     def log_in(email:, password:, rails_session:, current_api_session:)
       user = User.find_by(email:)
       raise(CreateNewSessionError, "invalid credentials") unless user&.authenticate(password)
@@ -39,6 +52,12 @@ class ApiSession < ApplicationRecord
       raise
     end
 
+    sig do
+      params(
+        rails_session: T::Hash[Symbol, T.untyped],
+        current_api_session: T.nilable(ApiSession)
+      ).void
+    end
     def log_out(rails_session:, current_api_session:)
       rails_session[:api_session_token] = nil
       current_api_session&.destroy!
@@ -47,6 +66,7 @@ class ApiSession < ApplicationRecord
 
   private
 
+  sig { void }
   def ensure_token
     self.token = SecureRandom.base64(64) if token.blank?
   end

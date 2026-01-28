@@ -1,3 +1,4 @@
+# typed: true
 # frozen_string_literal: true
 
 # == Schema Information
@@ -15,6 +16,8 @@
 #  status      :enum             default("uncleared"), not null
 #
 class Exchange < ApplicationRecord
+  extend T::Sig
+
   include Taggable
   include Importable
 

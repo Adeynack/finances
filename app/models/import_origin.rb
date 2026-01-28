@@ -1,3 +1,4 @@
+# typed: true
 # frozen_string_literal: true
 
 # == Schema Information
@@ -13,6 +14,8 @@
 #  external_id     :string           not null, uniquely indexed => [subject_type, subject_id, external_system]
 #
 class ImportOrigin < ApplicationRecord
+  extend T::Sig
+
   belongs_to :subject, polymorphic: true
 
   validates :external_system, presence: true

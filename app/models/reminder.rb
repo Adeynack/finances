@@ -1,3 +1,4 @@
+# typed: true
 # frozen_string_literal: true
 
 # == Schema Information
@@ -22,6 +23,8 @@
 #  exchange_status      :enum             default("uncleared"), not null
 #
 class Reminder < ApplicationRecord
+  extend T::Sig
+
   include Taggable
   include Importable
 
@@ -46,6 +49,7 @@ class Reminder < ApplicationRecord
     self.next_occurence_at = calculate_next_occurence_at
   end
 
+  sig { returns(T.nilable(Date)) }
   def calculate_next_occurence_at
     return first_date unless recurrence
 
@@ -66,6 +70,7 @@ class Reminder < ApplicationRecord
     next_occurence
   end
 
+  sig { returns(String) }
   def debug
     [
       "Reminder: #{title}",

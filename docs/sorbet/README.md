@@ -4,7 +4,7 @@
 
 This directory contains documentation and configuration for the Sorbet static type checking integration.
 
-## Current Status: ⚠️ Phase 1 Partially Complete
+## Current Status: ✅ Phase 2 Complete (Phase 1 Partially Complete)
 
 ### ✅ What's Implemented
 
@@ -159,10 +159,12 @@ sorbet/
 - ⏳ Generate gem/DSL RBIs (blocked by Tapioca issue)
 - ⏳ Verify Sorbet runs cleanly
 
-### Phase 2: Core Models (Weeks 3-4) - ⏳ PENDING
-- ApplicationRecord, User, ApiSession
-- Book, Register (critical)
-- Exchange, Split, Reminder
+### Phase 2: Core Models (Weeks 3-4) - ✅ COMPLETE
+- ✅ ApplicationRecord, User, ApiSession
+- ✅ ImportOrigin
+- ✅ Currencyable concern
+- ✅ Book, Register (critical)
+- ✅ Exchange, Split, Reminder, ReminderSplit
 
 ### Phase 3: Concerns & Validators (Week 5) - ⏳ PENDING
 - Currencyable, Taggable, Importable

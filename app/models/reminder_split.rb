@@ -1,3 +1,4 @@
+# typed: true
 # frozen_string_literal: true
 
 # == Schema Information
@@ -16,6 +17,8 @@
 #  status             :enum             default("uncleared"), not null
 #
 class ReminderSplit < ApplicationRecord
+  extend T::Sig
+
   include Taggable
   include Importable
 
@@ -27,6 +30,7 @@ class ReminderSplit < ApplicationRecord
 
   enum :status, Exchange.statuses, validate: true
 
+  sig { returns(T.nilable(Book)) }
   def book
     super || reminder.book
   end

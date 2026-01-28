@@ -1,11 +1,16 @@
+# typed: true
 # frozen_string_literal: true
 
 module Currencyable
+  extend T::Sig
   extend ActiveSupport::Concern
 
   KNOWN_CURRENCY_ISO_CODES = Money::Currency.all.map(&:iso_code).freeze
 
   class_methods do
+    extend T::Sig
+
+    sig { params(attribute_name: Symbol, optional: T::Boolean).void }
     def has_currency(attribute_name, optional: false)
       raise ArgumentError, "has_currency needs the symbol of the attribute representing the ISO code of a currency" unless attribute_name.is_a?(Symbol)
 

@@ -1,3 +1,4 @@
+# typed: true
 # frozen_string_literal: true
 
 # == Schema Information
@@ -14,6 +15,8 @@
 #  default_book_id :uuid             indexed                        Last opened book.
 #
 class User < ApplicationRecord
+  extend T::Sig
+
   has_secure_password
 
   has_many :api_sessions, dependent: :delete_all

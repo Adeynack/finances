@@ -1,3 +1,4 @@
+# typed: true
 # frozen_string_literal: true
 
 # == Schema Information
@@ -26,6 +27,8 @@
 #  card_number          :string                                       In the case the register is linked to a card, its number (eg: a credit card).
 #
 class Register < ApplicationRecord
+  extend T::Sig
+
   include Currencyable
   include Taggable
   include Importable
@@ -33,9 +36,9 @@ class Register < ApplicationRecord
 
   self.inheritance_column = nil
 
-  ACCOUNT_TYPES = ["Asset", "Bank", "Card", "Institution", "Investment", "Liability", "Loan"].freeze
-  CATEGORY_TYPES = ["Expense", "Income"].freeze
-  KNOWN_TYPES = (ACCOUNT_TYPES + CATEGORY_TYPES).freeze
+  ACCOUNT_TYPES = T.let(["Asset", "Bank", "Card", "Institution", "Investment", "Liability", "Loan"].freeze, T::Array[String])
+  CATEGORY_TYPES = T.let(["Expense", "Income"].freeze, T::Array[String])
+  KNOWN_TYPES = T.let((ACCOUNT_TYPES + CATEGORY_TYPES).freeze, T::Array[String])
 
   enum :type, KNOWN_TYPES.index_with(&:itself), validate: true
 
@@ -74,16 +77,19 @@ class Register < ApplicationRecord
   scope :categories, -> { where(type: CATEGORY_TYPES) }
   scope :active, -> { where(active: true) }
 
+  sig { returns(T::Boolean) }
   def account?
     ACCOUNT_TYPES.include?(type)
   end
 
+  sig { returns(T::Boolean) }
   def category?
     CATEGORY_TYPES.include?(type)
   end
 
-  HIERARCHICAL_NAME_SEPARATOR = ":"
+  HIERARCHICAL_NAME_SEPARATOR = T.let(":", String)
 
+  sig { returns(String) }
   def hierarchical_name
     until_self = parent_id ? self_and_ancestors : [self]
     until_self.pluck(:name).reverse.join(HIERARCHICAL_NAME_SEPARATOR)
@@ -91,6 +97,7 @@ class Register < ApplicationRecord
 
   private
 
+  sig { void }
   def validate_name_does_not_contain_separator_character
     errors.add(:name, :contains_separator_character) if name.to_s.include?(HIERARCHICAL_NAME_SEPARATOR)
   end

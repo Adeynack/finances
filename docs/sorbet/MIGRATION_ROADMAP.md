@@ -488,18 +488,18 @@ time bin/sorbet
 - [ ] Create documentation
 
 ### Week 3: Core Models (Part 1)
-- [ ] ApplicationRecord, User, ApiSession
-- [ ] ImportOrigin
-- [ ] Currencyable concern
+- [x] ApplicationRecord, User, ApiSession
+- [x] ImportOrigin
+- [x] Currencyable concern
 
 ### Week 4: Core Models (Part 2)
-- [ ] Book (critical)
-- [ ] Register (critical)
-- [ ] Exchange
+- [x] Book (critical)
+- [x] Register (critical)
+- [x] Exchange
 
 ### Week 5: Core Models (Part 3) + Concerns
-- [ ] Split, Reminder, ReminderSplit
-- [ ] All concerns and validators
+- [x] Split, Reminder, ReminderSplit
+- [ ] All other concerns and validators
 
 ### Week 6: Policies
 - [ ] ApplicationPolicy

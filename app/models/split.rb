@@ -1,3 +1,4 @@
+# typed: true
 # frozen_string_literal: true
 
 # == Schema Information
@@ -16,6 +17,8 @@
 #  status             :enum             default("uncleared"), not null
 #
 class Split < ApplicationRecord
+  extend T::Sig
+
   include Taggable
   include Importable
 
@@ -27,6 +30,7 @@ class Split < ApplicationRecord
 
   acts_as_list scope: :exchange
 
+  sig { returns(T.nilable(Book)) }
   def book
     super || exchange.book
   end

@@ -1,3 +1,4 @@
+# typed: true
 # frozen_string_literal: true
 
 # == Schema Information
@@ -12,6 +13,8 @@
 #  default_currency_iso_code :string(3)        not null
 #
 class Book < ApplicationRecord
+  extend T::Sig
+
   include Currencyable
   include Importable
 
@@ -28,6 +31,7 @@ class Book < ApplicationRecord
 
   validates :name, presence: true
 
+  sig { returns(String) }
   def debug_registers_tree
     result = []
     exchange_count_per_register_id = Exchange.group(:register_id).count
@@ -48,6 +52,7 @@ class Book < ApplicationRecord
     result.join("\n")
   end
 
+  sig { returns(String) }
   def debug_reminders
     reminders.order(:title)
       .includes(:exchange_register, :reminder_splits)
@@ -55,6 +60,7 @@ class Book < ApplicationRecord
       .join("\n")
   end
 
+  sig { params(fast: T::Boolean).void }
   def destroy!(fast: false)
     transaction do
       if fast
