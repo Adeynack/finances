@@ -46,7 +46,7 @@ RSpec.describe Book do
           last date:
           recurrence:     {"every":"month","mday":[1]}
           last commit:
-          next occurence:  (calculated: 2020-01-01 00:00:00 +0000)
+          next occurence:  (calculated: 2020-01-01 00:00:00 +0100)
           register:       First Bank
           splits:         1
             - register: Food:Fruits

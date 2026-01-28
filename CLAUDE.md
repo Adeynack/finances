@@ -5,7 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Project Overview
 
 This is a personal finance management application built with:
-- **Backend**: Ruby on Rails 8.0.1 with GraphQL API (using graphql-ruby)
+- **Backend**: Ruby 3.4.8 + Rails 8.1.2 with GraphQL API (using graphql-ruby)
 - **Frontend**: React + TypeScript with Vite, Apollo Client, and Ant Design
 - **Database**: PostgreSQL with UUID primary keys
 - **Development**: VS Code Dev Container setup with Overmind for process management
@@ -149,13 +149,13 @@ Key concerns in `app/models/concerns/`:
 
 ### Ruby Version
 
-Uses `.ruby-version` file (currently 3.4.2). The version is read by Gemfile.
+Uses `.ruby-version` file (currently 3.4.8). The version is read by Gemfile.
 
 ### Code Style
 
 - **Ruby**: Standard + RuboCop with multiple plugins (rails, performance, rspec, graphql, rake)
   - Config in `.rubocop.yml` inherits from shimmer gem's base config
-  - Target Ruby version: 3.4.2
+  - Target Ruby version: 3.4.8
 - **TypeScript/React**: ESLint 9 with TypeScript, React Hooks, Prettier integration
   - Config in `eslint.config.js`
   - Prettier for formatting

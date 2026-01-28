@@ -1,5 +1,5 @@
 AllCops:
-  TargetRubyVersion: 3.4.2
+  TargetRubyVersion: 3.4.8
   DisplayCopNames: true
   DisplayStyleGuide: true
   NewCops: disable
@@ -13,7 +13,7 @@ AllCops:
 inherit_gem:
   shimmer: config/rubocop_base.yml
 
-require:
+plugins:
   - rubocop-rspec_rails
 
 # Metrics/AbcSize:

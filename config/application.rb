@@ -47,8 +47,5 @@ module Finances
     config.generators.system_tests = nil
 
     config.action_mailer.default_url_options = {host: ENV["HOST"]} if ENV["HOST"].present?
-
-    # DEPRECATION WARNING: `to_time` will always preserve the full timezone rather than offset of the receiver in Rails 8.1.
-    config.active_support.to_time_preserves_timezone = :zone
   end
 end

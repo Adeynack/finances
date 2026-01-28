@@ -24,12 +24,12 @@ OptionParser.new do |opts|
     "-i FILEPATH",
     "--input-file FILEPATH",
     "Path to the Moneydance exported JSON file to import"
-  ) { @input_filepath = _1 }
+  ) { @input_filepath = it }
   opts.on(
     "-c CURRENCY_CODE",
     "--default-currency CURRENCU_CODE",
     "ISO Code (3 letters) of the default currency of the book to create."
-  ) { @default_currency = _1 }
+  ) { @default_currency = it }
   opts.on(
     "-d",
     "--delete-book",
@@ -39,15 +39,15 @@ OptionParser.new do |opts|
     "-u URL",
     "--api-url URL",
     "URL of the Finances API."
-  ) { @api_url = _1 }
+  ) { @api_url = it }
   opts.on(
     "--api-email EMAIL",
     "The E-Mail to use to log in to the API. Alternatively, the environment FINANCES_API_EMAIL is used."
-  ) { @api_email = _1 }
+  ) { @api_email = it }
   opts.on(
     "--api-password PASSWORD",
     "The password to use to log in to the API. Alternatively, the environment FINANCES_API_PASSWORD is used."
-  ) { @api_password = _1 }
+  ) { @api_password = it }
   opts.on(
     "--api-verbose",
     "Output the API calls"

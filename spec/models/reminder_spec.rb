@@ -99,7 +99,7 @@ RSpec.describe Reminder do
 
     subject { reminder.calculate_next_occurence_at&.to_date }
 
-    before { travel_to today }
+    before { travel_to Time.zone.parse(today) }
 
     context "when today is 2024-09-03" do
       let(:today) { "2024-09-03" }
@@ -203,7 +203,7 @@ RSpec.describe Reminder do
             last date:
             recurrence:     {"every":"month","mday":[15]}
             last commit:
-            next occurence: 2024-09-15 (calculated: 2024-09-15 00:00:00 +0000)
+            next occurence: 2024-09-15 (calculated: 2024-09-15 00:00:00 +0200)
             register:       First Bank
             splits:         2
               - register: Food:Fruits
@@ -228,7 +228,7 @@ RSpec.describe Reminder do
             last date:
             recurrence:     {"every":"month","mday":[15]}
             last commit:
-            next occurence: 2024-09-15 (calculated: 2024-09-15 00:00:00 +0000)
+            next occurence: 2024-09-15 (calculated: 2024-09-15 00:00:00 +0200)
             register:       First Bank
             splits:         0
         VALUE

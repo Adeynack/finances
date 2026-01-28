@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ruby:*)",
+      "Bash(bundle exec rails:*)",
+      "Bash(rbenv install:*)",
+      "Bash(bundle update:*)",
+      "Bash(RAILS_ENV=test bin/rails:*)",
+      "Bash(bin/rspec:*)",
+      "Bash(bin/check:*)",
+      "Bash(bin/rubocop:*)",
+      "Bash(cat:*)"
+    ]
+  }
+}

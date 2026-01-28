@@ -13,7 +13,7 @@ namespace :db do
         ["Load Fixtures into Database", :rake, "db:fixtures:load"],
         ["Seed Database", :rake, "db:seed"]
       ].each do |title, type, command|
-        puts title.blue + (success ? "" : " => Skipped because of previous error".yellow)
+        puts title + (success ? "" : " => Skipped because of previous error")
         case type
         when :rake
           puts "bin/rake #{command}"
@@ -23,7 +23,7 @@ namespace :db do
           sh command if success
         end
       rescue => e
-        puts e.message.red
+        puts e.message
         success = false
       end
     end

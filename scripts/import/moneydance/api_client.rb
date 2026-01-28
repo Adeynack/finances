@@ -94,9 +94,9 @@ module MoneydanceImport
     def to_camel_string_hash(variables)
       case variables
       when Hash
-        variables.transform_keys { _1.to_s.camelize(:lower) }.transform_values { to_camel_string_hash(_1) }
+        variables.transform_keys { it.to_s.camelize(:lower) }.transform_values { to_camel_string_hash(it) }
       when Array
-        variables.map { to_camel_string_hash(_1) }
+        variables.map { to_camel_string_hash(it) }
       else
         variables
       end
@@ -105,9 +105,9 @@ module MoneydanceImport
     def to_underscore_sym_hash(result)
       case result
       when Hash
-        result.transform_keys { _1.underscore.to_sym }.transform_values { to_underscore_sym_hash(_1) }
+        result.transform_keys { it.underscore.to_sym }.transform_values { to_underscore_sym_hash(it) }
       when Array
-        result.map { to_underscore_sym_hash(_1) }
+        result.map { to_underscore_sym_hash(it) }
       else
         result
       end
@@ -189,7 +189,7 @@ module MoneydanceImport
         }
       GQL
 
-      r.flat_map { _1.dig(:books, :nodes) }.map { Book.new(**_1) }
+      r.flat_map { it.dig(:books, :nodes) }.map { Book.new(**it) }
     end
 
     def create_book(name:, default_currency_iso_code:)

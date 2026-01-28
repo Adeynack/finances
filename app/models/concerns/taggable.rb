@@ -9,7 +9,7 @@ module Taggable
 
     def tag(tag)
       tag_record = tag.is_a?(Tag) ? tag : Tag.find_or_create_by(name: tag)
-      already_tagged = (new_record? || tags.loaded?) ? tags.any? { _1.name == tag_record.name } : tags.exists?(name: tag_record.name)
+      already_tagged = (new_record? || tags.loaded?) ? tags.any? { it.name == tag_record.name } : tags.exists?(name: tag_record.name)
       tags << tag_record unless already_tagged
     end
 

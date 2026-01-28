@@ -53,7 +53,7 @@ class Reminder < ApplicationRecord
       # this reminder was last comitted after its first date
       # next occurence after last_commit_at, excluding today
       candidates = recurrence.starting(last_commit_at).first(2)
-      (candidates[0] == last_commit_at) ? candidates[1] : candidates[0]
+      (candidates[0].to_date == last_commit_at) ? candidates[1] : candidates[0]
     else
       # last_commit_at is nil, or before first_date
       # first ocurence starting first_date

@@ -7,7 +7,7 @@ echo "\n===> Full Database Reset\n"
 bin/rake db:reset:full
 
 echo "\n===> Annotate\n"
-bin/annotate
+bin/annotaterb
 
 echo "\n===> Chusaku\n"
 bin/chusaku
