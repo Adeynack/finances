@@ -38,7 +38,7 @@ bin/rspec spec/path/to/file_spec.rb:42
 ### Code Quality & Linting
 
 ```bash
-# Full check suite (database reset, annotate, rubocop, rspec, graphql codegen, yarn lint & test)
+# Full check suite (database reset, annotate, sorbet, rubocop, rspec, graphql codegen, yarn lint & test)
 bin/check
 
 # Ruby linting
@@ -46,6 +46,9 @@ bin/rubocop
 
 # Ruby auto-fix
 bin/rubocop -a
+
+# Sorbet type checking
+bin/sorbet
 
 # TypeScript/React linting
 yarn lint              # All linting checks
@@ -86,6 +89,51 @@ bin/annotaterb
 # Annotate routes in controllers
 bin/chusaku
 ```
+
+### Sorbet Type Checking
+
+This project uses Sorbet for static type checking. See comprehensive guides in `docs/sorbet/`.
+
+```bash
+# Check types
+bin/sorbet
+
+# Generate gem RBIs (after bundle install/update)
+bin/tapioca gem --all
+
+# Generate DSL RBIs (after modifying models/DSL)
+bin/tapioca dsl
+
+# Regenerate all RBIs
+bin/rake sorbet:regenerate
+
+# Verify RBIs are up to date
+bin/rake sorbet:verify_rbis
+```
+
+**Quick Reference for Adding Type Signatures:**
+
+When creating or modifying Ruby files:
+
+1. Add strictness sigil at top: `# typed: true`
+2. Add `extend T::Sig` to class/module
+3. Add signatures to public methods:
+```ruby
+sig { params(name: String).returns(String) }
+def greet(name)
+  "Hello, #{name}"
+end
+```
+
+See `docs/sorbet/TYPING_PATTERNS.md` for comprehensive examples.
+
+**Strictness Levels:**
+- `# typed: false` - Opt out (legacy code)
+- `# typed: true` - Basic checking (most code)
+- `# typed: strict` - All methods need sigs (critical code)
+- `# typed: strong` - No T.untyped (library code)
+
+See `docs/sorbet/MIGRATION_ROADMAP.md` for the gradual adoption plan.
 
 ## Architecture
 
@@ -209,3 +257,5 @@ Guard is configured (in `Guardfile`) for running RSpec tests automatically durin
 - **montrose**: Recurring schedule management
 - **iban-tools**: IBAN validation
 - **shimmer**: Shared Rails configuration
+- **sorbet**: Static type checking for Ruby
+- **tapioca**: RBI (Ruby Interface) file generator for Sorbet

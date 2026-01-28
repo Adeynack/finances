@@ -36,6 +36,9 @@ gem "money-rails"
 gem "iban-tools"
 gem "montrose"
 
+# Sorbet runtime (needed in production for T::Sig)
+gem "sorbet-runtime"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: [:mri, :windows]
@@ -69,4 +72,10 @@ group :development do
   gem "chusaku", require: false
   gem "ruby-lsp-rspec", require: false
   gem "ruby-lsp-rails", require: false
+
+  # Sorbet static type checker
+  gem "sorbet", "~> 0.5"
+  gem "tapioca", require: false  # Use latest version for Ruby 3.4 compatibility
+  gem "sorbet-rails", "~> 0.7"
+  gem "sorbet-struct-comparable", "~> 1.3"
 end

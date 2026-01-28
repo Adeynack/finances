@@ -12,6 +12,11 @@ bin/annotaterb
 echo "\n===> Chusaku\n"
 bin/chusaku
 
+# Sorbet temporarily disabled until Tapioca is compatible with Ruby 3.4
+# See docs/sorbet/RUBY_3_4_COMPATIBILITY.md
+# echo "\n===> Sorbet Type Check\n"
+# bin/sorbet --color=never
+
 echo "\n===> Rubocop\n"
 bin/rubocop -c .rubocop.yml
 

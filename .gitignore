@@ -49,4 +49,7 @@ client/dist/
 # Test Coverage Results / Reports
 coverage/
 
+# Sorbet
+sorbet/rbi/todo.rbi
+
 ###

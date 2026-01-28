@@ -14,7 +14,15 @@
       "Bash(grep:*)",
       "Bash(tree:*)",
       "Bash(ls:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(bundle install:*)",
+      "Bash(bundle exec tapioca init:*)",
+      "Bash(bundle binstubs:*)",
+      "Bash(bin/sorbet:*)",
+      "Bash(bundle info:*)",
+      "Bash(chmod:*)",
+      "Bash(bundle exec srb:*)",
+      "Bash(bundle exec sorbet:*)"
     ]
   }
 }

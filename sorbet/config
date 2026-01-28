@@ -1,0 +1,20 @@
+# Sorbet Configuration
+--dir
+.
+
+# Ignore patterns
+--ignore=vendor/bundle/
+--ignore=bin/
+--ignore=db/schema.rb
+--ignore=node_modules/
+--ignore=tmp/
+--ignore=log/
+--ignore=client/
+--ignore=public/
+--ignore=storage/
+
+# Options
+--enable-experimental-requires-ancestor
+
+# Initial strictness (all files default to this)
+--typed=false

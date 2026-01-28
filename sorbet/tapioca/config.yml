@@ -1,0 +1,45 @@
+---
+sorbet_config: sorbet/config
+
+dsl:
+  compiler_options:
+    ActiveRecordEnum:
+      enabled: true
+    ActiveRecordFixtures:
+      enabled: true
+    ActiveRecordRelations:
+      enabled: true
+    ActiveRecordScope:
+      enabled: true
+    ActiveRecordSecureToken:
+      enabled: true
+    ActiveRecordTypedStore:
+      enabled: true
+    ActiveStorageAttachment:
+      enabled: true
+    ActionMailer:
+      enabled: true
+    ActiveJob:
+      enabled: true
+
+gem:
+  exclude:
+    - debug
+    - rspec-rails
+    - guard
+    - guard-rspec
+    - rubocop
+    - standard
+    - annotaterb
+    - chusaku
+    - solargraph
+    - fuubar
+
+  manual_requires:
+    - closure_tree
+    - acts_as_list
+    - pundit
+    - montrose
+
+require:
+  - ./sorbet/tapioca/require.rb
