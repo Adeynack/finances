@@ -57,8 +57,9 @@ RSpec.describe Book do
   end
 
   describe "#destroy!" do
-    let(:have_destroyed_all_sub_books_subresources) do
-      change { book.registers.count }.to(0)
+    let(:have_deleted_book_and_sub_resources) do
+      change { Book.where(id: book.id).count }.from(1).to(0)
+        .and change { book.registers.count }.to(0)
         .and change { book.reminders.count }.to(0)
         .and change { book.exchanges.count }.to(0)
         .and change { book.users_where_default_book.count }.to(0)
@@ -66,13 +67,13 @@ RSpec.describe Book do
 
     context "when the default action is called" do
       it "destroys the book and all of its associated ressources" do
-        expect { book.destroy! }.to have_destroyed_all_sub_books_subresources
+        expect { book.destroy! }.to have_deleted_book_and_sub_resources
       end
     end
 
     context "when the `fast` action is called" do
       it "destroys the book and all of its associated ressources" do
-        expect { book.destroy!(fast: true) }.to have_destroyed_all_sub_books_subresources
+        expect { book.destroy!(fast: true) }.to have_deleted_book_and_sub_resources
       end
     end
   end
