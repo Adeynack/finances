@@ -1,15 +1,16 @@
 import { useQuery } from "@apollo/client";
 import { gql } from "../../__generated__";
-import { Button } from "antd";
+import { Button, Flex } from "antd";
 import { Link } from "react-router-dom";
 import { ApolloErrorCard } from "../../components/errors/ApolloErrorCard";
 import { LoadingOutlined } from "@ant-design/icons";
 
 const GET_BOOK_LIST_QUERY = gql(`
-  query GetBookList {
-    books {
+  query GetBookList($cursor: String) {
+    books(after: $cursor) {
       pageInfo {
         hasNextPage
+        endCursor
       }
       edges {
         node {
@@ -26,13 +27,26 @@ const GET_BOOK_LIST_QUERY = gql(`
 `);
 
 export function BooksIndex() {
-  const { loading, data, error, refetch } = useQuery(GET_BOOK_LIST_QUERY);
+  const { loading, data, error, refetch, fetchMore } = useQuery(
+    GET_BOOK_LIST_QUERY,
+    {
+      notifyOnNetworkStatusChange: true,
+      fetchPolicy: "cache-and-network",
+    },
+  );
 
+  if (loading && !data) return <LoadingOutlined />;
   if (error) return <ApolloErrorCard error={error} />;
-  if (loading) return <LoadingOutlined />;
 
   return (
     <div>
+      <Flex gap="small">
+        <Button disabled={loading} onClick={() => refetch()}>
+          Refresh
+        </Button>
+        <Button onClick={() => alert("TODO")}>Create a new book</Button>
+      </Flex>
+
       {data && (
         <>
           {data.books.edges && (
@@ -52,8 +66,15 @@ export function BooksIndex() {
                       ),
                   )}
               </ul>
-              {data.books.pageInfo.hasNextPage && (
-                <Button onClick={() => alert("TODO: Load more")}>
+              {loading && <LoadingOutlined />}
+              {!loading && data.books.pageInfo.hasNextPage && (
+                <Button
+                  onClick={() =>
+                    fetchMore({
+                      variables: { cursor: data.books.pageInfo.endCursor },
+                    })
+                  }
+                >
                   Load more
                 </Button>
               )}
@@ -61,7 +82,6 @@ export function BooksIndex() {
           )}
         </>
       )}
-      <Button onClick={() => refetch()}>Refetch book list</Button>
     </div>
   );
 }

@@ -5,6 +5,7 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import { relayStylePagination } from "@apollo/client/utilities";
 import { loadSessionOrDefault } from "./session";
 
 const httpLink = createHttpLink({
@@ -16,6 +17,13 @@ export const apolloClient = new ApolloClient({
   headers: {},
   cache: new InMemoryCache({
     // possibleTypes: // TODO: Consider graphql-codegen/fragment-matcher (https://the-guild.dev/blog/graphql-codegen-and-apollo-client-3)
+    typePolicies: {
+      Query: {
+        fields: {
+          books: relayStylePagination(),
+        },
+      },
+    },
   }),
   devtools: {
     enabled: true,
