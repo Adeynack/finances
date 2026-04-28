@@ -32,7 +32,7 @@ module MoneydanceImport
 
     def import_account_batch(bar:, accounts_to_import:, md_accounts_by_parent_id:)
       types = accounts_to_import.map { |a| a.fetch("type") }.uniq!.sort
-      bar.log "Importer MD accounts of type#{types.many? ? "s" : ""} #{types.join(", ")}"
+      bar.log "Importer MD accounts of type#{"s" if types.many?} #{types.join(", ")}"
 
       accounts_to_import.each do |md_account|
         import_account_recursively bar:, parent_register: nil, md_account:, md_accounts_by_parent_id:
@@ -96,7 +96,7 @@ module MoneydanceImport
     def create_account(md_account:, account:, parent_register:)
       account.merge!(
         parent_id: parent_register&.id,
-        starts_at: md_account["creation_date"]&.then { (_1.length == 8) ? from_md_int_date(_1) : from_md_unix_date(_1) },
+        starts_at: md_account["creation_date"]&.then { (it.length == 8) ? from_md_int_date(it) : from_md_unix_date(it) },
         initial_balance: md_account["sbal"]&.then(&:to_i),
         default_category_id: extract_default_category_id(md_account:)
       )

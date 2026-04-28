@@ -48,7 +48,7 @@ module MoneydanceImport
         exchange_description: transaction["desc"].presence,
         exchange_memo: transaction["memo"].presence,
         exchange_status: from_md_stat(transaction["stat"]),
-        splits: splits.map { import_reminder_split(_1) }
+        splits: splits.map { import_reminder_split(it) }
       }
       @api_client.create_reminder(reminder:)
       bar.increment
@@ -71,7 +71,7 @@ module MoneydanceImport
           split[attribute] = md_reminder.delete(key).to_s
         end
       end
-      ordered_splits = splits_per_index.keys.sort.map { |i| splits_per_index.fetch(i) }
+      ordered_splits = splits_per_index.keys.sort.map! { |i| splits_per_index.fetch(i) }
 
       [transaction_hash, ordered_splits]
     end

@@ -54,7 +54,7 @@ module MoneydanceImport
       file_name = md_json["metadata"]["file_name"]
       export_date = md_json["metadata"]["export_date"].to_s
       book_name = "#{file_name} (#{export_date[0..3]}-#{export_date[4..5]}-#{export_date[6..7]})"
-      book_candidate = api_client.list_books.find { _1.name == book_name }
+      book_candidate = api_client.list_books.find { it.name == book_name }
 
       if book_candidate.present?
         puts "Book with name \"#{book_name}\" found"
