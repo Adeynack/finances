@@ -34,9 +34,12 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
 # Misc
 /out
 node_modules
+.overmind.sock
+
 ### macOS
 .DS_Store
 

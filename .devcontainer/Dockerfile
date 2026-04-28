@@ -1,4 +1,4 @@
-FROM ruby:3.4.5
+FROM ruby:4.0.3
 
 WORKDIR /workspaces/${LOCAL_WORKSPACE_FOLDER_BASENAME}
 
