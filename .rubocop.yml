@@ -13,12 +13,8 @@ AllCops:
 inherit_gem:
   shimmer: config/rubocop_base.yml
 
-require:
+plugins:
   - rubocop-rspec_rails
-
-# Metrics/AbcSize:
-#   Enabled: false
-#   Max: 9999 # for some reason, `Enabled: false` does not disable it 🤷🏼‍♂️
 
 Rails/FilePath:
   Enabled: true
