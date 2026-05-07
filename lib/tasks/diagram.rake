@@ -5,8 +5,12 @@ namespace :diagram do
   task mermaid: :environment do
     require "active_support/inflector"
 
+    ignored_models = ["Tagging", "Tag", "ImportOrigin"].freeze
+
     models = Dir[Rails.root.join("app/models/**/*.rb")].filter_map do |file|
       model_name = File.basename(file, ".rb").camelize
+      next if model_name.in?(ignored_models)
+
       begin
         model = model_name.constantize
         model if model < ApplicationRecord
@@ -36,25 +40,31 @@ namespace :diagram do
       next if table.ends_with?("_hierarchies")
 
       model.reflect_on_all_associations.each do |assoc|
+        next if assoc.through_reflection? # skip through associations
+
+        target_model = assoc.klass
+        next if target_model.name.in?(ignored_models)
+
         target = begin
           assoc.klass.table_name
         rescue
           next
         end
-        next if target.ends_with?("_hierarchies")
 
+        next if target.ends_with?("_hierarchies")
         next if one_to_many[table]&.include?(target)
+
         one_to_many[target] ||= []
 
         case assoc.macro
         when :belongs_to
-          lines << "  #{table} }o--|| #{target} : belongs_to"
+          lines << "  #{table} }o--|| #{target} : \"belongs_to #{assoc.name}\""
           one_to_many[target] << table
         when :has_many
-          lines << "  #{table} ||--o{ #{target} : has_many"
+          lines << "  #{table} ||--o{ #{target} : \"has_many #{assoc.name}\""
           one_to_many[target] << table
         when :has_one
-          lines << "  #{table} ||--|| #{target} : has_one"
+          lines << "  #{table} ||--|| #{target} : \"has_one #{assoc.name}\""
         end
       end
     end
