@@ -1,0 +1,58 @@
+{
+  "name": "Finances",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "devcontainer",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "remoteUser": "root",
+  "postCreateCommand": "bin/setup",
+  "forwardPorts": [
+    30001,
+    30002,
+    30099
+  ],
+  "portsAttributes": {
+    "30001": {
+      "label": "rails"
+    },
+    "30002": {
+      "label": "client-web"
+    },
+    "30099": {
+      "label": "psql"
+    }
+  },
+  "otherPortsAttributes": {
+    "onAutoForward": "ignore"
+  },
+  "containerEnv": {
+    "LOCAL_WORKSPACE_FOLDER_BASENAME": "${localWorkspaceFolderBasename}",
+    "EDITOR": "code --wait"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "bierner.markdown-mermaid",
+        "darkriszty.markdown-table-prettify",
+        "dbaeumer.vscode-eslint",
+        "eamodio.gitlens",
+        "esbenp.prettier-vscode",
+        "EditorConfig.EditorConfig",
+        "GraphQL.vscode-graphql",
+        "kaiwood.endwise",
+        "ms-azuretools.vscode-docker",
+        "ms-vscode-remote.remote-containers",
+        "netcorext.uuid-generator",
+        "redhat.vscode-yaml",
+        "shopify.ruby-extensions-pack",
+        "trybick.terminal-zoom",
+        "wmaurer.change-case",
+        "yzhang.markdown-all-in-one",
+        "zombocom.dead-end-vscode",
+        "anykeyh.simplecov-vscode",
+        "cweijan.vscode-database-client2",
+        "DrMerfy.overtype",
+        "apollographql.vscode-apollo"
+      ]
+    }
+  }
+}

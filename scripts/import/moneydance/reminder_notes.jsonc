@@ -1,0 +1,56 @@
+{
+  "id": "7bfdb855-a2f3-4287-97f5-292282feeb3f",
+  "obj_type": "reminder",
+  "desc": "Appart - Électricité",
+  "sdt": "20190801",        // first_date
+  "ackdt": "20210801",      // last_date entered (?)
+  "ldt": "0",               // last_date | 0 (none)
+  "ts": "1627853939930",    // last_commit_at (?)
+
+  "daily": "0",       // every n day(s)
+
+  "weeklydays": "0",  // every week on this day (unless 0). 1 = Sunday. 7 = Saturday. Comma separated.
+  "weeklymod": "0",   // weeks to skip (0 = every week, 1 = every 2nd week, 2 = every 3rd week)
+
+  "monthlydays": "1", // every month on this day (unless 0)
+  "monthlymod": "0",  // months to skip (0 = every month, 1 = every 2nd month, 2 = every 3rd month)
+
+  "yearly": "0",      // every n year(s)
+
+  "acdays": "0",      // auto-commit n days before (positive number). 0 or -1 = disabled.
+  "memo": "",
+  "type": "1",
+  "is_loan_reminder": "0",
+  "oldid": "-1",
+
+  "txn.id": "65e03827-0134-43d6-8899-0c3488096a00",
+  "txn.oldid": "-1",
+  "txn.dt": "20000502",
+  "txn.acctid": "081d566c-f748-44ea-ac04-bb95618ef9e4",
+  "txn.acct": "321",
+  "txn.td": "20000502",
+  "txn.desc": "Polarsterm GmbH",
+  "txn.memo": "",
+  "txn.chk": "",
+  "txn.dtentered": "1479939737972",
+  "txn.obj_type": "txn",
+
+  "txn.0.id": "dd1df65e-9cc6-4508-a72a-9481d91820e3",
+  "txn.0.pamt": "-3500",
+  "txn.0.samt": "3500",
+  "txn.0.oldid": "-1",
+  "txn.0.tags": "Fixed (Planning)",
+  "txn.0.acctid": "2b509117-084c-4d84-af1c-e86f79a183e5",
+  "txn.0.acct": "232",
+  "txn.0.obj_type": "",
+  "txn.0.desc": "Électricité",
+
+  "txn.1.id": "b6104bbf-a535-4fc2-aa61-4dab97460267",
+  "txn.1.oldid": "-1",
+  "txn.1.acctid": "f757052d-e183-4004-a42c-b0870b67d8db",
+  "txn.1.obj_type": "",
+  "txn.1.tags": "NA (Planning)",
+  "txn.1.desc": "Électricité",
+  "txn.1.samt": "3500",
+  "txn.1.pamt": "-3500"
+}

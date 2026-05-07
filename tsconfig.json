@@ -1,20 +1,11 @@
 {
-  "compilerOptions": {
-    "declaration": false,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "lib": ["ES2019", "dom"],
-    "module": "es6",
-    "moduleResolution": "node",
-    "baseUrl": ".",
-    "paths": {
-      "*": ["node_modules/*", "app/javascript/*"]
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
     },
-    "sourceMap": true,
-    "target": "ES2017",
-    "noEmit": true,
-    "strict": true
-  },
-  "exclude": ["**/*.spec.ts", "node_modules", "vendor", "public"],
-  "compileOnSave": false
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
 }

@@ -1,0 +1,20 @@
+AllCops:
+  TargetRubyVersion: 4.0
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+  NewCops: disable
+  Exclude:
+    - "vendor/bundle/**/*"
+    - "bin/**/*"
+    - "db/schema.rb"
+    - "node_modules/**/*"
+    - "tmp/**/*"
+
+inherit_gem:
+  shimmer: config/rubocop_base.yml
+
+plugins:
+  - rubocop-rspec_rails
+
+Rails/FilePath:
+  Enabled: true

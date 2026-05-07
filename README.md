@@ -1,24 +1,32 @@
-# README
+# Finances (working name)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Dev Ops
 
-Things you may want to cover:
+### Basic Development Workflow
 
-* Ruby version
+This project is equipped with a [Visual Studio Code development container](https://code.visualstudio.com/docs/devcontainers/containers)
+setup, along with a lunch configuration. After opening the project within its
+container, start debugging on the _Run app_ configuration. All necessary elements
+will start and you're goog to go.
 
-* System dependencies
+| URL                             | Description                                |
+| ------------------------------- | ------------------------------------------ |
+| http://localhost:30001/graphiql | Rails server, hosting a _GraphiQL_ client. |
+| http://localhost:30002          | Web client development server (_Vite_).    |
 
-* Configuration
+### Commands at a glance
 
-* Database creation
+| Title               | Command                   | Details                                                  |
+| ------------------- | ------------------------- | -------------------------------------------------------- |
+| Ruby Tests          | `bin/rspec`               |                                                          |
+| Full Database Reset | `bin/rails db:reset:full` | See `lib/tasks/db.rake` for list of operation performed. |
 
-* Database initialization
+### Ruby Code Coverage
 
-* How to run the test suite
+Coverage is automatically detected and reported.
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+| ENV        | Effect                                                                                                            |
+| ---------- | ----------------------------------------------------------------------------------------------------------------- |
+| `COVERAGE` | When set, coverage will be skipped.                                                                               |
+| `CI`       | When set, no HTML report will be generated.                                                                       |
+| `MIN_COV`  | When set (or `CI` is), the test run fails if coverage is under a minimum (see `spec/spec_helpler.rb` for values). |

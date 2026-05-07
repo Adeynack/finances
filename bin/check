@@ -1,0 +1,28 @@
+#!/usr/bin/env sh
+set -e
+
+export RAILS_ENV=test
+
+echo "\n===> Full Database Reset\n"
+bin/rake db:reset:full
+
+echo "\n===> Annotate\n"
+bin/annotate
+
+echo "\n===> Chusaku\n"
+bin/chusaku
+
+echo "\n===> Rubocop\n"
+bin/rubocop -c .rubocop.yml
+
+echo "\n===> RSpec\n"
+bin/rspec
+
+echo "\n===> GraphQL Code Generation\n"
+yarn gql:gen
+
+echo "\n===> Lint (yarn)\n"
+yarn lint
+
+echo "\n===> Test (yarn)\n"
+yarn test

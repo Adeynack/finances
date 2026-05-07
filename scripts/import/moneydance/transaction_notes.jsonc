@@ -1,0 +1,42 @@
+{
+  "0.id": "f89489f7-547d-4393-8d01-3e2cc29cbeba",
+  "0.acctid": "a1c33cd2-e33f-4029-b1c7-f0cea7acbc3c",
+  "0.desc": "Ajustement à 102,71 € (Post Berlin)",
+  "0.acct": "251",
+  "0.samt": "28415",
+  "0.pamt": "-28415",
+  "0.obj_type": "",
+  "0.oldid": "13516",
+
+  "1.id": "b0d186d7-016c-43a1-97d1-fa00ede556cb",
+  "1.acctid": "fa46b065-b7aa-4e43-94aa-f96e4fe4c6e3",
+  "1.desc": "Ajustement à 102,71 € (Post Berlin)",
+  "1.pamt": "-42089",
+  "1.samt": "42089",
+  "1.acct": "255",
+  "1.obj_type": "",
+  "1.oldid": "13517",
+
+  "2.id": "77809058-d2aa-4cea-a7fa-3526be3ef575",
+  "2.acctid": "e8ca1113-208c-42da-a0a0-2d3b474748a2",
+  "2.desc": "Ajustement à 102,71 € (Post Berlin) - Taxis",
+  "2.obj_type": "",
+  "2.oldid": "13554",
+  "2.pamt": "-13000",
+  "2.samt": "13000",
+  "2.acct": "259",
+
+  "dtentered": "1334497620300", // Date Entered (2012-04-15)
+  "memo": "",
+  "dt": "20120412", // Date (2012-04-12)
+  "obj_type": "txn",
+  "id": "e4b86c37-9025-43bb-9f98-cd09448bc90a",
+  "chk": "",
+  "acct": "202",
+  "desc": "Ajustement à 102,71 € (Post Berlin)",
+  "acctid": "6caff282-f8ec-47b8-a036-1be75b5f73f7",
+  "oldid": "13515",
+  "stat": "X",
+  "td": "20120412", // Date (2012-04-12)
+  "ts": "1459363246415" // ?? (2016-03-30)
+}
